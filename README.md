@@ -25,14 +25,6 @@ Managing business operations using manual records or separate systems can lead t
 - User Authentication
 - AI-powered Sales Chatbot
 
-### Customer
-- Product Catalogue
-- Product Details
-- Stock Availability Display
-- Size Reference Chart
-- Redirect to Shopee and TikTok Shop
-- Responsive Web Interface :contentReference[oaicite:3]{index=3}
-
 ## 🛠️ Technology Stack
 
 ### Frontend
