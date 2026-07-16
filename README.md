@@ -1,31 +1,39 @@
 # Omni-View Business Command Centre
 
-A web-based Integrated Operations Management System developed for **Capt Empire** to centralize business operations, including sales management, inventory tracking, employee performance monitoring, KPI analysis, and business reporting. :contentReference[oaicite:0]{index=0}
+A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform. :contentReference[oaicite:0]{index=0}
+
+---
 
 ## 📖 Project Overview
 
-Managing business operations using manual records or separate systems can lead to inaccurate data, inefficient workflows, and delayed decision-making. This project provides a centralized platform that helps management monitor business performance through an intuitive web dashboard. :contentReference[oaicite:1]{index=1}
+Capt Empire currently relies on manual processes and separate records to manage daily operations. This system provides a centralized dashboard that enables management to monitor business performance, inventory, sales, and employee productivity efficiently. The goal is to improve operational efficiency, increase data accuracy, and support better business decisions. :contentReference[oaicite:1]{index=1}
+
+---
 
 ## 🎯 Objectives
 
-- Develop a web-based business management system.
-- Manage sales and inventory efficiently.
-- Monitor employee performance and KPIs.
-- Provide dashboards and reports for data-driven decision-making. :contentReference[oaicite:2]{index=2}
+- Develop a web-based Integrated Operations Management System.
+- Centralize sales, inventory, employee, and KPI management.
+- Monitor employee performance through KPI tracking.
+- Provide dashboards and reports for business analysis and decision-making. :contentReference[oaicite:2]{index=2}
+
+---
 
 ## ✨ Features
 
-### Admin
-- Product Management (CRUD)
-- Inventory Management
-- Sales Record Management
-- Employee Performance Dashboard
-- KPI Tracking
-- Business Reports
-- User Authentication
-- AI-powered Sales Chatbot
+- 📦 Product Management (CRUD)
+- 📊 Sales Management
+- 📁 Inventory Management
+- 👨‍💼 Employee Management
+- 📈 KPI Monitoring
+- 📉 Analytics Dashboard
+- 🤖 AI-powered Sales Assistant Chatbot
+- 🔐 Secure Authentication
+- 📄 Business Reports
 
-## 🛠️ Technology Stack
+---
+
+## 🛠 Technology Stack
 
 ### Frontend
 - HTML5
@@ -34,71 +42,17 @@ Managing business operations using manual records or separate systems can lead t
 - Bootstrap
 
 ### Backend
-- PHP
+- Supabase
 
 ### Database
-- MySQL
+- PostgreSQL (Supabase)
 
 ### Development Tools
 - Visual Studio Code
-- XAMPP
 - Git
 - GitHub
 
-## 📂 Project Structure
-
-```
-project-root/
-│
-├── assets/
-│   ├── css/
-│   ├── js/
-│   └── images/
-│
-├── admin/
-│
-├── customer/
-│
-├── database/
-│
-├── includes/
-│
-├── uploads/
-│
-├── index.php
-├── login.php
-├── logout.php
-└── README.md
-```
-
-## 🚀 Installation
-
-1. Clone the repository.
-
-```bash
-git clone https://github.com/your-username/omni-view-business-command-centre.git
-```
-
-2. Move the project into your XAMPP `htdocs` folder.
-
-3. Start **Apache** and **MySQL** using XAMPP.
-
-4. Import the SQL database into MySQL.
-
-5. Update the database configuration.
-
-```php
-$host = "localhost";
-$user = "root";
-$password = "";
-$database = "omni_view";
-```
-
-6. Open the project in your browser.
-
-```
-http://localhost/omni-view-business-command-centre
-```
+---
 
 ## 📊 Modules
 
@@ -109,61 +63,71 @@ http://localhost/omni-view-business-command-centre
 - Employee Management
 - KPI Monitoring
 - Reports
-- AI Chatbot
 - Authentication
+- AI Chatbot
+
+---
 
 ## 🔒 User Roles
 
 ### Administrator
+
 - Manage products
-- Update inventory
-- Record sales
-- Monitor employee performance
-- View reports
-- Manage users
+- Manage inventory
+- Record and monitor sales
+- Manage employee information
+- Monitor KPIs
+- Generate reports
+- Access AI chatbot
+- Manage user accounts
 
 ### Staff
-- View assigned information
+
+- Update inventory
 - Record sales
-- Update stock
+- View assigned dashboard
 - Access AI chatbot
 
-## 📈 Future Improvements
+---
 
-- Email notifications
-- QR code inventory management
-- Barcode scanner integration
+## 🤖 AI Assistant
+
+The integrated AI chatbot assists staff and administrators by answering sales-related questions and providing quick access to business information.
+
+---
+
+## 📈 Future Enhancements
+
+- Advanced analytics dashboard
 - Sales forecasting using AI
-- Mobile application
-- Multi-branch support
-- Data export (PDF/Excel)
+- Barcode or QR code inventory management
+- Export reports to PDF and Excel
+- Email notifications
+- Multi-branch management
+- Mobile-friendly interface
 
-## 👨‍💻 Development Methodology
+---
 
-This project follows the **Waterfall Software Development Life Cycle (SDLC)** consisting of:
+## 🏗 Development Methodology
+
+This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
 
 1. Planning
 2. System Design
 3. Development
 4. Testing
-5. Documentation :contentReference[oaicite:4]{index=4}
+5. Documentation :contentReference[oaicite:3]{index=3}
 
-## 📄 License
-
-This project is developed for educational purposes as a Final Year Project.
+---
 
 ## 👥 Team Members
 
 - Chin Zi Huai
 - Adam Bin Mohd Syazwan
-- Amir Arif Bin Harisfazillah :contentReference[oaicite:5]{index=5}
+- Amir Arif Bin Harisfazillah :contentReference[oaicite:4]{index=4}
 
 ---
 
-**Project Name:** Omni-View Business Command Centre
+## 📄 License
 
-**Client:** Capt Empire
-
-**Course:** Diploma in Information Technology (Digital Technology)
-
-**Academic Session:** 2026/2027 :contentReference[oaicite:6]{index=6}
+This project is developed as a Final Year Project for the Diploma in Information Technology (Digital Technology). :contentReference[oaicite:5]{index=5}
