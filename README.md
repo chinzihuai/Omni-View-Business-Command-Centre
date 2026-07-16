@@ -130,4 +130,4 @@ This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
 
 ## 📄 License
 
-This project is developed as a Final Year Project for the Diploma in Information Technology (Digital Technology). :contentReference[oaicite:5]{index=5}
+This project is developed as a Final Year Project for the Diploma in Information Technology (Digital Technology). 
