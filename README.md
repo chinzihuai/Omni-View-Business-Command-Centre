@@ -116,7 +116,7 @@ This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
 2. System Design
 3. Development
 4. Testing
-5. Documentation :contentReference[oaicite:3]{index=3}
+5. Documentation
 
 ---
 
@@ -124,7 +124,7 @@ This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
 
 - Chin Zi Huai
 - Adam Bin Mohd Syazwan
-- Amir Arif Bin Harisfazillah :contentReference[oaicite:4]{index=4}
+- Amir Arif Bin Harisfazillah 
 
 ---
 
