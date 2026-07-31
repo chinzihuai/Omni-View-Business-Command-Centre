@@ -139,6 +139,7 @@ body{
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-left: auto;
 }
 
 .topbar-user .user-name{
@@ -282,6 +283,182 @@ body{
 
 .chartjs-render-monitor{
     border-radius: 18px;
+}
+
+/* ---------- Product page ---------- */
+.product-header {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+}
+
+.product-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.product-breadcrumb {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 0.5rem;
+    color: #6b7280;
+}
+
+.product-breadcrumb .breadcrumb-item + .breadcrumb-item::before {
+    content: '/';
+    color: #cbd5e1;
+}
+
+.product-breadcrumb a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.product-alert {
+    margin-bottom: 1.5rem;
+}
+
+.product-card {
+    background: #ffffff;
+    border-radius: 28px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 18px 35px rgba(15, 23, 42, 0.06);
+    overflow: hidden;
+}
+
+.product-card .card-header {
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.12), rgba(249, 250, 251, 0.8));
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    padding: 1.35rem 1.5rem;
+}
+
+.product-card .card-title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #0f172a;
+}
+
+.product-card .card-body {
+    padding: 1.75rem 1.5rem 1.5rem;
+}
+
+.product-card .table-responsive {
+    margin: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(226, 232, 240, 0.35);
+}
+
+.product-card table.table {
+    width: 100%;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.product-card table.table thead th {
+    background: #eef2ff;
+    color: #334155;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    vertical-align: middle;
+    padding: 1rem 1rem;
+}
+
+.product-card table.table tbody tr:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+.product-card table.table td,
+.product-card table.table th {
+    vertical-align: middle;
+    padding: 0.95rem 1rem;
+}
+
+.product-card .dataTables_wrapper {
+    width: 100%;
+}
+
+.product-card .dataTables_wrapper .dataTables_length,
+.product-card .dataTables_wrapper .dataTables_filter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.product-card .dataTables_wrapper .dataTables_length select,
+.product-card .dataTables_wrapper .dataTables_filter input {
+    min-width: 120px;
+    border-radius: 0.85rem;
+    border: 1px solid #d1d5db;
+    padding: 0.65rem 0.9rem;
+    background: #ffffff;
+}
+
+.product-card .dataTables_wrapper .dataTables_info {
+    color: #475569;
+    font-size: 0.95rem;
+    margin-top: 1rem;
+}
+
+.product-card .dataTables_wrapper .dataTables_filter label,
+.product-card .dataTables_wrapper .dataTables_length label {
+    margin: 0;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.product-card .dataTables_wrapper .dataTables_paginate {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.75rem;
+}
+
+.product-card .dataTables_wrapper .dataTables_paginate .pagination {
+    margin: 0;
+}
+
+.product-card .dataTables_wrapper .dataTables_paginate .page-item .page-link {
+    border-radius: 0.65rem;
+    border: 1px solid #e2e8f0;
+    color: #334155;
+    min-width: 42px;
+    text-align: center;
+}
+
+.product-card .dataTables_wrapper .dataTables_paginate .page-item.active .page-link {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+.product-card .dataTables_wrapper .dataTables_paginate .page-item .page-link:hover {
+    background: #eff6ff;
+    color: #1d4ed8;
+}
+
+@media (max-width: 768px) {
+    .product-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-card .dataTables_wrapper .dataTables_length,
+    .product-card .dataTables_wrapper .dataTables_filter {
+        justify-content: space-between;
+    }
 }
 
 /* ---------- Mobile top bar ---------- */
