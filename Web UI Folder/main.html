@@ -50,9 +50,16 @@
                     <input type="text" class="form-control" placeholder="Search for...">
                     <button type="submit"><i class="bi bi-search"></i></button>
                 </form>
-                <div class="topbar-user">
-                    <span class="user-name">Hello, Admin</span>
-                    <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
+                <div class="topbar-user dropdown">
+                    <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="user-name">Hello, Admin</span>
+                        <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
+                        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    </ul>
                 </div>
             </div>
 

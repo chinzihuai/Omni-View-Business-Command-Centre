@@ -1,0 +1,57 @@
+/* Styles for Forgot Password page, matching main site aesthetics */
+.forgot-page{
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 28px;
+	background: inherit;
+}
+
+.forgot-card{
+	width: 100%;
+	max-width: 520px;
+	border-radius: 24px;
+	box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+	overflow: hidden;
+	background: #ffffff;
+}
+
+.forgot-card .card-body{
+	padding: 36px 32px;
+	text-align: center;
+}
+
+.forgot-card h1{
+	font-size: 28px;
+	font-weight: 700;
+	margin-bottom: 6px;
+	color: #111827;
+}
+
+.forgot-card .lead{
+	color: #6b7280;
+	margin-bottom: 8px;
+}
+
+.phone-link{
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--brand-accent, #2563eb);
+	text-decoration: none;
+	font-weight: 600;
+}
+
+.phone-link .bi{
+	font-size: 18px;
+	color: #2563eb;
+}
+
+@media (max-width: 576px){
+	.forgot-card .card-body{
+		padding: 28px 18px;
+	}
+	.forgot-card h1{ font-size: 22px; }
+}
+

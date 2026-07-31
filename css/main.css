@@ -155,6 +155,27 @@ body{
     border: 2px solid rgba(0,0,0,.08);
 }
 
+/* Dropdown adjustments for topbar avatar menu */
+.topbar-user.dropdown{
+    position: relative;
+}
+.topbar-user .dropdown-toggle{
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: inherit;
+    text-decoration: none;
+}
+.topbar-user .dropdown-menu{
+    right: 0;
+    left: auto;
+    min-width: 160px;
+    border-radius: 12px;
+}
+.topbar-user .dropdown-item i{
+    margin-right: 8px;
+}
+
 /* ---------- Statistic cards ---------- */
 .stat-card{
     display: flex;
