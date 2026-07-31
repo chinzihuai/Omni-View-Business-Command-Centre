@@ -1,11 +1,12 @@
-/* Styles for Forgot Password page, matching main site aesthetics */
+/* Styles for Forgot Password page*/
+
 .forgot-page{
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 28px;
-	background: inherit;
+	background: linear-gradient(180deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0) 100%), #ffffff;
 }
 
 .forgot-card{
