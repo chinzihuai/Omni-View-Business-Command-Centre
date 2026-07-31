@@ -26,17 +26,52 @@
                     <p class="text-muted mb-4">
                         Login to continue
                     </p>
-                    <form>
+                    <form id="loginForm" action="main.html" method="POST">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username</label>
+                            <label for="username" class="form-label">Username:</label>
                             <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
                         </div>
                         <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
+                            <label for="password" class="form-label">Password:</label>
                             <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
                     </form>
+
+                    <div class="text-center mt-3">
+                        <alert class="alert alert-danger" style="display: none;" id="loginError"></alert>
+                    </div>
+
+                    <script>
+                        document.getElementById('loginForm').addEventListener('submit', function(event) {
+                            event.preventDefault(); // Prevent the default form submission
+
+                            // Get the username and password values
+                            const username = document.getElementById('username').value;
+                            const password = document.getElementById('password').value;
+                            const loginError = document.getElementById('loginError');
+
+                            loginError.style.display = 'none'; // Hide the error message initially
+
+                            // Perform validation (you can add more complex validation if needed)
+                            if (username === '' || password === '') {
+                                loginError.textContent = 'Please enter both username and password.';
+                                loginError.style.display = 'block';
+                                return;
+                            }
+                            else if(username !== 'admin123' || password !== 'password123') { // Example credentials
+                                loginError.textContent = 'Invalid username or password.';
+                                loginError.style.display = 'block';
+                                return;
+                            }
+                            else{
+                                loginError.style.display = 'none'; // Hide the error message if validation passes
+                                // If validation passes,redirect to the main page
+                                window.location.href = 'main.html'; // Redirect to main.html
+                            }
+                            
+                        });
+                    </script>
                     <hr>
                     <div class="text-center">
                         <a class="small" href="forgot-password.html">Forgot Password?</a>
