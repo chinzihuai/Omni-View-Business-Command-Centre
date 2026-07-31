@@ -1,0 +1,72 @@
+.profile-page{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0) 100%), #ffffff;
+}
+
+.profile-page .card{
+    border: none;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+}
+
+.profile-page .card-body{
+    padding: 3rem 2.5rem;
+}
+
+.profile-page .card-title{
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+}
+
+.profile-page .card-text{
+    font-size: 1rem;
+    color: #475569;
+    margin-bottom: 1rem;
+}
+
+.profile-page .card-text i{
+    color: #2563eb;
+    margin-right: 0.5rem;
+}
+
+.profile-page .btn{
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    border-radius: 0.85rem;
+}
+
+.profile-page .btn-secondary{
+    background-color: #64748b;
+    border-color: #64748b;
+}
+
+.profile-page .btn-secondary:hover{
+    background-color: #475569;
+    border-color: #475569;
+}
+
+.profile-page .btn-primary{
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.profile-page .btn-primary:hover{
+    background-color: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+@media (max-width: 576px) {
+    .profile-page .card-body{
+        padding: 2rem 1.5rem;
+    }
+
+    .profile-page .card-title{
+        font-size: 1.5rem;
+    }
+}
