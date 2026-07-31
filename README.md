@@ -1,12 +1,11 @@
 # Omni-View Business Command Centre
 
-A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform. :contentReference[oaicite:0]{index=0}
-
+A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform. 
 ---
 
 ## 📖 Project Overview
 
-Capt Empire currently relies on manual processes and separate records to manage daily operations. This system provides a centralized dashboard that enables management to monitor business performance, inventory, sales, and employee productivity efficiently. The goal is to improve operational efficiency, increase data accuracy, and support better business decisions. :contentReference[oaicite:1]{index=1}
+Capt Empire currently relies on manual processes and separate records to manage daily operations. This system provides a centralized dashboard that enables management to monitor business performance, inventory, sales, and employee productivity efficiently. The goal is to improve operational efficiency, increase data accuracy, and support better business decisions. 
 
 ---
 
@@ -15,7 +14,7 @@ Capt Empire currently relies on manual processes and separate records to manage 
 - Develop a web-based Integrated Operations Management System.
 - Centralize sales, inventory, employee, and KPI management.
 - Monitor employee performance through KPI tracking.
-- Provide dashboards and reports for business analysis and decision-making. :contentReference[oaicite:2]{index=2}
+- Provide dashboards and reports for business analysis and decision-making. 
 
 ---
 
@@ -116,7 +115,7 @@ This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
 2. System Design
 3. Development
 4. Testing
-5. Documentation :contentReference[oaicite:3]{index=3}
+5. Documentation
 
 ---
 
@@ -124,7 +123,7 @@ This project follows the **Waterfall Software Development Life Cycle (SDLC)**:
 
 - Chin Zi Huai
 - Adam Bin Mohd Syazwan
-- Amir Arif Bin Harisfazillah :contentReference[oaicite:4]{index=4}
+- Amir Arif Bin Harisfazillah 
 
 ---
 
