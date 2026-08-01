@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,7 +9,7 @@
     <link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">
     <script src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js" ></script>
     <link rel="stylesheet" href="../css/main.css">
-    <title>Products Page</title>
+    <title>Sales Page</title>
 </head>
 <body>
     <div class="d-flex">
@@ -24,10 +24,10 @@
                 <a href="main.html" class="nav-link">
                     <i class="bi bi-grid-1x2-fill"></i> <span>Dashboard</span>
                 </a>
-                <a href="product.html" class="nav-link active">
+                <a href="product.html" class="nav-link">
                     <i class="bi bi-box-seam-fill"></i> <span>Product</span>
                 </a>
-                <a href="sales.html" class="nav-link">
+                <a href="sales.html" class="nav-link active">
                     <i class="bi bi-cash-coin"></i> <span>Sales</span>
                 </a>
                 <a href="employee.html" class="nav-link">
@@ -60,12 +60,12 @@
                 </div>
             </div>
         
-        <div class="container-fluid">
+            <div class="container-fluid">
             <div class="product-header">
-                <h1 class="mt-4">Products</h1>
+                <h1 class="mt-4">Sales</h1>
                 <ol class="breadcrumb mb-4 product-breadcrumb">
                     <li class="breadcrumb-item"><a href="main.html">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Products</li>
+                    <li class="breadcrumb-item active">Sales</li>
                 </ol>
             </div>
 
@@ -77,167 +77,165 @@
                 <div class="col-md-12">
                     <div class="card product-card mb-4">
                         <div class="card-header">
-                            <h1 class="card-title"><i class="bi bi-box-seam-fill"></i> Product List</h1>
+                            <h1 class="card-title"><i class="bi bi-cash-coin"></i> Sales List</h1>
                         </div>
                         <div class="card-body"> 
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="ProductTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="SalesTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Product ID</th>
-                                            <th>Product Name</th>
-                                            <th>Category</th>
-                                            <th>Price</th>
-                                            <th>Stock</th>
+                                            <th>Sale ID</th>
+                                            <th>Customer</th>
+                                            <th>Product</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- Sample data, replace with dynamic content -->
                                         <tr>
                                             <td>1</td>
+                                            <td>John Doe</td>
                                             <td>Product A</td>
-                                            <td>Category 1</td>
-                                            <td>$10.00</td>
-                                            <td>100</td>
+                                            <td>$120.00</td>
+                                            <td>Completed</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
+                                            <td>Jane Smith</td>
                                             <td>Product B</td>
-                                            <td>Category 2</td>
-                                            <td>$20.00</td>
-                                            <td>50</td>
+                                            <td>$85.00</td>
+                                            <td>Pending</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
+                                            <td>Acme Corp</td>
                                             <td>Product C</td>
-                                            <td>Category 3</td>
-                                            <td>$30.00</td>
-                                            <td>75</td>
+                                            <td>$240.00</td>
+                                            <td>Completed</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>4</td>
+                                            <td>Mike Johnson</td>
                                             <td>Product D</td>
-                                            <td>Category 4</td>
-                                            <td>$40.00</td>
-                                            <td>100</td>
+                                            <td>$175.00</td>
+                                            <td>Shipped</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>5</td>
+                                            <td>Emma Watson</td>
                                             <td>Product E</td>
-                                            <td>Category 5</td>
-                                            <td>$50.00</td>
-                                            <td>125</td>
+                                            <td>$300.00</td>
+                                            <td>Completed</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>6</td>
+                                            <td>Chris Martin</td>
                                             <td>Product F</td>
-                                            <td>Category 6</td>
-                                            <td>$60.00</td>
-                                            <td>150</td>
+                                            <td>$95.00</td>
+                                            <td>Pending</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>7</td>
+                                            <td>Olivia Brown</td>
                                             <td>Product G</td>
-                                            <td>Category 3</td>
-                                            <td>$30.00</td>
-                                            <td>75</td>
+                                            <td>$220.00</td>
+                                            <td>Completed</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>8</td>
+                                            <td>William Lee</td>
                                             <td>Product H</td>
-                                            <td>Category 4</td>
-                                            <td>$40.00</td>
-                                            <td>100</td>
+                                            <td>$110.00</td>
+                                            <td>Shipped</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>9</td>
+                                            <td>Sarah Nguyen</td>
                                             <td>Product I</td>
-                                            <td>Category 1</td>
-                                            <td>$10.00</td>
-                                            <td>25</td>
+                                            <td>$70.00</td>
+                                            <td>Pending</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>10</td>
+                                            <td>David Park</td>
                                             <td>Product J</td>
-                                            <td>Category 3</td>
-                                            <td>$30.00</td>
-                                            <td>75</td>
+                                            <td>$155.00</td>
+                                            <td>Completed</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
+                                                <button class="btn btn-primary btn-sm">View</button>
+                                                <button class="btn btn-danger btn-sm">Cancel</button>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
-                        <!-- Using Extension DataTables -->
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        new DataTable('#ProductTable', {
-                                            pageLength: 10,
-                                            lengthMenu: [10, 25, 50, 100],
-                                            paging: true,
-                                            ordering: true,
-                                            info: true,
-                                            language: {
-                                                paginate: {
-                                                    previous: 'Previous',
-                                                    next: 'Next'
-                                                },
-                                                info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-                                                lengthMenu: 'Show _MENU_ entries',
-                                                search: 'Search:',
-                                                infoFiltered: '(filtered from _MAX_ total entries)',
-                                                zeroRecords: 'No matching records found'
-                                            }
-                                        });
-                                    });
-                                </script>
-                        </div>
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                new DataTable('#SalesTable', {
+                                    pageLength: 10,
+                                    lengthMenu: [10, 25, 50, 100],
+                                    paging: true,
+                                    ordering: true,
+                                    info: true,
+                                    language: {
+                                        paginate: {
+                                            previous: 'Previous',
+                                            next: 'Next'
+                                        },
+                                        info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+                                        lengthMenu: 'Show _MENU_ entries',
+                                        search: 'Search:',
+                                        infoFiltered: '(filtered from _MAX_ total entries)',
+                                        zeroRecords: 'No matching records found'
+                                    }
+                                });
+                            });
+                        </script>
                     </div>
                 </div>
             </div>
+            </div>
             <div class="row justify-content-center mt-5">
                 <div class="col-lg-3 col-md-6 text-center">
-                    <button class="btn btn-primary w-100" id="import_product_data"><i class="bi bi-cloud-arrow-up"></i> Import Product Data</button>
+                    <button class="btn btn-primary w-100" id="import_sales_data"><i class="bi bi-cloud-arrow-up"></i> Import Sales Data</button>
                 </div>
             </div>
     </main>
