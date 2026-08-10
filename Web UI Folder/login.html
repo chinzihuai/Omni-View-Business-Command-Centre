@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/login.js"></script>
     <link rel="stylesheet" href="../css/login.css">
     <title>Capt Empire Login Page</title>
 </head>
@@ -26,10 +29,10 @@
                     <p class="text-muted mb-4">
                         Login to continue
                     </p>
-                    <form id="loginForm" action="main.html" method="POST">
+                    <form id="loginForm" onsubmit="login(event)">
                         <div class="mb-3">
-                            <label for="username" class="form-label">Username:</label>
-                            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="email" class="form-control" id="email" placeholder="Enter your email" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password:</label>
@@ -42,36 +45,6 @@
                         <div class="alert alert-danger" style="display: none;" id="loginError"></div>
                     </div>
 
-                    <script>
-                        document.getElementById('loginForm').addEventListener('submit', function(event) {
-                            event.preventDefault(); // Prevent the default form submission
-
-                            // Get the username and password values
-                            const username = document.getElementById('username').value;
-                            const password = document.getElementById('password').value;
-                            const loginError = document.getElementById('loginError');
-
-                            loginError.style.display = 'none'; // Hide the error message initially
-
-                            // Perform validation (you can add more complex validation if needed)
-                            if (username === '' || password === '') {
-                                loginError.textContent = 'Please enter both username and password.';
-                                loginError.style.display = 'block';
-                                return;
-                            }
-                            else if(username !== 'admin123' || password !== 'password123') { // Example credentials
-                                loginError.textContent = 'Invalid username or password.';
-                                loginError.style.display = 'block';
-                                return;
-                            }
-                            else{
-                                loginError.style.display = 'none'; // Hide the error message if validation passes
-                                // If validation passes,redirect to the main page
-                                window.location.href = 'main.html'; // Redirect to main.html
-                            }
-                            
-                        });
-                    </script>
                     <hr>
                     <div class="text-center">
                         <a class="small" href="forgot-password.html">Forgot Password?</a>

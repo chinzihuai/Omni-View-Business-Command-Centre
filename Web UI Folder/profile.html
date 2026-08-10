@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/loaddata.js"></script>
+    <script src="../js/logout.js"></script>
     <link rel="stylesheet" href="../css/profile.css">
     <title>Profile User</title>
 </head>
@@ -16,9 +20,9 @@
                 <div class="card">
                     <div class="card-body">
                         <h1 class="card-title text-center"><strong>User Profile</strong></h1>
-                        <p class="card-text mt-5"><i class="bi bi-person"></i> Name: Admin</p>
-                        <p class="card-text"><i class="bi bi-envelope"></i> Email: admin@example.com</p>
-                        <p class="card-text"><i class="bi bi-telephone"></i> Phone: +1234567890</p>
+                        <p class="card-text mt-5"><i class="bi bi-person"></i> Name: <span id="profile_name"></span></p>
+                        <p class="card-text"><i class="bi bi-envelope"></i> Email: <span id="profile_email"></span></p>
+                        <p class="card-text"><i class="bi bi-telephone"></i> Phone: <span id="profile_phone"></span></p>
                         
                         <div class="row col-12 g-4 mt-5 justify-content-center">
                             <div class="col-lg-5">

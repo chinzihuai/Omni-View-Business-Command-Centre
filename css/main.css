@@ -37,7 +37,9 @@ body{
 }
 
 .sidebar-logo{
-    width: 32px;
+    width: 75px;
+    height: 100px;
+    object-fit: contain;
 }
 
 .brand-text{
