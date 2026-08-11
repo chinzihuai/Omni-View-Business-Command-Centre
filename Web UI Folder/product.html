@@ -12,6 +12,7 @@
     <script src="../js/database.js"></script>
     <script src="../js/loaddata.js"></script>
     <script src="../js/logout.js"></script>
+    <script src="../js/product.js"></script>
     <link rel="stylesheet" href="../css/main.css">
     <title>Products Page</title>
 </head>
@@ -31,8 +32,8 @@
                 <a href="product.html" class="nav-link active">
                     <i class="bi bi-box-seam-fill"></i> <span>Product</span>
                 </a>
-                <a href="sales.html" class="nav-link">
-                    <i class="bi bi-cash-coin"></i> <span>Sales</span>
+                <a href="lives.html" class="nav-link">
+                    <i class="bi bi-camera-reels-fill"></i> <span>Lives</span>
                 </a>
                 <a href="employee.html" class="nav-link">
                     <i class="bi bi-people-fill"></i> <span>Employee</span>
@@ -75,9 +76,6 @@
                 </ol>
             </div>
 
-            <div class="row mt-3">
-                <div class="alert alert-warning mt-1 product-alert">This is just a sample table. Replace with dynamic content.</div>
-            </div>
 
             <div class="row">
                 <div class="col-md-12">
@@ -93,159 +91,79 @@
                                             <th>Product ID</th>
                                             <th>Product Name</th>
                                             <th>Category</th>
-                                            <th>Price</th>
                                             <th>Stock</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <!-- Sample data, replace with dynamic content -->
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Product A</td>
-                                            <td>Category 1</td>
-                                            <td>$10.00</td>
-                                            <td>100</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Product B</td>
-                                            <td>Category 2</td>
-                                            <td>$20.00</td>
-                                            <td>50</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Product C</td>
-                                            <td>Category 3</td>
-                                            <td>$30.00</td>
-                                            <td>75</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Product D</td>
-                                            <td>Category 4</td>
-                                            <td>$40.00</td>
-                                            <td>100</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Product E</td>
-                                            <td>Category 5</td>
-                                            <td>$50.00</td>
-                                            <td>125</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Product F</td>
-                                            <td>Category 6</td>
-                                            <td>$60.00</td>
-                                            <td>150</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>Product G</td>
-                                            <td>Category 3</td>
-                                            <td>$30.00</td>
-                                            <td>75</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>Product H</td>
-                                            <td>Category 4</td>
-                                            <td>$40.00</td>
-                                            <td>100</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Product I</td>
-                                            <td>Category 1</td>
-                                            <td>$10.00</td>
-                                            <td>25</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>Product J</td>
-                                            <td>Category 3</td>
-                                            <td>$30.00</td>
-                                            <td>75</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">Edit</button>
-                                                <button class="btn btn-danger btn-sm">Delete</button>
-                                            </td>
-                                        </tr>
+                                    <tbody>     
                                     </tbody>
                                 </table>
                             </div>
+                            <div id="alertProduct" class="alert alert-danger" role="alert" style="display: none;"></div>
                         </div>
-                        <!-- Using Extension DataTables -->
-                                <script type="module">
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        new DataTable('#ProductTable', {
-                                            pageLength: 10,
-                                            lengthMenu: [10, 25, 50, 100],
-                                            paging: true,
-                                            ordering: true,
-                                            info: true,
-                                            language: {
-                                                paginate: {
-                                                    previous: 'Previous',
-                                                    next: 'Next'
-                                                },
-                                                info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-                                                lengthMenu: 'Show _MENU_ entries',
-                                                search: 'Search:',
-                                                infoFiltered: '(filtered from _MAX_ total entries)',
-                                                zeroRecords: 'No matching records found'
-                                            }
-                                        });
-                                    });
-                                </script>
+                                
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center mt-5">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <button class="btn btn-primary w-100" id="import_product_data"><i class="bi bi-cloud-arrow-up"></i> Import Product Data</button>
+
+            
+            
+            <div class="modal fade" id="addProductModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal">
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label class="form-label">Product ID</label>
+                                <input type="text"class="form-control" id="productId">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="productName">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Category</label>
+                                <input type="text" class="form-control" id="productCategory">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="productStock">
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                            <button type="button" class="btn btn-success" onclick="addProduct()">
+                                Add Product
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
+
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <button class="btn btn-primary w-100" id="addproduct">
+                        <i class="bi bi-plus-circle"></i> Add Product</button>
+                </div>
+            </div>
+
     </main>
 </div>
 </body>
