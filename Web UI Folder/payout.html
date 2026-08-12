@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">
+    <script type="module" src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/database.js"></script>
+    <script src="../js/loaddata.js"></script>
+    <script src="../js/logout.js"></script>
+    <script src="../js/authcheck.js"></script>
+    <script src="../js/payout.js"></script>
+    <link rel="stylesheet" href="../css/main.css">
+    <title>Employee Page</title>
+</head>
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <img src="../image/captempire_icon.png" alt="Logo" class="sidebar-logo">
+                <span class="brand-text">Capt Empire</span>
+            </div>
+ 
+            <nav class="sidebar-nav">
+                <a href="main.html" class="nav-link">
+                    <i class="bi bi-grid-1x2-fill"></i> <span>Dashboard</span>
+                </a>
+                <a href="product.html" class="nav-link">
+                    <i class="bi bi-box-seam-fill"></i> <span>Product</span>
+                </a>
+                <a href="lives.html" class="nav-link">
+                    <i class="bi bi-camera-reels-fill"></i> <span>Lives</span>
+                </a>
+                <a href="payout.html" class="nav-link active">
+                    <i class="bi bi-cash-coin"></i> <span>Payout</span>
+                </a>
+                <a href="report.html" class="nav-link">
+                    <i class="bi bi-file-earmark-bar-graph-fill"></i> <span>Report</span>
+                </a>
+            </nav>
+ 
+            <div class="sidebar-footer">
+                <a href="login.html" class="nav-link">
+                    <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-topbar">
+                <div class="topbar-user dropdown">
+                    <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="user-name">Hello, Admin</span>
+                        <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
+                        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        
+        <div class="container-fluid">
+            <div class="product-header">
+                <h1 class="mt-4">Payout</h1>
+                <ol class="breadcrumb mb-4 product-breadcrumb">
+                    <li class="breadcrumb-item"><a href="main.html">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Payout</li>
+                </ol>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card product-card mb-4">
+                        <div class="card-header">
+                            <h1 class="card-title"><i class="bi bi-cash-coin"></i> Employee Payout Table</h1>
+                        </div>
+                        <div class="card-body"> 
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="PayoutTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Payout ID</th>
+                                            <th>Employee ID</th>
+                                            <th>Employee Name</th>
+                                            <th style="min-width: 120px;">Period Start</th>
+                                            <th style="min-width: 120px;">Period End</th>
+                                            <th>Work Hours</th>
+                                            <th>Total Items Sold</th>
+                                            <th>Total GMV</th>
+                                            <th>Base Salary</th>
+                                            <th>Bonus</th>
+                                            <th>Final Payout</th>
+                                            <th style="min-width: 120px;">Payout Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+                <div class="col-lg-3 col-md-6 text-center">
+                    <button class="btn btn-primary w-100" id="import_employee_data"><i class="bi bi-cloud-arrow-up"></i> Import Employee Data</button>
+                </div>
+        </div>
+    </main>
+</div>
+</body>
+</html>
