@@ -9,8 +9,7 @@ async function loadProducts() {
 
     if(error) {
         console.error('Error fetching products:', error);
-        document.getElementById("alertProduct").style.display = "block";
-        document.getElementById("alertProduct").innerText = "Error fetching products: " + error.message;
+        alert("Error fetching products. Please check the console for details.");
         return;
     }
 
@@ -74,8 +73,7 @@ async function deleteProduct(ProductId) {
 
     if(error) {
         console.error('Error deleting product:', error);
-        document.getElementById("alertProduct").style.display = "block";
-        document.getElementById("alertProduct").innerText = "Error deleting product: " + error.message;
+        alert("Failed to delete product.");
         return;
     }
 
