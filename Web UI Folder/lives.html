@@ -12,6 +12,8 @@
     <script src="../js/database.js"></script>
     <script src="../js/loaddata.js"></script>
     <script src="../js/logout.js"></script>
+    <script src="../js/authcheck.js"></script>
+    <script src="../js/live.js"></script>
     <link rel="stylesheet" href="../css/main.css">
     <title>Live Page</title>
 </head>
@@ -34,8 +36,8 @@
                 <a href="lives.html" class="nav-link active">
                     <i class="bi bi-camera-reels-fill"></i> <span>Lives</span>
                 </a>
-                <a href="employee.html" class="nav-link">
-                    <i class="bi bi-people-fill"></i> <span>Employee</span>
+                <a href="payout.html" class="nav-link">
+                    <i class="bi bi-cash-coin"></i> <span>Payout</span>
                 </a>
                 <a href="report.html" class="nav-link">
                     <i class="bi bi-file-earmark-bar-graph-fill"></i> <span>Report</span>
@@ -53,7 +55,7 @@
             <div class="content-topbar">
                 <div class="topbar-user dropdown">
                     <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="user-name" id="userName"></span>
+                        <span class="user-name" id="user_name">Welcome</span>
                         <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
@@ -84,161 +86,122 @@
                         </div>
                         <div class="card-body"> 
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="SalesTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="LiveTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Sale ID</th>
-                                            <th>Customer</th>
-                                            <th>Product</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
+                                            <th>Session ID</th>
+                                            <th>Employee ID</th>
+                                            <th style="min-width: 120px;">Date</th>
+                                            <th>Day of Week</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                            <th>Duration (Hours)</th>
+                                            <th>Items Sold</th>
+                                            <th>GMV Amount</th>
+                                            <th>Views</th>
+                                            <th style="min-width: 175px;">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>John Doe</td>
-                                            <td>Product A</td>
-                                            <td>$120.00</td>
-                                            <td>Completed</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jane Smith</td>
-                                            <td>Product B</td>
-                                            <td>$85.00</td>
-                                            <td>Pending</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Acme Corp</td>
-                                            <td>Product C</td>
-                                            <td>$240.00</td>
-                                            <td>Completed</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>Mike Johnson</td>
-                                            <td>Product D</td>
-                                            <td>$175.00</td>
-                                            <td>Shipped</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>Emma Watson</td>
-                                            <td>Product E</td>
-                                            <td>$300.00</td>
-                                            <td>Completed</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>6</td>
-                                            <td>Chris Martin</td>
-                                            <td>Product F</td>
-                                            <td>$95.00</td>
-                                            <td>Pending</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>7</td>
-                                            <td>Olivia Brown</td>
-                                            <td>Product G</td>
-                                            <td>$220.00</td>
-                                            <td>Completed</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>8</td>
-                                            <td>William Lee</td>
-                                            <td>Product H</td>
-                                            <td>$110.00</td>
-                                            <td>Shipped</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>9</td>
-                                            <td>Sarah Nguyen</td>
-                                            <td>Product I</td>
-                                            <td>$70.00</td>
-                                            <td>Pending</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>10</td>
-                                            <td>David Park</td>
-                                            <td>Product J</td>
-                                            <td>$155.00</td>
-                                            <td>Completed</td>
-                                            <td>
-                                                <button class="btn btn-primary btn-sm">View</button>
-                                                <button class="btn btn-danger btn-sm">Cancel</button>
-                                            </td>
-                                        </tr>
                                     </tbody>
                                 </table>
+                                <div id="alertLives" class="alert alert-danger" role="alert" style="display: none;"></div>
                             </div>
                         </div>
-                        <script type="module">
-                            document.addEventListener('DOMContentLoaded', function() {
-                                new DataTable('#SalesTable', {
-                                    pageLength: 10,
-                                    lengthMenu: [10, 25, 50, 100],
-                                    paging: true,
-                                    ordering: true,
-                                    info: true,
-                                    language: {
-                                        paginate: {
-                                            previous: 'Previous',
-                                            next: 'Next'
-                                        },
-                                        info: 'Showing _START_ to _END_ of _TOTAL_ entries',
-                                        lengthMenu: 'Show _MENU_ entries',
-                                        search: 'Search:',
-                                        infoFiltered: '(filtered from _MAX_ total entries)',
-                                        zeroRecords: 'No matching records found'
-                                    }
-                                });
-                            });
-                        </script>
                     </div>
                 </div>
             </div>
             </div>
+            <div class="modal fade" id="addLiveModal" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h5 class="modal-title">Add Live Data</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal">
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+
+                            <div class="mb-3">
+                                <label class="form-label">Session ID</label>
+                                <input type="text"class="form-control" id="sessionId">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Employee ID</label>
+                                <select class="form-select" id="employeeId">
+                                    <option value="">Loading employees...</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Date</label>
+                                <input type="date" class="form-control" id="liveDate">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Day of Week</label>
+                                <select class="form-select" id="dayOfWeek">
+                                    <option value="Mon">Monday</option>
+                                    <option value="Tue">Tuesday</option>
+                                    <option value="Wed">Wednesday</option>
+                                    <option value="Thu">Thursday</option>
+                                    <option value="Fri">Friday</option>
+                                    <option value="Sat">Saturday</option>
+                                    <option value="Sun">Sunday</option>
+                                </select>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Start Time</label>
+                                <input type="time" class="form-control" id="startTime">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">End Time</label>
+                                <input type="time" class="form-control" id="endTime">   
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Duration (Hours)</label>
+                                <input type="number" class="form-control" id="durationHours">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Items Sold</label>
+                                <input type="number" class="form-control" id="itemsSold">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">GMV Amount</label>
+                                <input type="number" class="form-control" id="gmvAmount">
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Views</label>
+                                <input type="number" class="form-control" id="views">
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                Cancel
+                            </button>
+
+                            <button type="button" class="btn btn-success" onclick="addLiveData()">
+                                Add Live Data
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <div class="row justify-content-center mt-5">
                 <div class="col-lg-3 col-md-6 text-center">
-                    <button class="btn btn-primary w-100" id="import_sales_data"><i class="bi bi-cloud-arrow-up"></i> Import Sales Data</button>
+                    <button class="btn btn-primary w-100" id="add_lives_data"><i class="bi bi-plus-circle"></i> Add Lives Data</button>
                 </div>
             </div>
     </main>
