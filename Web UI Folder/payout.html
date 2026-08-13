@@ -55,7 +55,7 @@
             <div class="content-topbar">
                 <div class="topbar-user dropdown">
                     <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="user-name">Hello, Admin</span>
+                        <span class="user-name" id="user_name"></span>
                         <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
@@ -111,9 +111,146 @@
                 </div>
             </div>
         </div>
+
+    <div class="modal fade" id="payoutModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Payout</h5>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="payoutForm">
+
+                    <!-- Product -->
+                    <div class="mb-3">
+                        <label for="payoutID" class="form-label">
+                            Payout Id
+                        </label>
+                        <input type="text"class="form-control" id="payoutID">
+                    </div>
+
+
+                    <!-- Employee -->
+                    <div class="mb-3">
+                        <label for="payoutEmployee" class="form-label">
+                            EmployeeID
+                        </label>
+                        <select id="payoutEmployee" class="form-select" required>
+                            <option value="">Loading employees...</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Period -->
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label for="periodStart" class="form-label">
+                                Period Start
+                            </label>
+                            <input type="date" id="periodStart" class="form-control" required>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="periodEnd" class="form-label">
+                                Period End
+                            </label>
+                            <input type="date" id="periodEnd" class="form-control" required>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Bonus per item -->
+                    <div class="mb-3">
+                        <label for="bonusPerItem" class="form-label">
+                            Bonus Per Item (RM)
+                        </label>
+                        <input type="number" id="bonusPerItem" class="form-control" min="0" step="0.01" placeholder="Example: 2.00" required>
+                    </div>
+
+
+                    <!-- Calculation Preview -->
+                    <div class="card bg-light mb-3">
+                        <div class="card-body">
+
+                            <h6 class="mb-3">
+                                Payout Calculation
+                            </h6>
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>Total Hours:</strong>
+                                    <span id="previewHours">0</span>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>Item Sold:</strong>
+                                    <span id="previewSales">0</span>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>GMV Amount:</strong>
+                                    RM <span id="previewGMV">0.00</span>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>Base Rate:</strong>
+                                    RM <span id="previewRate">0.00</span>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>Base Payment:</strong>
+                                    RM <span id="previewBase">0.00</span>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>Bonus:</strong>
+                                    RM <span id="previewBonus">0.00</span>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <strong>Total Payment:</strong>
+                                    RM <span id="previewTotal">0.00</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+
+                <button type="button" form="payoutForm" class="btn btn-primary" onclick="addPayout()">
+                    Add Payout
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
         <div class="row justify-content-center mt-5">
                 <div class="col-lg-3 col-md-6 text-center">
-                    <button class="btn btn-primary w-100" id="import_employee_data"><i class="bi bi-cloud-arrow-up"></i> Import Employee Data</button>
+                    <button class="btn btn-primary w-100" id="add_payout_data"><i class="bi bi-plus-circle"></i> Add Payout</button>
                 </div>
         </div>
     </main>
