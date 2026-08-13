@@ -12,6 +12,7 @@
     <script src="../js/loaddata.js"></script>
     <script src="../js/logout.js"></script>
     <script src="../js/authcheck.js"></script>
+    <script src="../js/dashboard.js"></script>
     <link rel="stylesheet" href="../css/main.css">
     <title>Dashboard Capt Empire</title>
 </head>
@@ -53,7 +54,7 @@
             <div class="content-topbar " >
                 <div class="topbar-user dropdown">
                     <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="user-name" id="user_name">Welcome</span>
+                        <span class="user-name" id="user_name"></span>
                         <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
@@ -79,26 +80,25 @@
 
                 <div class="container-fluid mt-4">
                     <div class="row g-4">
-                        <p class="alert alert-warning">This is just a sample card</p>
                         <div class="col-md-6">
                             <div class="stat-card">
                                 <div>
-                                    <div class="stat-card-label">Earnings (Monthly)</div>
-                                    <div class="stat-card-value">$40,000</div>
+                                    <div class="stat-card-label" id="monthly-gmv-label">GMV amount (Monthly)</div>
+                                    <div class="stat-card-value" id="monthly-gmv">RM0.00</div>
                                 </div>
                                 <div class="stat-card-icon bg-primary-light">
-                                    <i class="bi bi-calendar-event"></i>
+                                    <i class="bi bi-currency-dollar"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="stat-card ">
                                 <div>
-                                    <div class="stat-card-label">Earnings (Annual)</div>
-                                    <div class="stat-card-value">$215,000</div>
+                                    <div class="stat-card-label" id="monthly-item-sold-label">Items Sold (Monthly)</div>
+                                    <div class="stat-card-value" id="monthly-item-sold">0</div>
                                 </div>
                                 <div class="stat-card-icon bg-success-light">
-                                    <i class="bi bi-currency-dollar"></i>
+                                    <i class="bi bi-box2"></i>
                                 </div>
                             </div>
                         </div>
