@@ -334,7 +334,34 @@ async function addLiveData() {
 
 
 }
+  
 document.addEventListener('DOMContentLoaded', () => {
+
+    const liveDateInput = document.getElementById('liveDate');
+    const dayOfWeek= document.getElementById('dayOfWeek');
+
+    liveDateInput.addEventListener('change', () => {
+
+        if (!liveDateInput.value) {
+            dayOfWeek.value = '';
+            return;
+        }
+
+        const [year, month, day] = liveDateInput.value.split('-');
+        const date=new Date(Number(year),Number(month) - 1, Number(day));
+        const days = [
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat"
+        ];
+
+        dayOfWeek.value = days[date.getDay()];
+    });
+
     loadlives();
     loadEmployeeOptions();
 });
