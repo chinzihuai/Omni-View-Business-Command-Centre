@@ -12,7 +12,9 @@
     <script src="../js/loaddata.js"></script>
     <script src="../js/logout.js"></script>
     <script src="../js/authcheck.js"></script>
+    <script src="../js/employee_leaderboard.js"></script>
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/leader_board.css">
     <title>Employee Dashboard</title>
     <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
 </head>
@@ -58,6 +60,245 @@
                             <i class="bi bi-box-arrow-right"></i> Logout
                         </a></li>
                     </ul>
+                </div>
+            </div>
+            
+            <div class="container-fluid mt-4">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Welcome Back! <span id="welcome_name"></span></h5>
+                                <p class="card-text text-muted">Here's a quick overview of your sales performance.</p>
+                                <hr>
+                                <div class="row g-3">
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="card border-0 shadow-sm mb-3">
+                                            <div class="card-body text-center">
+                                                <h6 class="card-subtitle mb-2">Today Sales</h6>
+                                                <h5 class="card-title" id="todaysales"><strong>RM 0.00</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="card border-0 shadow-sm mb-3">
+                                            <div class="card-body text-center">
+                                                <h6 class="card-subtitle mb-2">Today live views</h6>
+                                                <h5 class="card-title" id="todayliveviews"><strong>0</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                        <div class="card border-0 shadow-sm mb-3">
+                                            <div class="card-body text-center">
+                                                <h6 class="card-subtitle mb-2">Current Rank</h6>
+                                                <h5 class="card-title" id="currentrank"><strong>#0</strong></h5>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            <!--Reference:https://fwdtools.com/ui-snippets/leaderboard-podium/-->
+            <!-- Sales Leaderboard -->
+            <div class="card leaderboard-card border-0 shadow-sm mt-4">
+
+                <div class="card-body">
+
+                    <!-- Header -->
+                    <div class="leaderboard-header">
+                        <div>
+                            <h4 class="fw-bold mb-1">
+                                🏆 Sales Champion
+                            </h4>
+
+                            <p class="text-muted mb-0">
+                                Employee sales performance
+                            </p>
+                        </div>
+
+                        <select id="leaderboardPeriod" class="form-select leaderboard-select">
+                            <option value="month" selected>This Month</option>
+                            <option value="lastMonth">Last Month</option>
+                            <option value="year">This Year</option>
+                        </select>
+                    </div>
+
+
+                    <!-- Loading -->
+                    <div id="leaderboardLoading" class="text-center py-5">
+                        <div class="spinner-border" role="status"></div>
+                        <p class="text-muted mt-2 mb-0">
+                            Loading leaderboard...
+                        </p>
+                    </div>
+
+
+                    <!-- Error -->
+                    <div id="leaderboardError"
+                        class="alert alert-danger d-none mt-3">
+                    </div>
+
+
+                    <!-- Podium -->
+                    <div id="podium" class="podium d-none">
+
+                        <!-- 2nd -->
+                        <div class="podium-player second-place">
+
+                            <div class="player-rank">
+                                🥈
+                            </div>
+
+                            <div class="player-avatar" id="secondAvatar">
+                                ?
+                            </div>
+
+                            <div class="player-name" id="secondName">
+                                -
+                            </div>
+
+                            <div class="player-gmv" id="secondGMV">
+                                RM 0.00
+                            </div>
+
+                            <div class="podium-block podium-second">
+                                <span>2</span>
+                            </div>
+
+                        </div>
+
+
+                        <!-- 1st -->
+                        <div class="podium-player first-place">
+
+                            <div class="crown">
+                                👑
+                            </div>
+
+                            <div class="player-rank">
+                                🥇
+                            </div>
+
+                            <div class="player-avatar champion-avatar"
+                                id="firstAvatar">
+                                ?
+                            </div>
+
+                            <div class="player-name champion-name"
+                                id="firstName">
+                                -
+                            </div>
+
+                            <div class="player-gmv champion-gmv"
+                                id="firstGMV">
+                                RM 0.00
+                            </div>
+
+                            <div class="podium-block podium-first">
+                                <span>1</span>
+                            </div>
+
+                        </div>
+
+
+                        <!-- 3rd -->
+                        <div class="podium-player third-place">
+
+                            <div class="player-rank">
+                                🥉
+                            </div>
+
+                            <div class="player-avatar" id="thirdAvatar">
+                                ?
+                            </div>
+
+                            <div class="player-name" id="thirdName">
+                                -
+                            </div>
+
+                            <div class="player-gmv" id="thirdGMV">
+                                RM 0.00
+                            </div>
+
+                            <div class="podium-block podium-third">
+                                <span>3</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- No data -->
+                    <div id="leaderboardEmpty"
+                        class="text-center py-5 d-none">
+
+                        <div class="fs-1">
+                            📊
+                        </div>
+
+                        <h5 class="mt-2">
+                            No sales data
+                        </h5>
+
+                        <p class="text-muted mb-0">
+                            There are no sales records for this period.
+                        </p>
+
+                    </div>
+
+
+                    <!-- Full ranking -->
+                    <div id="leaderboardList"
+                        class="leaderboard-list d-none mt-4">
+
+                        <h5 class="fw-bold mb-3">
+                            Full Ranking
+                        </h5>
+
+                        <div id="rankingRows"></div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container-fluid mt-4">
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Sales Performance Chart</h5>
+                                <p class="card-text text-muted">Visual representation of your sales performance over time.</p>
+                                <hr>
+                                <canvas id="salesChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Working hours this month</h5>
+                                <p class="card-text text-muted">Your working hours for the current month.</p>
+                                <hr>
+                                <canvas id="workingHours" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="card-title fw-bold">Live views trend this month</h5>
+                                <p class="card-text text-muted">Distribution of your sales across different categories.</p>
+                                <hr>
+                                <canvas id="liveViewsTrend" width="400" height="200"></canvas>
+                            </div>
+                        </div>
                 </div>
             </div>
         </main>

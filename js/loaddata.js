@@ -49,6 +49,9 @@ async function loadUserData() {
     const profilePhoneElement =
         document.getElementById("profile_phone");
 
+    const welcomename=
+        document.getElementById("welcome_name");
+
 
     if (userNameElement) {
         userNameElement.innerText =
@@ -68,6 +71,11 @@ async function loadUserData() {
     if (profilePhoneElement) {
         profilePhoneElement.innerText =
             data.phone;
+    }
+
+    if(welcomename){
+        welcomename.innerText =
+            data.username;
     }
 
 
