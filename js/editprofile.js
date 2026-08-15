@@ -85,8 +85,25 @@ async function updateProfile(event) {
 
     message.style.display = "block";
 
-
-    setTimeout(function () {
-        window.location.href = "profile.html";
-    }, 1500);
+    const {data:role, error: roleError} = await supabaseClient
+        .from("profiles")
+        .select("role")
+        .eq("email", user.email)
+        .single();
+    
+    if (roleError) {
+        console.error("ROLE ERROR:", roleError);
+        alert("Failed to retrieve user role.");
+    } else {
+        // Redirect based on role
+        if (role === "admin" || role === "owner") {
+            setTimeout(function () {
+                window.location.href = "main.html";
+            }, 1500);
+        } else if (role === "employee") {
+            setTimeout(function () {
+                window.location.href = "Employee_Profile.html";
+            }, 1500);
+        }
+    }
 }
