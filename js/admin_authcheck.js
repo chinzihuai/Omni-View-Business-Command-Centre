@@ -1,4 +1,4 @@
-async function checkAuthentication() {
+async function checkAdminAuthentication() {
 const {data:{session},error}=await supabaseClient.auth.getSession();
 
 if(error || !session) {
@@ -13,11 +13,16 @@ else{
         await supabaseClient.auth.signOut();
         window.location.replace("login.html");
     }
-    else{
+    else if(profile.role !== "admin") {
+        console.error("User is not an admin");
+        await supabaseClient.auth.signOut();
+        window.location.replace("login.html");
+    }
+    
     console.log("Authenticated:", session.user.email);
     console.log("Role:", profile.role);
-    }
+
 }
 }
 
-checkAuthentication();
+checkAdminAuthentication();
