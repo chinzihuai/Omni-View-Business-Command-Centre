@@ -17,8 +17,25 @@ async function login(event) {
         return;
     }
 
+    const{data:profile,error:profileError}=await supabaseClient
+        .from("profiles")
+        .select("role")
+        .eq("email",email)
+        .single();
 
-
-    console.log('Login successful:', data);
-    window.location.href = 'main.html';
+    if(profileError || !profile) {
+        console.error("Profile not found");
+        document.getElementById('loginError').innerText ="Profile not found. Please contact support.";
+        document.getElementById('loginError').style.display = "block";
+        await supabaseClient.auth.signOut();
+        return;
+    }
+    if(profile.role==="admin" || profile.role==="owner"){
+        console.log('Login successful:', data);
+        window.location.href = 'main.html';
+    }
+    else if(profile.role==="employee"){
+        console.log('Login successful:', data);
+        window.location.href = 'Employee_Main.html';
+    }
 }
