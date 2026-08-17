@@ -1,21 +1,20 @@
-/* Styles for Forgot Password page*/
-
 .forgot-page{
 	min-height: 100vh;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	padding: 28px;
-	background: linear-gradient(180deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0) 100%), #ffffff;
+	background: linear-gradient(180deg, var(--gold-tint, rgba(185, 135, 60, .08)) 0%, rgba(185, 135, 60, 0) 100%), var(--paper, #f5f4f0);
 }
 
 .forgot-card{
 	width: 100%;
 	max-width: 520px;
-	border-radius: 24px;
-	box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+	border-radius: var(--radius-lg, 20px);
+	box-shadow: var(--shadow-card, 0 14px 30px rgba(20, 20, 25, .07), 0 2px 6px rgba(20, 20, 25, .04));
 	overflow: hidden;
-	background: #ffffff;
+	background: var(--surface, #ffffff);
+	border: 1px solid var(--border, #e6e2d8);
 }
 
 .forgot-card .card-body{
@@ -24,14 +23,15 @@
 }
 
 .forgot-card h1{
+	font-family: 'Sora', sans-serif;
 	font-size: 28px;
 	font-weight: 700;
 	margin-bottom: 6px;
-	color: #111827;
+	color: var(--text, #1f2124);
 }
 
 .forgot-card .lead{
-	color: #6b7280;
+	color: var(--text-muted, #6b6f7a);
 	margin-bottom: 8px;
 }
 
@@ -39,14 +39,18 @@
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	color: var(--brand-accent, #2563eb);
+	color: var(--gold, #b9873c);
 	text-decoration: none;
 	font-weight: 600;
 }
 
+.phone-link:hover{
+	color: var(--gold-dark, #93692a);
+}
+
 .phone-link .bi{
 	font-size: 18px;
-	color: #2563eb;
+	color: var(--gold, #b9873c);
 }
 
 @media (max-width: 576px){
@@ -55,4 +59,3 @@
 	}
 	.forgot-card h1{ font-size: 22px; }
 }
-

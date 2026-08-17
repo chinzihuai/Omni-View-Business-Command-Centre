@@ -1,23 +1,20 @@
 :root{
-    --brand-dark: #111111;
-    --brand-accent: #2d6cdf;
-    --text-muted: #bbbbbb;
-    --card-radius: 15px;
+    --card-radius: var(--radius-lg, 20px);
     --input-height: 50px;
 }
 
 *{
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Inter', sans-serif;
     box-sizing: border-box;
 }
 
 body{
-    background: #f5f5f5;
+    background: var(--paper, #f5f4f0);
 }
 
 /* ---------- Left panel ---------- */
 .left-panel{
-    background: var(--brand-dark);
+    background: var(--ink, #15171b);
     color: white;
     display: flex;
     justify-content: center;
@@ -34,19 +31,21 @@ body{
 }
 
 .left-panel h1{
+    font-family: 'Sora', sans-serif;
     font-weight: 700;
     font-size: 40px;
     margin-bottom: 4px;
 }
 
 .left-panel h2{
+    font-family: 'Sora', sans-serif;
     font-size: 30px;
     font-weight: 300;
     margin-bottom: 20px;
 }
 
 .left-panel p{
-    color: var(--text-muted);
+    color: #a7abb5;
     letter-spacing: 2px;
 }
 
@@ -55,7 +54,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: white;
+    background: var(--surface, #ffffff);
     padding: 20px;
 }
 
@@ -64,29 +63,36 @@ body{
     max-width: 100%;
     padding: 40px;
     border-radius: var(--card-radius);
-    box-shadow: 0 10px 30px rgba(0,0,0,.15);
+    box-shadow: var(--shadow-card, 0 14px 30px rgba(20, 20, 25, .07), 0 2px 6px rgba(20, 20, 25, .04));
+    background: var(--surface, #ffffff);
+    border: 1px solid var(--border, #e6e2d8);
 }
 
 .login-card h3{
+    font-family: 'Sora', sans-serif;
     font-weight: 700;
+    color: var(--text, #1f2124);
 }
 
 /* ---------- Form controls ---------- */
 .form-control{
     height: var(--input-height);
+    border: 1px solid var(--border, #e6e2d8);
+    border-radius: 10px;
 }
 
 .form-control:focus{
-    border-color: var(--brand-accent);
-    box-shadow: 0 0 0 0.2rem rgba(45,108,223,.15);
+    border-color: var(--gold, #b9873c);
+    box-shadow: 0 0 0 0.2rem var(--gold-tint, rgba(185, 135, 60, .18));
 }
 
 .form-control.is-invalid{
-    border-color: #dc3545;
+    border-color: var(--danger, #b6473f);
 }
 
 .invalid-feedback{
     font-size: 13px;
+    color: var(--danger, #b6473f);
 }
 
 /* Password field with a toggle icon inside it */
@@ -106,19 +112,33 @@ body{
     background: none;
     border: none;
     cursor: pointer;
-    color: #888;
+    color: var(--text-muted, #6b6f7a);
     padding: 0;
     line-height: 1;
 }
 
 .password-toggle:hover{
-    color: var(--brand-dark);
+    color: var(--ink, #15171b);
 }
 
 /* ---------- Button ---------- */
 .btn{
     height: var(--input-height);
     font-weight: 600;
+    border-radius: 10px;
+}
+
+.btn-primary{
+    background: var(--gold, #b9873c);
+    border-color: var(--gold, #b9873c);
+    color: #201404;
+}
+
+.btn-primary:hover,
+.btn-primary:focus{
+    background: var(--gold-dark, #93692a);
+    border-color: var(--gold-dark, #93692a);
+    color: #ffffff;
 }
 
 .btn:disabled{
