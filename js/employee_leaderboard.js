@@ -90,8 +90,6 @@ async function loadLeaderboard() {
         return;
     }
 
-    console.log("Live data:", liveData);
-    console.log("Live error:", liveError);
 
     const {data: profiles,error: profilesError} = await supabaseClient
         .from('profiles')
@@ -159,6 +157,8 @@ async function loadLeaderboard() {
             employee.rank = index + 1;
     });
 
+    
+
     hideLeaderboardLoading();
 
     if (leaderboardData.length === 0) {
@@ -173,6 +173,8 @@ async function loadLeaderboard() {
 
 
     displayFullRanking(leaderboardData);
+
+    displayCurrentEmployeeRank();
 
 }
 
@@ -324,11 +326,7 @@ function setPlayer(position,employee) {
     avatar.textContent =getInitials(employee.name);
 }
 
-
-// ========================================
 // HIDE PODIUM PLAYER
-// ========================================
-
 function hidePlayer(position) {
 
     const player =document.querySelector(`.${position}-place`);
@@ -517,6 +515,24 @@ function showLeaderboardEmpty() {
 
     document.getElementById('leaderboardEmpty')
         .classList.remove('d-none');
+}
+
+function displayCurrentEmployeeRank() {
+
+    const currentEmployee = leaderboardData.find(
+        employee => employee.isCurrentUser
+    );
+
+    if (!currentEmployee) {
+        console.log("Current employee is not in leaderboard.");
+        return;
+    }
+
+    const rankElement = document.getElementById('currentrank');
+
+    if (rankElement) {
+        rankElement.textContent = `#${currentEmployee.rank}`;
+    }
 }
 
 document.addEventListener('DOMContentLoaded',function () {

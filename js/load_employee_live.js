@@ -38,12 +38,13 @@ async function loadlives() {
     }
 
     const employee_id = profile.userid;
+    const today_date = new Date();
 
     const {data, error} = await supabaseClient
         .from('Live')
         .select('*')
         .eq('employee_id', employee_id);
-
+    
     if(error){
         console.error("Error fetching live sessions:", error);
         alert("Error fetching live sessions. Please check the console for details.");
@@ -52,7 +53,7 @@ async function loadlives() {
 
     if(!LiveTable) {
         LiveTable = new DataTable('#LiveTable', {
-            pageLength: 5,
+            pageLength: 10,
             lengthMenu: [5, 10, 25, 50,100],
             paging: true,
             ordering: true,

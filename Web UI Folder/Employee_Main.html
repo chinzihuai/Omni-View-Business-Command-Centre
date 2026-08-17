@@ -13,6 +13,8 @@
     <script src="../js/logout.js"></script>
     <script src="../js/authcheck.js"></script>
     <script src="../js/employee_leaderboard.js"></script>
+    <script src="../js/eployee_dashboard.js"></script>
+    <script src="../js/eployee_charts.js"></script>
     <link rel="stylesheet" href="../css/main.css">
     <link rel="stylesheet" href="../css/leader_board.css">
     <title>Employee Dashboard</title>
@@ -54,7 +56,7 @@
                         <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
-                        <li><a class="dropdown-item" href="Employee_Profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
+                        <li><a class="dropdown-item" href="Employee_profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" onclick="logout(event)">
                             <i class="bi bi-box-arrow-right"></i> Logout
@@ -66,33 +68,42 @@
             <div class="container-fluid mt-4">
                 <div class="row">
                     <div class="col-md-12 mb-4">
-                        <div class="card border-0 shadow-sm">
+                        <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title fw-bold">Welcome Back! <span id="welcome_name"></span></h5>
                                 <p class="card-text text-muted">Here's a quick overview of your sales performance.</p>
                                 <hr>
                                 <div class="row g-3">
                                     <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card border-0 shadow-sm mb-3">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-subtitle mb-2">Today Sales</h6>
-                                                <h5 class="card-title" id="todaysales"><strong>RM 0.00</strong></h5>
+                                        <div class="stat-card">
+                                            <div>
+                                                <div class="stat-card-label">Today Sales</div>
+                                                <div class="stat-card-value" id="todaysales">RM 0.00</div>
+                                            </div>
+                                            <div class="stat-card-icon bg-primary-light">
+                                                <i class="bi bi-currency-dollar"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card border-0 shadow-sm mb-3">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-subtitle mb-2">Today live views</h6>
-                                                <h5 class="card-title" id="todayliveviews"><strong>0</strong></h5>
+                                        <div class="stat-card">
+                                            <div>
+                                                <div class="stat-card-label">Today Live Views</div>
+                                                <div class="stat-card-value" id="todayliveviews">0</div>
+                                            </div>
+                                            <div class="stat-card-icon bg-info-light">
+                                                <i class="bi bi-eye-fill"></i>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-12">
-                                        <div class="card border-0 shadow-sm mb-3">
-                                            <div class="card-body text-center">
-                                                <h6 class="card-subtitle mb-2">Current Rank</h6>
-                                                <h5 class="card-title" id="currentrank"><strong>#0</strong></h5>
+                                        <div class="stat-card">
+                                            <div>
+                                                <div class="stat-card-label">Current Rank</div>
+                                                <div class="stat-card-value" id="currentrank">#0</div>
+                                            </div>
+                                            <div class="stat-card-icon bg-warning-light">
+                                                <i class="bi bi-trophy-fill"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -271,30 +282,30 @@
             <div class="container-fluid mt-4">
                 <div class="row">
                     <div class="col-md-12 mb-4">
-                        <div class="card border-0 shadow-sm">
+                        <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">Sales Performance Chart</h5>
+                                <h5 class="card-title fw-bold" id="sales_title">Sales Performance</h5>
                                 <p class="card-text text-muted">Visual representation of your sales performance over time.</p>
                                 <hr>
                                 <canvas id="salesChart" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="card border-0 shadow-sm">
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">Working hours this month</h5>
+                                <h5 class="card-title fw-bold" id="working_title">Working hours</h5>
                                 <p class="card-text text-muted">Your working hours for the current month.</p>
                                 <hr>
                                 <canvas id="workingHours" width="400" height="200"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-4">
-                        <div class="card border-0 shadow-sm">
+                    <div class="col-md-12 mb-4">
+                        <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title fw-bold">Live views trend this month</h5>
-                                <p class="card-text text-muted">Distribution of your sales across different categories.</p>
+                                <h5 class="card-title fw-bold" id="views_title">Live views trend</h5>
+                                <p class="card-text text-muted">Your live views trend for the current month.</p>
                                 <hr>
                                 <canvas id="liveViewsTrend" width="400" height="200"></canvas>
                             </div>
