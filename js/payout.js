@@ -32,8 +32,8 @@ async function loadPayouts() {
             payout.total_hours_worked,
             payout.total_items_sold,
             payout.total_gmv,
-            payout.base_payment ,
-            payout.bonus_amount,
+            Number(payout.bonus_amount).toFixed(2),
+            Number(payout.final_payout).toFixed(2),
             payout.final_payout,
             payout.payout_date,
             
