@@ -39,3 +39,24 @@ async function login(event) {
         window.location.href = 'Employee_Main.html';
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const togglePassword = document.querySelector('#togglePassword');
+    const togglePasswordIcon = togglePassword ? togglePassword.querySelector('i') : null;
+    const password = document.querySelector('#password');
+
+    if (!togglePassword || !togglePasswordIcon || !password) {
+        console.error('Password toggle element(s) not found in login form.');
+        return;
+    }
+
+    togglePassword.addEventListener('click', () => {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        const showPassword = type === 'text';
+
+        password.setAttribute('type', type);
+        togglePasswordIcon.classList.toggle('bi-eye', showPassword);
+        togglePasswordIcon.classList.toggle('bi-eye-slash', !showPassword);
+        togglePassword.setAttribute('aria-label', showPassword ? 'Hide password' : 'Show password');
+    });
+});
