@@ -73,8 +73,8 @@ async function loadPayouts() {
             payout.total_items_sold,
             payout.total_gmv,
             payout.base_payment ,
-            payout.bonus_amount,
-            payout.final_payout,
+            Number(payout.bonus_amount).toFixed(2),
+            Number(payout.final_payout).toFixed(2),
             payout.payout_date,  
         ]);
     });
