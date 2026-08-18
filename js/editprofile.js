@@ -37,14 +37,11 @@ async function updateProfile(event) {
 
 
     // Update profile
-    const { data, error } = await supabaseClient
-        .from("profiles")
-        .update({
-            username: username,
-            phone: phone
-        })
-        .eq("email", user.email)
-        .select();
+    const { error } = await supabaseClient
+        .rpc("update_my_profile", {
+            p_username: username,
+            p_phone: phone
+        });
 
 
     if (error) {
