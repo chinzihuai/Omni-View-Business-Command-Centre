@@ -40,6 +40,34 @@ async function login(event) {
     }
 }
 
+async function checksession(){
+    const { data: { user } } = await supabaseClient.auth.getUser();
+
+    if (user) {
+        // User is logged in
+        const {data:profile,error}=await supabaseClient
+            .from("profiles")
+            .select("role")
+            .eq("email",user.email)
+            .single();
+
+        if(error || !profile) {
+            console.error("Profile not found");
+            await supabaseClient.auth.signOut();
+            window.location.replace("login.html");
+            return;
+        }
+        if(profile.role==="admin" || profile.role==="owner"){
+            console.log('Login successful:', profile);
+            window.location.href = 'main.html';
+        }
+        else if(profile.role==="employee"){
+            console.log('Login successful:', profile);
+            window.location.href = 'Employee_Main.html';
+        }
+}
+} 
+
 document.addEventListener('DOMContentLoaded', () => {
     const togglePassword = document.querySelector('#togglePassword');
     const togglePasswordIcon = togglePassword ? togglePassword.querySelector('i') : null;
@@ -60,3 +88,5 @@ document.addEventListener('DOMContentLoaded', () => {
         togglePassword.setAttribute('aria-label', showPassword ? 'Hide password' : 'Show password');
     });
 });
+
+checksession()
