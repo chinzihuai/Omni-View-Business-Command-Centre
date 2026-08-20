@@ -15,7 +15,7 @@
     <script src="../js/admin_authcheck.js"></script>
     <script src="../js/payout.js"></script>
     <link rel="stylesheet" href="../css/main.css">
-    <title>Employee Page</title>
+    <title>Payout Page</title>
     <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
 </head>
 <body>
@@ -43,10 +43,13 @@
                 <a href="report.html" class="nav-link">
                     <i class="bi bi-file-earmark-bar-graph-fill"></i> <span>Report</span>
                 </a>
+                <a href="user_management.html" class="nav-link">
+                    <i class="bi bi-people-fill"></i> <span>User Management</span>
+                </a>
             </nav>
  
             <div class="sidebar-footer">
-                <a href="login.html" class="nav-link">
+                <a href="#" class="nav-link" onclick="logout(event)">
                     <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
                 </a>
             </div>
@@ -62,7 +65,7 @@
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
                         <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="login.html"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="logout(event)"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
