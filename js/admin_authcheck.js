@@ -13,8 +13,8 @@ else{
         await supabaseClient.auth.signOut();
         window.location.replace("login.html");
     }
-    else if(profile.role !== "admin") {
-        console.error("User is not an admin");
+    else if(profile.role !== "admin" && profile.role !== "owner") {
+        console.error("User is not an admin or owner");
         await supabaseClient.auth.signOut();
         window.location.replace("login.html");
     }
