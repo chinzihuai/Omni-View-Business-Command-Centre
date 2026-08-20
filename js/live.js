@@ -63,7 +63,7 @@ async function editLives(button, sessionId) {
         console.error('Row not found for Session ID:', sessionId);
         return;
     }
-
+    
     row.data([
         data[0], // Session ID
         data[1], // Employee ID
