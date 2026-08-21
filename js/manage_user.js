@@ -1,5 +1,8 @@
 let UserTable;
 let currentUserRole;
+let isAddingUser = false;
+let isDeletingUser = false;
+
 async function loadUser() {
     const {data:{session},error}=await supabaseClient.auth.getSession();
 
@@ -131,57 +134,236 @@ async function editUser(button, userId) {
 }
 
 async function deleteUser(userId) {
-    if (!confirm(`Delete user ${userId}? This cannot be undone.`)) return;
-
-    const { error } = await supabaseClient
-        .from('profiles')
-        .delete()
-        .eq('userid', userId);
-
-    if (error) {
-        console.error("Error deleting user:", error);
-        alert("Failed to delete user: " + error.message);
+    if (isDeletingUser) {
         return;
     }
 
-    await loadUser();
+    if (!userId) {
+        alert("Invalid User ID.");
+        return;
+    }
+
+    const confirmDelete = confirm(
+        "Are you sure you want to delete user " + userId + "?"
+    );
+
+    if (!confirmDelete) {
+        return;
+    }
+
+    isDeletingUser = true;
+
+    try{
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                'delete-user',
+                {
+                    body: {
+                        userId: userId
+                    }
+                }
+            );
+
+        if (error) {
+            console.error(
+                "Error calling delete-user:",
+                error
+            );
+
+            alert(
+                "Failed to delete user: " +
+                error.message
+            );
+
+            return;
+        }
+
+        if (!data || !data.success) {
+
+            console.error(
+                "Delete user failed:",
+                data
+            );
+
+            alert(
+                "Failed to delete user: " +
+                (data?.message || "Unknown error")
+            );
+
+            return;
+        }
+
+        alert("User deleted successfully!");
+        await loadUser();
+    }
+    catch (err) {
+        console.error("Unexpected error:", err);
+        alert(
+            "An unexpected error occurred: " +
+            err.message
+        );
+    }
+    finally {
+        isDeletingUser = false;
+    }
 }
 
 async function addUser() {
+    const addButton = document.getElementById('add_user_button');
+
+    if (isAddingUser) {
+        return;
+    }
+
+    isAddingUser = true;
+    addButton.disabled = true;
+    addButton.textContent = "Adding...";
+
+try {
     const userId = document.getElementById('UserID').value;
     const username = document.getElementById('username').value.trim();
     const email = document.getElementById('email').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const role = document.getElementById('role').value;
+    const password = document.getElementById('password').value;
+    const hourlyRate = document.getElementById('hourlyRate').value;
 
-    if (!username || !email) {
-        alert("Username and email are required.");
+    if (!username || !email || !password || !hourlyRate) {
+        alert("All fields are required.");
         return;
     }
 
-    const { error } = await supabaseClient
-        .from('profiles')
-        .insert([{
-            userid: userId,
-            username: username,
-            email: email,
-            phone: phone,
-            role: role
-        }]);
-
-    if (error) {
-        console.error("Error adding user:", error);
-        alert("Failed to add user: " + error.message);
+    if (isNaN(hourlyRate) || Number(hourlyRate) < 0) {
+        alert("Hourly Rate must be a non-negative number.");
         return;
     }
 
-    const userModalEl = document.getElementById('userModal');
-    const userModal = bootstrap.Modal.getInstance(userModalEl);
-    if (userModal) userModal.hide();
+    if (password.length < 6) {
+        alert("Password must be at least 6 characters long.");
+        return;
+    }
 
-    document.getElementById('payoutForm').reset();
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+    }
 
-    await loadUser();
+        // CHECK DUPLICATE USER ID
+        const { data: existingUser, error: checkError } =
+            await supabaseClient
+                .from('profiles')
+                .select('userid')
+                .eq('userid', userId)
+                .maybeSingle();
+
+        if (checkError) {
+            console.error("Error checking User ID:", checkError);
+            alert("Unable to check User ID.");
+            return;
+        }
+
+        if (existingUser) {
+            alert("User ID already exists.");
+            return;
+        }
+
+        // CHECK DUPLICATE EMAIL
+        const { data: existingEmail, error: emailCheckError } =
+            await supabaseClient
+                .from('profiles')
+                .select('email')
+                .eq('email', email)
+                .maybeSingle();
+
+        if (emailCheckError) {
+            console.error("Error checking email:", emailCheckError);
+            alert("Unable to check email.");
+            return;
+        }
+
+        if (existingEmail) {
+            alert("Email already exists.");
+            return;
+        }
+
+        // CREATE SUPABASE AUTH USER
+        const { data, error } =
+            await supabaseClient.functions.invoke(
+                'create-user',
+                {
+                    body: {
+                        userId: userId,
+                        username: username,
+                        email: email,
+                        phone: phone,
+                        role: role,
+                        password: password,
+                        hourlyRate: Number(hourlyRate)
+                    }
+                }
+            );
+
+            if (error) {
+            console.error("Error calling create-user:", error);
+
+            alert(
+                "Failed to create user: " +
+                error.message
+            );
+
+            return;
+        }
+            if (!data || !data.success) {
+
+            console.error("Create user failed:", data);
+
+            alert(
+                "Failed to create user: " +
+                (data?.message || "Unknown error")
+            );
+
+            return;
+        }
+
+        alert("User added successfully!");
+
+        const userModalEl =
+            document.getElementById('userModal');
+
+        if (userModalEl) {
+
+            const userModal =
+                bootstrap.Modal.getInstance(userModalEl);
+
+            if (userModal) {
+                userModal.hide();
+            }
+        }
+
+        const userForm =
+            document.getElementById('userForm');
+
+        if (userForm) {
+            userForm.reset();
+        }
+
+        await loadUser();
+    }
+catch (err) {
+
+        console.error("Unexpected error:", err);
+
+        alert(
+            "An unexpected error occurred: " +
+            err.message
+        );
+}
+finally {
+        // Always enable button again
+        isAddingUser = false;
+        addButton.disabled = false;
+        addButton.textContent = "Add User";
+}
 }
 
 async function saveUser(userId, button) {
