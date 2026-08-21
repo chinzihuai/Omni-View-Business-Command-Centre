@@ -32,9 +32,9 @@ async function loadPayouts() {
             payout.total_hours_worked,
             payout.total_items_sold,
             payout.total_gmv,
+            Number(payout.base_payment).toFixed(2),
             Number(payout.bonus_amount).toFixed(2),
             Number(payout.final_payout).toFixed(2),
-            payout.final_payout,
             payout.payout_date,
             
             `
@@ -77,12 +77,6 @@ async function addPayout() {
     const periodStart = document.getElementById('periodStart').value;
     const periodEnd = document.getElementById('periodEnd').value;
     const bonusPerItemValue = Number(document.getElementById('bonusPerItem').value) || 0;
-    const periodHours = Number(document.getElementById('previewHours').textContent) || 0;
-    const periodItems = Number(document.getElementById('previewSales').textContent) || 0;
-    const periodGMV = Number(document.getElementById('previewGMV').textContent) || 0;
-    const basePayment = Number(document.getElementById('previewBase').textContent) || 0;
-    const bonusAmount = Number(document.getElementById('previewBonus').textContent) || 0;
-    const finalPayout = Number(document.getElementById('previewTotal').textContent) || 0;
 
     if (!payoutId || !employeeId || !periodStart || !periodEnd) {
         alert('Please fill in all required fields.');
@@ -98,6 +92,20 @@ async function addPayout() {
         alert('Bonus amount per item cannot be negative.');
         return;
     }
+
+    const payoutMetrics = await calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusPerItemValue, true);
+
+    if (!payoutMetrics) {
+        resetPreview();
+        return;
+    }
+
+    const periodHours = payoutMetrics.totalHours;
+    const periodItems = payoutMetrics.totalItems;
+    const periodGMV = payoutMetrics.totalGMV;
+    const basePayment = payoutMetrics.basePayment;
+    const bonusAmount = payoutMetrics.bonusAmount;
+    const finalPayout = payoutMetrics.finalPayout;
 
     const { data: employee, error: employeeError } = await supabaseClient
         .from('profiles')
@@ -151,6 +159,78 @@ async function addPayout() {
     modalInstance.hide();
 
     loadPayouts();
+}
+
+async function calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusPerItemValue, showNoDataAlert = false) {
+    if (!employeeId || !periodStart || !periodEnd) {
+        return null;
+    }
+
+    if (new Date(periodStart) > new Date(periodEnd)) {
+        if (showNoDataAlert) {
+            alert('End date cannot be earlier than start date. Please select valid dates.');
+        }
+        return null;
+    }
+
+    const { data: employee, error: employeeError } = await supabaseClient
+        .from('profiles')
+        .select('hourly_rate')
+        .eq('userid', employeeId)
+        .single();
+
+    if (employeeError) {
+        console.error('Error fetching employee data:', employeeError);
+        return null;
+    }
+
+    const baseRate = Number(employee.hourly_rate) || 0;
+
+    const nextDay = new Date(periodEnd);
+    nextDay.setDate(nextDay.getDate() + 1);
+
+    const { data: liveData, error: liveError } = await supabaseClient
+        .from('Live')
+        .select('duration_hours,items_sold,gmv_amount,session_date')
+        .eq('employee_id', employeeId)
+        .gte('session_date', periodStart)
+        .lt('session_date', nextDay.toISOString().split('T')[0]);
+
+    if (liveError) {
+        console.error('Error fetching live data:', liveError);
+        return null;
+    }
+
+    if (!liveData || liveData.length === 0) {
+        if (showNoDataAlert) {
+            alert('No work hours or item sales data found in Live for the selected date range. Please choose another start and end date.');
+        }
+        return null;
+    }
+
+    let totalHours = 0;
+    let totalItems = 0;
+    let totalGMV = 0;
+
+    liveData.forEach(live => {
+        totalHours += Number(live.duration_hours) || 0;
+        totalItems += Number(live.items_sold) || 0;
+        totalGMV += Number(live.gmv_amount) || 0;
+    });
+
+    const basePayment = totalHours * baseRate;
+    const bonusAmount = totalItems * bonusPerItemValue;
+    const finalPayout = basePayment + bonusAmount;
+
+    return {
+        totalHours,
+        totalItems,
+        totalGMV,
+        baseRate,
+        basePayment,
+        bonusAmount,
+        finalPayout
+    };
 }
 
 async function getNextPayoutID() {
@@ -238,102 +318,21 @@ async function previewPayout() {
         return;
     }
 
-    // GET EMPLOYEE BASE RATE
-    const{data:employee,error:employeeError} = await supabaseClient
-        .from('profiles')
-        .select('userid,hourly_rate, username')
-        .eq('userid', employeeId)
-        .single();
-    
-    if (employeeError) {
-        console.error('Error fetching employee data:', employeeError);
+    const payoutMetrics = await calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusPerItemValue, true);
+
+    if (!payoutMetrics) {
         resetPreview();
         return;
     }
-
-    const baseRate = Number(employee.hourly_rate)||0;
-
-    //GET FIRST AND LAST LIVE SESSION DATES
-    const{data:liveDates,error:dateError} = await supabaseClient
-        .from('Live')
-        .select('session_date')
-        .eq('employee_id', employeeId)
-        .order('session_date', { ascending: true });
-
-    if (dateError) {
-        console.error('Error fetching live session dates:', dateError);
-        resetPreview();
-        return;
-    }
-
-    if (!liveDates || liveDates.length === 0) {
-        resetPreview();
-        return;
-    }
-
-    const firstSessionDate =liveDates[0].session_date;
-    const lastSessionDate = liveDates[liveDates.length - 1].session_date;
-
-    // CHECK SELECTED DATE RANGE
-    if(periodStart < firstSessionDate){
-        document.getElementById('periodStart').value = '';
-        resetPreview();
-        return;
-    }
-
-    if (periodEnd > lastSessionDate) {
-        document.getElementById('periodEnd').value = '';
-        resetPreview();
-        return;
-    }
-
-
-    // GET LIVE DATA
-    const nextDay= new Date(periodEnd);
-    nextDay.setDate(nextDay.getDate() + 1);
-
-    const { data: liveData, error: liveError } = await supabaseClient
-        .from('Live')
-        .select('duration_hours,items_sold,gmv_amount,session_date')
-        .eq('employee_id', employeeId)
-        .gte('session_date', periodStart)
-        .lt('session_date', nextDay.toISOString().split('T')[0]);
-    
-    if (liveError) {
-        console.error('Error fetching live data:', liveError);
-        resetPreview();
-        return;
-    }
-
-    if (!liveData || liveData.length === 0) {
-        alert('No live data found for the selected employee and period. Please ensure the employee has live sessions within the specified date range.');
-        resetPreview();
-        return;
-    }
-    // CALCULATE LIVE TOTALS
-    let totalHours = 0;
-    let totalItems = 0;
-    let totalGMV = 0;
-
-    liveData.forEach(live => {
-        totalHours += Number(live.duration_hours) || 0;
-        totalItems += Number(live.items_sold) || 0;
-        totalGMV += Number(live.gmv_amount) || 0;
-    });
-
-    // CALCULATE PAYOUT
-    const basePayment = totalHours * baseRate;
-    const bonusAmount = totalItems * bonusPerItemValue;
-    const finalPayout = basePayment + bonusAmount;
 
     // DISPLAY PREVIEW
-    document.getElementById('previewHours').textContent = totalHours;
-    document.getElementById('previewSales').textContent = totalItems;
-    document.getElementById('previewGMV').textContent =  totalGMV.toFixed(2);
-    document.getElementById('previewRate').textContent =  baseRate.toFixed(2);
-    document.getElementById('previewBase').textContent =  basePayment.toFixed(2);
-    document.getElementById('previewBonus').textContent =  bonusAmount.toFixed(2);
-    document.getElementById('previewTotal').textContent =  finalPayout.toFixed(2);
+    document.getElementById('previewHours').textContent = payoutMetrics.totalHours;
+    document.getElementById('previewSales').textContent = payoutMetrics.totalItems;
+    document.getElementById('previewGMV').textContent = payoutMetrics.totalGMV.toFixed(2);
+    document.getElementById('previewRate').textContent = payoutMetrics.baseRate.toFixed(2);
+    document.getElementById('previewBase').textContent = payoutMetrics.basePayment.toFixed(2);
+    document.getElementById('previewBonus').textContent = payoutMetrics.bonusAmount.toFixed(2);
+    document.getElementById('previewTotal').textContent = payoutMetrics.finalPayout.toFixed(2);
 }
 
 async function validatePayoutForm() {
