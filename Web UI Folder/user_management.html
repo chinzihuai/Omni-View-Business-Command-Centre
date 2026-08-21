@@ -137,19 +137,31 @@
                         <label for="username" class="form-label">
                             User Name
                         </label>
-                        <input type="text"class="form-control" id="username">
+                        <input type="text"class="form-control" id="username" required>
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">
                             Email
                         </label>
-                        <input type="email" class="form-control" id="email">
+                        <input type="email" class="form-control" id="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Password
+                        </label>
+                        <input type="password" class="form-control" id="password" required minlength="6">
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">
                             Phone
                         </label>
-                        <input type="tel" class="form-control" id="phone">
+                        <input type="tel" class="form-control" id="phone" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="hourlyRate" class="form-label">
+                            Hourly Rate
+                        </label>
+                        <input type="number" class="form-control" id="hourlyRate" required min="0" step="0.01">
                     </div>
                     <div class="mb-3">
                         <label for="role" class="form-label">
@@ -171,7 +183,7 @@
                     Cancel
                 </button>
 
-                <button type="button" form="payoutForm" class="btn btn-primary" onclick="addUser()">
+                <button type="button" form="userForm" class="btn btn-primary" onclick="addUser()" id="add_user_button">
                     Add user
                 </button>
             </div>
