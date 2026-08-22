@@ -1,3 +1,5 @@
+const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
 document.addEventListener('DOMContentLoaded',async () => {
     const resetPasswordForm = document.getElementById('resetPasswordForm');
     const newPassword = document.getElementById('newPassword');
@@ -66,8 +68,8 @@ document.addEventListener('DOMContentLoaded',async () => {
         const password = newPassword.value;
         const confirmPasswordValue = confirmPassword.value;
 
-        if(password.length < 6) {
-            showMessage("Password must be at least 6 characters long.", "danger");
+        if (!passwordPattern.test(password)) {
+            showMessage("Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character.", "danger");
             return;
         }
 

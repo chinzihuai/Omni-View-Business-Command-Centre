@@ -3,6 +3,9 @@ let currentUserRole;
 let isAddingUser = false;
 let isDeletingUser = false;
 
+// At least 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special character for password validation
+const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/;
+
 async function loadUser() {
     const {data:{session},error}=await supabaseClient.auth.getSession();
 
@@ -240,8 +243,8 @@ try {
         return;
     }
 
-    if (password.length < 6) {
-        alert("Password must be at least 6 characters long.");
+    if (!passwordPattern.test(password)) {
+        alert("Password must be at least 8 characters and include an uppercase letter, a lowercase letter, a number, and a special character.");
         return;
     }
 
