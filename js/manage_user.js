@@ -7,7 +7,7 @@ async function loadUser() {
     const {data:{session},error}=await supabaseClient.auth.getSession();
 
     if(error || !session) {
-    window.location.replace("login.html");
+    window.location.replace("index.html");
     }
 
     const{data:profile,error:profileError}=await supabaseClient
@@ -19,7 +19,7 @@ async function loadUser() {
     if(error || !profile) {
         console.error("Profile not found");
         await supabaseClient.auth.signOut();
-        window.location.replace("login.html");
+        window.location.replace("index.html");
     }
 
     currentUserRole = profile.role;

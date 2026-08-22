@@ -2,7 +2,7 @@ async function checkAuthentication() {
 const {data:{session},error}=await supabaseClient.auth.getSession();
 
 if(error || !session) {
-    window.location.replace("login.html");
+    window.location.replace("index.html");
 }
 
 else{
@@ -11,7 +11,7 @@ else{
     if(error || !profile) {
         console.error("Profile not found");
         await supabaseClient.auth.signOut();
-        window.location.replace("login.html");
+        window.location.replace("index.html");
     }
     else{
     console.log("Authenticated:", session.user.email);

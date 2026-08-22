@@ -7,7 +7,7 @@ async function loadUserData() {
 
     if (authError || !user) {
         console.error("No logged-in user:", authError);
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         return;
     }
 

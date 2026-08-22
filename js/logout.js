@@ -12,5 +12,5 @@ async function logout(event) {
 
     // 2. Redirect back to login page
     console.log("Successfully logged out.");
-    window.location.href = 'login.html';
+    window.location.href = 'index.html';
 }

@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded',async () => {
         console.error("Toggle password elements not found.");
         return;
     }
-    
+
     if (togglePassword) {
         togglePassword.addEventListener('click', () => {
             const type = newPassword.getAttribute('type') === 'password' ? 'text' : 'password';
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
             await supabaseClient.auth.signOut();
             setTimeout(() => {
-                window.location.href = "./login.html";
+                window.location.href = "./index.html";
             }, 2000);
 
         } catch(error) {

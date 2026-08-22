@@ -12,7 +12,7 @@ async function updateProfile(event) {
 
     if (authError || !user) {
         alert("Please login first.");
-        window.location.href = "login.html";
+        window.location.href = "index.html";
         return;
     }
 
