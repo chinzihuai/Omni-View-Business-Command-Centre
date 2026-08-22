@@ -54,7 +54,7 @@ async function checksession(){
         if(error || !profile) {
             console.error("Profile not found");
             await supabaseClient.auth.signOut();
-            window.location.replace("index.html");
+            window.location.replace("login.html");
             return;
         }
         if(profile.role==="admin" || profile.role==="owner"){

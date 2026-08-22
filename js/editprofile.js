@@ -12,7 +12,7 @@ async function updateProfile(event) {
 
     if (authError || !user) {
         alert("Please login first.");
-        window.location.href = "index.html";
+        window.location.href = "login.html";
         return;
     }
 
@@ -37,7 +37,7 @@ async function updateProfile(event) {
 
 
     // Update profile
-    const { error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .rpc("update_my_profile", {
             p_username: username,
             p_phone: phone
@@ -82,7 +82,7 @@ async function updateProfile(event) {
 
     message.style.display = "block";
 
-    const {data:role, error: roleError} = await supabaseClient
+    const {data:profileRole, error: roleError} = await supabaseClient
         .from("profiles")
         .select("role")
         .eq("email", user.email)
@@ -93,13 +93,13 @@ async function updateProfile(event) {
         alert("Failed to retrieve user role.");
     } else {
         // Redirect based on role
-        if (role === "admin" || role === "owner") {
+        if (profileRole.role === "admin" || profileRole.role === "owner") {
             setTimeout(function () {
-                window.location.href = "main.html";
+                window.location.href = "profile.html";
             }, 1500);
-        } else if (role === "employee") {
+        } else if (profileRole.role === "employee") {
             setTimeout(function () {
-                window.location.href = "Employee_Profile.html";
+                window.location.href = "employee_profile.html";
             }, 1500);
         }
     }

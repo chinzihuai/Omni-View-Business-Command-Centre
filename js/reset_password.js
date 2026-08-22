@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded',async () => {
 
             await supabaseClient.auth.signOut();
             setTimeout(() => {
-                window.location.href = "./index.html";
+                window.location.href = "./login.html";
             }, 2000);
 
         } catch(error) {

@@ -153,8 +153,8 @@ async function loadLeaderboard() {
     );
 
     leaderboardData.forEach(
-        (employee, index) => {
-            employee.rank = index + 1;
+        (employee, login) => {
+            employee.rank = login + 1;
     });
 
     

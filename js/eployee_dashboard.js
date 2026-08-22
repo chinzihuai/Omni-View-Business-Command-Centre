@@ -64,4 +64,4 @@ async function loaddaily() {
     }
 }
 
-document.getElementById(DOMException,loaddaily());
+document.addEventListener('DOMContentLoaded', loaddaily);
