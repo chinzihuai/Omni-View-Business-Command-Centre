@@ -325,3 +325,65 @@
         bottom: 15px;
     }
 }
+
+/* Loading bubble stays on the LEFT */
+
+.typing-message {
+    justify-content: flex-start !important;
+}
+
+
+/* Make loading bubble small */
+
+.typing-content {
+    width: fit-content !important;
+    min-width: 0 !important;
+
+    padding: 10px 14px !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Typing dots */
+
+.ai-typing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.ai-typing span {
+    width: 6px;
+    height: 6px;
+
+    background: #6c757d;
+
+    border-radius: 50%;
+
+    animation: aiTyping 1.2s infinite;
+}
+
+.ai-typing span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.ai-typing span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes aiTyping {
+
+    0%, 60%, 100% {
+        opacity: 0.3;
+        transform: translateY(0);
+    }
+
+    30% {
+        opacity: 1;
+        transform: translateY(-3px);
+    }
+}

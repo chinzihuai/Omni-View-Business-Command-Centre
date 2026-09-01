@@ -364,37 +364,24 @@ function addTypingMessage() {
     const container =
         document.getElementById("aiChatMessages");
 
-
     const wrapper =
         document.createElement("div");
 
-    wrapper.className =
-        "ai-message ai";
-
+    wrapper.className = "ai-message ai typing-message";
 
     wrapper.innerHTML = `
-
-        <div class="ai-message-content">
-
+        <div class="ai-message-content typing-content">
             <div class="ai-typing">
-
                 <span></span>
                 <span></span>
                 <span></span>
-
             </div>
-
         </div>
-
     `;
-
 
     container.appendChild(wrapper);
 
-
-    container.scrollTop =
-        container.scrollHeight;
-
+    container.scrollTop = container.scrollHeight;
 
     return wrapper;
 }
