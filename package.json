@@ -1,0 +1,28 @@
+{
+  "name": "omni-view-business-command-centre",
+  "version": "1.0.0",
+  "description": "A web-based Integrated Operations Management System developed for **Capt Empire**. The system centralizes business operations by integrating inventory management, sales tracking, employee performance monitoring, KPI analysis, reporting, and an AI-powered assistant into a single platform. \r ---",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chinzihuai/Omni-View-Business-Command-Centre.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/chinzihuai/Omni-View-Business-Command-Centre/issues"
+  },
+  "homepage": "https://github.com/chinzihuai/Omni-View-Business-Command-Centre#readme",
+  "dependencies": {
+    "@google/genai": "^2.20.0",
+    "@supabase/supabase-js": "^2.112.4",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
