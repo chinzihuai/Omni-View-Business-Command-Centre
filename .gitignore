@@ -1,2 +1,4 @@
 .env
 node_modules/
+test-chat.html
+server.js
