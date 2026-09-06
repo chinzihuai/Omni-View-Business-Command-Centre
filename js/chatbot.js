@@ -221,7 +221,7 @@ async function sendChatMessage() {
         // ----------------------------------
 
         const response = await fetch(
-            "http://localhost:3000/api/chat",
+            "https://omni-view-business-command-centre.onrender.com/api/chat",
             {
                 method: "POST",
 
