@@ -1,84 +1,94 @@
-.profile-page{
+.profile-page {
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 28px;
-    background: linear-gradient(180deg, var(--gold-tint, rgba(185, 135, 60, .08)) 0%, rgba(185, 135, 60, 0) 100%), var(--paper, #f5f4f0);
+    background:
+        linear-gradient(
+            180deg,
+            var(--gold-tint, rgba(185, 135, 60, 0.08)) 0%,
+            rgba(185, 135, 60, 0) 100%
+        ),
+        var(--paper, #f5f4f0);
 }
 
-.profile-page .card{
+.profile-page .card {
     border: 1px solid var(--border, #e6e2d8);
     border-radius: var(--radius-lg, 20px);
-    box-shadow: var(--shadow-card, 0 14px 30px rgba(20, 20, 25, .07), 0 2px 6px rgba(20, 20, 25, .04));
+    box-shadow: var(
+        --shadow-card,
+        0 14px 30px rgba(20, 20, 25, 0.07),
+        0 2px 6px rgba(20, 20, 25, 0.04)
+    );
     overflow: hidden;
     background: var(--surface, #ffffff);
 }
 
-.profile-page .card-body{
+.profile-page .card-body {
     padding: 3rem 2.5rem;
 }
 
-.profile-page .card-title{
+.profile-page .card-title {
     font-family: 'Sora', sans-serif;
     font-size: 1.75rem;
     margin-bottom: 1.5rem;
     color: var(--text, #1f2124);
 }
 
-.profile-page .form-label{
+.profile-page .form-label {
     color: var(--text-muted, #6b6f7a);
     font-weight: 600;
 }
 
-.profile-page .form-control{
+.profile-page .form-control {
     border-radius: 10px;
     padding: 0.95rem 1rem;
     border: 1px solid var(--border, #e6e2d8);
     box-shadow: none;
 }
 
-.profile-page .form-control:focus{
+.profile-page .form-control:focus {
     border-color: var(--gold, #b9873c);
-    box-shadow: 0 0 0 0.15rem var(--gold-tint, rgba(185, 135, 60, .18));
+    box-shadow: 0 0 0 0.15rem var(--gold-tint, rgba(185, 135, 60, 0.18));
 }
 
-.profile-page .btn{
+.profile-page .btn {
     padding: 0.85rem 1rem;
     font-weight: 600;
     border-radius: 10px;
 }
 
-.profile-page .btn-secondary{
+.profile-page .btn-secondary {
     background-color: #ffffff;
     border: 1px solid var(--border, #e6e2d8);
     color: var(--text, #1f2124);
 }
 
-.profile-page .btn-secondary:hover{
+.profile-page .btn-secondary:hover {
     background-color: var(--paper, #f5f4f0);
     border-color: var(--ink, #15171b);
     color: var(--ink, #15171b);
 }
 
-.profile-page .btn-primary{
+.profile-page .btn-primary {
     background-color: var(--gold, #b9873c);
     border-color: var(--gold, #b9873c);
     color: #201404;
 }
 
-.profile-page .btn-primary:hover{
+.profile-page .btn-primary:hover {
     background-color: var(--gold-dark, #93692a);
     border-color: var(--gold-dark, #93692a);
     color: #ffffff;
 }
 
 @media (max-width: 576px) {
-    .profile-page .card-body{
+    .profile-page .card-body {
         padding: 2rem 1.5rem;
     }
 
-    .profile-page .card-title{
+    .profile-page .card-title {
         font-size: 1.5rem;
     }
 }

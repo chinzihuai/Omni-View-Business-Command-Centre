@@ -2,7 +2,11 @@
     border-radius: var(--radius-lg, 20px);
     overflow: hidden;
     border: 1px solid var(--border, #e6e2d8);
-    box-shadow: var(--shadow-card, 0 14px 30px rgba(20, 20, 25, .07), 0 2px 6px rgba(20, 20, 25, .04));
+    box-shadow: var(
+        --shadow-card,
+        0 14px 30px rgba(20, 20, 25, 0.07),
+        0 2px 6px rgba(20, 20, 25, 0.04)
+    );
 }
 
 .leaderboard-header {
@@ -57,9 +61,7 @@
     animation-delay: 0.45s;
 }
 
-
 @keyframes podiumSecond {
-
     from {
         opacity: 0;
         transform: translateY(120px);
@@ -70,10 +72,8 @@
         transform: translateY(0);
     }
 }
-
 
 @keyframes podiumThird {
-
     from {
         opacity: 0;
         transform: translateY(120px);
@@ -85,9 +85,7 @@
     }
 }
 
-
 @keyframes podiumFirst {
-
     from {
         opacity: 0;
         transform: translateY(160px);
@@ -106,7 +104,6 @@
 }
 
 @keyframes crownFloat {
-
     0%,
     100% {
         transform: translateY(0);
@@ -145,14 +142,12 @@
     margin-bottom: 8px;
 }
 
-
 .champion-avatar {
     width: 80px;
     height: 80px;
 
     font-size: 26px;
 }
-
 
 .player-name {
     font-weight: 600;
@@ -167,13 +162,11 @@
     text-overflow: ellipsis;
 }
 
-
 .champion-name {
     font-family: 'Sora', sans-serif;
     font-size: 18px;
     font-weight: 700;
 }
-
 
 .player-gmv {
     font-size: 14px;
@@ -182,7 +175,6 @@
 
     margin-top: 3px;
 }
-
 
 .champion-gmv {
     font-family: 'Sora', sans-serif;
@@ -193,7 +185,6 @@
     margin-bottom: 10px;
     color: var(--gold-dark, #93692a);
 }
-
 
 .podium-block {
     width: 150px;
@@ -214,29 +205,24 @@
 
     color: white;
 
-    box-shadow:
-        0 -5px 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.08);
 
     transition: transform 0.2s;
 }
 
-
 .podium-block:hover {
     transform: translateY(-5px);
 }
-
 
 .podium-first {
     height: 145px;
     background: var(--gold, #b9873c);
 }
 
-
 .podium-second {
     height: 110px;
     background: #9aa0a6;
 }
-
 
 .podium-third {
     height: 85px;
@@ -259,18 +245,15 @@
     transition: 0.2s;
 }
 
-
 .ranking-row:hover {
     transform: translateX(4px);
     background: var(--gold-tint, #f1f3f5);
 }
 
-
 .ranking-row.current-user {
     border: 2px solid var(--gold, #b9873c);
     background: var(--gold-tint, #eef5ff);
 }
-
 
 .ranking-position {
     width: 45px;
@@ -280,7 +263,6 @@
     font-size: 18px;
     color: var(--text, #1f2124);
 }
-
 
 .ranking-avatar {
     width: 42px;
@@ -300,23 +282,19 @@
     margin-right: 12px;
 }
 
-
 .ranking-info {
     flex: 1;
 }
-
 
 .ranking-name {
     font-weight: 600;
     color: var(--text, #1f2124);
 }
 
-
 .ranking-items {
     font-size: 13px;
     color: var(--text-muted, #6c757d);
 }
-
 
 .ranking-gmv {
     font-weight: 700;

@@ -29,10 +29,7 @@
     transform: scale(1.08);
 }
 
-
-/* ==========================================
-   CHAT WINDOW
-========================================== */
+/*CHAT WINDOW*/
 
 #aiChatWindow {
     position: fixed;
@@ -60,13 +57,9 @@
     border: 1px solid #dee2e6;
 }
 
-
-/* ==========================================
-   HEADER
-========================================== */
+/*HEADER*/
 
 .ai-chat-header {
-
     height: 60px;
 
     background: #212529;
@@ -83,7 +76,6 @@
 }
 
 .ai-chat-title {
-
     display: flex;
 
     align-items: center;
@@ -98,7 +90,6 @@
 }
 
 #aiChatClose {
-
     background: transparent;
 
     border: none;
@@ -110,13 +101,9 @@
     cursor: pointer;
 }
 
-
-/* ==========================================
-   MESSAGES
-========================================== */
+/*MESSAGES*/
 
 #aiChatMessages {
-
     flex: 1;
 
     padding: 15px;
@@ -126,31 +113,21 @@
     background: #f8f9fa;
 }
 
-
-/* ==========================================
-   MESSAGE
-========================================== */
-
 .ai-message {
-
     display: flex;
 
     margin-bottom: 12px;
 }
 
 .ai-message.user {
-
     justify-content: flex-end;
 }
 
 .ai-message.ai {
-
     justify-content: flex-start;
 }
 
-
 .ai-message-content {
-
     max-width: 80%;
 
     padding: 10px 14px;
@@ -164,9 +141,7 @@
     white-space: pre-wrap;
 }
 
-
 .ai-message.user .ai-message-content {
-
     background: #212529;
 
     color: white;
@@ -174,9 +149,7 @@
     border-bottom-right-radius: 4px;
 }
 
-
 .ai-message.ai .ai-message-content {
-
     background: white;
 
     color: #212529;
@@ -186,13 +159,9 @@
     border-bottom-left-radius: 4px;
 }
 
-
-/* ==========================================
-   INPUT AREA
-========================================== */
+/*INPUT AREA*/
 
 .ai-chat-input-area {
-
     padding: 12px;
 
     background: white;
@@ -204,9 +173,7 @@
     gap: 8px;
 }
 
-
 #aiChatInput {
-
     flex: 1;
 
     border: 1px solid #ced4da;
@@ -220,15 +187,11 @@
     font-size: 14px;
 }
 
-
 #aiChatInput:focus {
-
     border-color: #6c757d;
 }
 
-
 #aiChatSend {
-
     width: 42px;
     height: 42px;
 
@@ -243,34 +206,25 @@
     cursor: pointer;
 }
 
-
 #aiChatSend:hover {
-
     background: #343a40;
 }
 
-
 #aiChatSend:disabled {
-
     opacity: 0.5;
 
     cursor: not-allowed;
 }
 
-
-/* ==========================================
-   TYPING
-========================================== */
+/*TYPING*/
 
 .ai-typing {
-
     display: inline-flex;
 
     gap: 4px;
 }
 
 .ai-typing span {
-
     width: 6px;
     height: 6px;
 
@@ -290,8 +244,9 @@
 }
 
 @keyframes aiTyping {
-
-    0%, 60%, 100% {
+    0%,
+    60%,
+    100% {
         opacity: 0.3;
         transform: translateY(0);
     }
@@ -302,15 +257,10 @@
     }
 }
 
-
-/* ==========================================
-   MOBILE
-========================================== */
+/*MOBILE*/
 
 @media (max-width: 500px) {
-
     #aiChatWindow {
-
         right: 10px;
         bottom: 80px;
 
@@ -320,7 +270,6 @@
     }
 
     #aiChatButton {
-
         right: 15px;
         bottom: 15px;
     }
@@ -331,7 +280,6 @@
 .typing-message {
     justify-content: flex-start !important;
 }
-
 
 /* Make loading bubble small */
 
@@ -345,7 +293,6 @@
     align-items: center;
     justify-content: center;
 }
-
 
 /* Typing dots */
 
@@ -376,8 +323,9 @@
 }
 
 @keyframes aiTyping {
-
-    0%, 60%, 100% {
+    0%,
+    60%,
+    100% {
         opacity: 0.3;
         transform: translateY(0);
     }

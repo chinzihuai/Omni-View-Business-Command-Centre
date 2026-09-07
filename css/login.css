@@ -1,20 +1,20 @@
-:root{
+:root {
     --card-radius: var(--radius-lg, 20px);
     --input-height: 50px;
 }
 
-*{
+* {
     font-family: 'Inter', sans-serif;
     box-sizing: border-box;
 }
 
-body{
+body {
     background: var(--paper, #f5f4f0);
 }
 
 /* ---------- Left panel ---------- */
-.left-panel{
-    background: var(--ink, #0A0B0D);
+.left-panel {
+    background: var(--ink, #0a0b0d);
     color: white;
     display: flex;
     justify-content: center;
@@ -24,33 +24,33 @@ body{
     text-align: center;
 }
 
-.logo{
+.logo {
     width: 320px;
     max-width: 60%;
     margin-bottom: 40px;
 }
 
-.left-panel h1{
+.left-panel h1 {
     font-family: 'Sora', sans-serif;
     font-weight: 700;
     font-size: 40px;
     margin-bottom: 4px;
 }
 
-.left-panel h2{
+.left-panel h2 {
     font-family: 'Sora', sans-serif;
     font-size: 30px;
     font-weight: 300;
     margin-bottom: 20px;
 }
 
-.left-panel p{
+.left-panel p {
     color: #a7abb5;
     letter-spacing: 2px;
 }
 
 /* ---------- Right panel ---------- */
-.right-panel{
+.right-panel {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,53 +58,57 @@ body{
     padding: 20px;
 }
 
-.login-card{
+.login-card {
     width: 380px;
     max-width: 100%;
     padding: 40px;
     border-radius: var(--card-radius);
-    box-shadow: var(--shadow-card, 0 14px 30px rgba(20, 20, 25, .07), 0 2px 6px rgba(20, 20, 25, .04));
+    box-shadow: var(
+        --shadow-card,
+        0 14px 30px rgba(20, 20, 25, 0.07),
+        0 2px 6px rgba(20, 20, 25, 0.04)
+    );
     background: var(--surface, #ffffff);
     border: 1px solid var(--border, #e6e2d8);
 }
 
-.login-card h3{
+.login-card h3 {
     font-family: 'Sora', sans-serif;
     font-weight: 700;
     color: var(--text, #1f2124);
 }
 
 /* ---------- Form controls ---------- */
-.form-control{
+.form-control {
     height: var(--input-height);
     border: 1px solid var(--border, #e6e2d8);
     border-radius: 10px;
 }
 
-.form-control:focus{
+.form-control:focus {
     border-color: var(--gold, #b9873c);
-    box-shadow: 0 0 0 0.2rem var(--gold-tint, rgba(185, 135, 60, .18));
+    box-shadow: 0 0 0 0.2rem var(--gold-tint, rgba(185, 135, 60, 0.18));
 }
 
-.form-control.is-invalid{
+.form-control.is-invalid {
     border-color: var(--danger, #b6473f);
 }
 
-.invalid-feedback{
+.invalid-feedback {
     font-size: 13px;
     color: var(--danger, #b6473f);
 }
 
 /* Password field with a toggle icon inside it */
-.password-wrapper{
+.password-wrapper {
     position: relative;
 }
 
-.password-wrapper .form-control{
+.password-wrapper .form-control {
     padding-right: 45px;
 }
 
-.password-toggle{
+.password-toggle {
     position: absolute;
     right: 14px;
     top: 50%;
@@ -117,36 +121,36 @@ body{
     line-height: 1;
 }
 
-.password-toggle:hover{
+.password-toggle:hover {
     color: var(--ink, #15171b);
 }
 
 /* ---------- Button ---------- */
-.btn{
+.btn {
     height: var(--input-height);
     font-weight: 600;
     border-radius: 10px;
 }
 
-.btn-primary{
+.btn-primary {
     background: var(--gold, #b9873c);
     border-color: var(--gold, #b9873c);
     color: #201404;
 }
 
 .btn-primary:hover,
-.btn-primary:focus{
+.btn-primary:focus {
     background: var(--gold-dark, #93692a);
     border-color: var(--gold-dark, #93692a);
     color: #ffffff;
 }
 
-.btn:disabled{
+.btn:disabled {
     opacity: 0.7;
     cursor: not-allowed;
 }
 
-.btn .spinner-border{
+.btn .spinner-border {
     width: 1rem;
     height: 1rem;
     margin-right: 8px;
@@ -154,7 +158,7 @@ body{
 }
 
 .btn-primary:disabled,
-.btn-primary.disabled{
+.btn-primary.disabled {
     background-color: var(--gold, #b9873c) !important;
     border-color: var(--gold, #b9873c) !important;
     color: #ffffff !important;
@@ -174,21 +178,21 @@ button.active,
 }
 
 /* ---------- Small screens ---------- */
-@media (max-width: 991px){
-    .left-panel{
+@media (max-width: 991px) {
+    .left-panel {
         padding: 30px 20px;
     }
-    .logo{
+    .logo {
         width: 220px;
         margin-bottom: 20px;
     }
-    .left-panel h1{
+    .left-panel h1 {
         font-size: 30px;
     }
-    .left-panel h2{
+    .left-panel h2 {
         font-size: 22px;
     }
-    .login-card{
+    .login-card {
         padding: 30px 25px;
         box-shadow: none;
     }
