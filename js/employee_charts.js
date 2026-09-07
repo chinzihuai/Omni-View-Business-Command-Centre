@@ -1,44 +1,44 @@
-let salesChart=null;
-let workingHours=null;
-let liveViewsTrend=null;
+let salesChart = null;
+let workingHours = null;
+let liveViewsTrend = null;
 
-async function loadcharts(){
+async function loadcharts() {
+    const { data: sessionData, error: sessionError } =
+        await supabaseClient.auth.getSession();
 
-    const {data:sessionData,error:sessionError}=await supabaseClient.auth.getSession();
-
-    if(sessionError || !sessionData || !sessionData.session) {
-        console.error("Error fetching session:", sessionError);
-        alert("Error fetching session. Please check the console for details.");
+    if (sessionError || !sessionData || !sessionData.session) {
+        console.error('Error fetching session:', sessionError);
+        alert('Error fetching session. Please check the console for details.');
         return;
     }
 
     const session = sessionData?.session;
 
-    if(!session){
-        console.error("No active session found.");
+    if (!session) {
+        console.error('No active session found.');
         return;
     }
 
-    const user=session.user;
-    
-    if(!user || !user.email){
-        console.error("User email not found in session.");
+    const user = session.user;
+
+    if (!user || !user.email) {
+        console.error('User email not found in session.');
         return;
     }
 
-    const {data:profile,error:profileError}=await supabaseClient
-        .from("profiles")
-        .select("userid")
-        .eq("email",user.email)
+    const { data: profile, error: profileError } = await supabaseClient
+        .from('profiles')
+        .select('userid')
+        .eq('email', user.email)
         .single();
 
     if (profileError) {
-        console.error("Profile error:", profileError);
+        console.error('Profile error:', profileError);
         return;
     }
 
     if (!profile) {
-        console.error("Employee profile not found.");
+        console.error('Employee profile not found.');
         return;
     }
 
@@ -46,38 +46,36 @@ async function loadcharts(){
 
     const now = new Date();
 
-    
+    const startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 
-    const startDate=new Date(
-        now.getFullYear(),
-        now.getMonth()-1,
-        1
-    );
+    const endDate = new Date(now.getFullYear(), now.getMonth(), 1);
 
-    const endDate = new Date(
-        now.getFullYear(),
-        now.getMonth(),
-        1
-    );
-
-    const start=formatChartDate(startDate);
+    const start = formatChartDate(startDate);
     const end = formatChartDate(endDate);
 
-    const lastmonthLabel = startDate.toLocaleString('default', { month: 'long', year: 'numeric' });
-    document.getElementById('sales_title').innerHTML =`Sales Performance (${lastmonthLabel})`;
-    document.getElementById('working_title').innerHTML =`Working hours (${lastmonthLabel})`;
-    document.getElementById('views_title').innerHTML =`Live views trend (${lastmonthLabel})`;
+    const lastmonthLabel = startDate.toLocaleString('default', {
+        month: 'long',
+        year: 'numeric',
+    });
+    document.getElementById('sales_title').innerHTML =
+        `Sales Performance (${lastmonthLabel})`;
+    document.getElementById('working_title').innerHTML =
+        `Working hours (${lastmonthLabel})`;
+    document.getElementById('views_title').innerHTML =
+        `Live views trend (${lastmonthLabel})`;
 
-    const {data:liveData,error:liveError}=await supabaseClient
+    const { data: liveData, error: liveError } = await supabaseClient
         .from('Live')
-        .select( 'employee_id,session_date,duration_hours,items_sold,gmv_amount,views')
+        .select(
+            'employee_id,session_date,duration_hours,items_sold,gmv_amount,views'
+        )
         .eq('employee_id', employeeId)
         .gte('session_date', start)
         .lt('session_date', end)
-        .order('session_date', {ascending: true});    
-            
-    if(liveError){
-        console.error("Live data error:", liveError);
+        .order('session_date', { ascending: true });
+
+    if (liveError) {
+        console.error('Live data error:', liveError);
         return;
     }
 
@@ -86,12 +84,10 @@ async function loadcharts(){
     createliveViewsTrendChart(liveData);
 }
 
-function createSalesPerformanceChart(data){
+function createSalesPerformanceChart(data) {
+    const dailysales = [];
 
-    const dailysales=[];
-
-    data.forEach((record)=>{
-
+    data.forEach((record) => {
         const date = record.session_date;
 
         if (!dailysales[date]) {
@@ -106,12 +102,12 @@ function createSalesPerformanceChart(data){
 
     const canvas = document.getElementById('salesChart');
 
-    if(!canvas){
-        console.error("Sales chart canvas not found.");
+    if (!canvas) {
+        console.error('Sales chart canvas not found.');
         return;
     }
 
-    if(salesChart){
+    if (salesChart) {
         salesChart.destroy();
     }
 
@@ -119,15 +115,17 @@ function createSalesPerformanceChart(data){
         type: 'line',
         data: {
             labels: labels,
-            datasets: [{
-                label: 'Sales',
-                data: values,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                tension: 0.4,
-                fill: true,
-                borderWidth: 2,
-            }]
+            datasets: [
+                {
+                    label: 'Sales',
+                    data: values,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2,
+                },
+            ],
         },
         options: {
             responsive: true,
@@ -138,12 +136,17 @@ function createSalesPerformanceChart(data){
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
-                            return 'RM'+ Number(context.raw)
-                            .toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2});
-                        }
-                    }
-                }
+                        label: function (context) {
+                            return (
+                                'RM' +
+                                Number(context.raw).toLocaleString(undefined, {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2,
+                                })
+                            );
+                        },
+                    },
+                },
             },
             scales: {
                 x: {
@@ -160,14 +163,14 @@ function createSalesPerformanceChart(data){
                     beginAtZero: true,
                 },
             },
-        }
+        },
     });
 }
 
-function createWorkingHoursChart(data){
-    const dailyHours={};
+function createWorkingHoursChart(data) {
+    const dailyHours = {};
 
-    data.forEach((record)=>{
+    data.forEach((record) => {
         const date = record.session_date;
 
         if (!dailyHours[date]) {
@@ -182,69 +185,63 @@ function createWorkingHoursChart(data){
 
     const canvas = document.getElementById('workingHours');
 
-    if(!canvas){
-        console.error("Working hours chart canvas not found.");
+    if (!canvas) {
+        console.error('Working hours chart canvas not found.');
         return;
     }
 
-    if(workingHours){
+    if (workingHours) {
         workingHours.destroy();
     }
 
     workingHoursChart = new Chart(canvas, {
-
         type: 'bar',
 
         data: {
-
             labels: labels,
 
-            datasets: [{
-                label: 'Working Hours',
-                data: values,
-                borderWidth: 1
-            }]
-
+            datasets: [
+                {
+                    label: 'Working Hours',
+                    data: values,
+                    borderWidth: 1,
+                },
+            ],
         },
-
 
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    display: false
-                }
+                    display: false,
+                },
             },
 
             scales: {
                 y: {
-
                     beginAtZero: true,
 
                     title: {
                         display: true,
-                        text: 'Hours'
-                    }
+                        text: 'Hours',
+                    },
                 },
                 x: {
-
                     title: {
                         display: true,
-                        text: 'Date'
-                    }
-                }
-            }
-        }
+                        text: 'Date',
+                    },
+                },
+            },
+        },
     });
-
 }
 
+function createliveViewsTrendChart(data) {
+    const dailyViews = {};
 
-function createliveViewsTrendChart(data){
-    const dailyViews={};
-
-    data.forEach((record)=>{
+    data.forEach((record) => {
         const date = record.session_date;
 
         if (!dailyViews[date]) {
@@ -259,31 +256,32 @@ function createliveViewsTrendChart(data){
 
     const canvas = document.getElementById('liveViewsTrend');
 
-    if(!canvas){
-        console.error("Live views trend chart canvas not found.");
+    if (!canvas) {
+        console.error('Live views trend chart canvas not found.');
         return;
     }
 
-    if(liveViewsTrend){
+    if (liveViewsTrend) {
         liveViewsTrend.destroy();
     }
 
     liveViewsChart = new Chart(canvas, {
-
         type: 'line',
 
         data: {
             labels: labels,
 
-            datasets: [{
-                label: 'Live Views',
-                data: values,
-                borderColor: 'rgba(75, 192, 192, 1)',
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                tension: 0.3,
-                fill: true,
-                borderWidth: 2
-            }]
+            datasets: [
+                {
+                    label: 'Live Views',
+                    data: values,
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    tension: 0.3,
+                    fill: true,
+                    borderWidth: 2,
+                },
+            ],
         },
 
         options: {
@@ -291,17 +289,18 @@ function createliveViewsTrendChart(data){
             maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    display: false
+                    display: false,
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
-                            return Number(context.raw).toLocaleString('en-MY') + ' views';
-                        }
-                    }
-
-                }
-
+                        label: function (context) {
+                            return (
+                                Number(context.raw).toLocaleString('en-MY') +
+                                ' views'
+                            );
+                        },
+                    },
+                },
             },
 
             scales: {
@@ -309,23 +308,21 @@ function createliveViewsTrendChart(data){
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Views'
-                    }
+                        text: 'Views',
+                    },
                 },
                 x: {
                     title: {
                         display: true,
-                        text: 'Date'
-                    }
-                }
-            }
-        }
+                        text: 'Date',
+                    },
+                },
+            },
+        },
     });
-
 }
 
 function formatChartDate(date) {
-
     const year = date.getFullYear();
 
     const month = String(date.getMonth() + 1).padStart(2, '0');

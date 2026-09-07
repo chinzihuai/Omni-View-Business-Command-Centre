@@ -1,40 +1,27 @@
-// ==========================================
 // CAPT EMPIRE AI CHATBOT
-// ==========================================
 
-document.addEventListener("DOMContentLoaded", () => {
-
+document.addEventListener('DOMContentLoaded', () => {
     createChatbot();
-
 });
 
-
-// ==========================================
 // CREATE CHATBOT HTML
-// ==========================================
 
 function createChatbot() {
-
-    // --------------------------------------
     // Chat button
-    // --------------------------------------
 
-    const chatButton = document.createElement("button");
+    const chatButton = document.createElement('button');
 
-    chatButton.id = "aiChatButton";
+    chatButton.id = 'aiChatButton';
 
-    chatButton.innerHTML = "🤖";
+    chatButton.innerHTML = '🤖';
 
-    chatButton.title = "AI Assistant";
+    chatButton.title = 'AI Assistant';
 
-
-    // --------------------------------------
     // Chat window
-    // --------------------------------------
 
-    const chatWindow = document.createElement("div");
+    const chatWindow = document.createElement('div');
 
-    chatWindow.id = "aiChatWindow";
+    chatWindow.id = 'aiChatWindow';
 
     chatWindow.innerHTML = `
 
@@ -85,289 +72,170 @@ function createChatbot() {
 
     `;
 
-
     document.body.appendChild(chatButton);
 
     document.body.appendChild(chatWindow);
 
-
-    // ======================================
     // Events
-    // ======================================
 
-    chatButton.addEventListener("click", () => {
-
-        const isOpen =
-            chatWindow.style.display === "flex";
+    chatButton.addEventListener('click', () => {
+        const isOpen = chatWindow.style.display === 'flex';
 
         if (isOpen) {
-
-            chatWindow.style.display = "none";
-
+            chatWindow.style.display = 'none';
         } else {
+            chatWindow.style.display = 'flex';
 
-            chatWindow.style.display = "flex";
-
-            document
-                .getElementById("aiChatInput")
-                .focus();
+            document.getElementById('aiChatInput').focus();
         }
-
     });
 
+    document.getElementById('aiChatClose').addEventListener('click', () => {
+        chatWindow.style.display = 'none';
+    });
 
     document
-        .getElementById("aiChatClose")
-        .addEventListener("click", () => {
-
-            chatWindow.style.display = "none";
-
-        });
-
+        .getElementById('aiChatSend')
+        .addEventListener('click', sendChatMessage);
 
     document
-        .getElementById("aiChatSend")
-        .addEventListener("click", sendChatMessage);
-
-
-    document
-        .getElementById("aiChatInput")
-        .addEventListener("keydown", (event) => {
-
-            if (event.key === "Enter") {
-
+        .getElementById('aiChatInput')
+        .addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
                 event.preventDefault();
 
                 sendChatMessage();
-
             }
-
         });
-
 }
 
-
-// ==========================================
 // SEND MESSAGE
-// ==========================================
 
 async function sendChatMessage() {
+    const input = document.getElementById('aiChatInput');
 
-    const input =
-        document.getElementById("aiChatInput");
+    const sendButton = document.getElementById('aiChatSend');
 
-    const sendButton =
-        document.getElementById("aiChatSend");
-
-    const message =
-        input.value.trim();
-
+    const message = input.value.trim();
 
     if (!message) {
         return;
     }
 
-
-    // ======================================
     // Show user's message
-    // ======================================
 
-    addChatMessage(
-        message,
-        "user"
-    );
+    addChatMessage(message, 'user');
 
-
-    input.value = "";
+    input.value = '';
 
     sendButton.disabled = true;
 
-
-    // ======================================
     // Show typing indicator
-    // ======================================
 
-    const typingMessage =
-        addTypingMessage();
-
+    const typingMessage = addTypingMessage();
 
     try {
-
-        // ----------------------------------
         // Get Supabase session
-        // ----------------------------------
 
         const {
             data: { session },
-            error: sessionError
+            error: sessionError,
         } = await supabaseClient.auth.getSession();
 
-
         if (sessionError || !session) {
-
             removeMessage(typingMessage);
 
             addChatMessage(
-                "Your session has expired. Please log in again.",
-                "ai"
+                'Your session has expired. Please log in again.',
+                'ai'
             );
 
             return;
         }
 
-
-        // ----------------------------------
         // Send to backend
-        // ----------------------------------
 
         const response = await fetch(
-            "https://omni-view-business-command-centre.onrender.com/api/chat",
+            'https://omni-view-business-command-centre.onrender.com/api/chat',
             {
-                method: "POST",
+                method: 'POST',
 
                 headers: {
+                    'Content-Type': 'application/json',
 
-                    "Content-Type":
-                        "application/json",
-
-                    "Authorization":
-                        `Bearer ${session.access_token}`
-
+                    Authorization: `Bearer ${session.access_token}`,
                 },
 
                 body: JSON.stringify({
-                    message: message
-                })
-
+                    message: message,
+                }),
             }
         );
 
+        const data = await response.json();
 
-        const data =
-            await response.json();
-
-
-        // ----------------------------------
         // Remove typing
-        // ----------------------------------
 
         removeMessage(typingMessage);
 
-
-        // ----------------------------------
         // Check response
-        // ----------------------------------
 
         if (!data.success) {
-
-            addChatMessage(
-                data.error ||
-                "Sorry, something went wrong.",
-                "ai"
-            );
+            addChatMessage(data.error || 'Sorry, something went wrong.', 'ai');
 
             return;
         }
 
-
-        // ----------------------------------
         // Show AI response
-        // ----------------------------------
 
-        addChatMessage(
-            data.answer,
-            "ai"
-        );
-
-
+        addChatMessage(data.answer, 'ai');
     } catch (error) {
-
-        console.error(
-            "Chatbot error:",
-            error
-        );
-
+        console.error('Chatbot error:', error);
 
         removeMessage(typingMessage);
 
-
-        addChatMessage(
-            "Unable to connect to the AI server.",
-            "ai"
-        );
-
+        addChatMessage('Unable to connect to the AI server.', 'ai');
     } finally {
-
         sendButton.disabled = false;
 
         input.focus();
-
     }
-
 }
 
-
-// ==========================================
 // ADD MESSAGE
-// ==========================================
 
 function addChatMessage(message, sender) {
+    const container = document.getElementById('aiChatMessages');
 
-    const container =
-        document.getElementById("aiChatMessages");
+    const messageWrapper = document.createElement('div');
 
+    messageWrapper.className = `ai-message ${sender}`;
 
-    const messageWrapper =
-        document.createElement("div");
+    const messageContent = document.createElement('div');
 
-    messageWrapper.className =
-        `ai-message ${sender}`;
+    messageContent.className = 'ai-message-content';
 
+    messageContent.textContent = message;
 
-    const messageContent =
-        document.createElement("div");
+    messageWrapper.appendChild(messageContent);
 
-    messageContent.className =
-        "ai-message-content";
-
-
-    messageContent.textContent =
-        message;
-
-
-    messageWrapper.appendChild(
-        messageContent
-    );
-
-
-    container.appendChild(
-        messageWrapper
-    );
-
+    container.appendChild(messageWrapper);
 
     // Scroll to bottom
 
-    container.scrollTop =
-        container.scrollHeight;
-
+    container.scrollTop = container.scrollHeight;
 
     return messageWrapper;
 }
 
-
-// ==========================================
 // TYPING INDICATOR
-// ==========================================
 
 function addTypingMessage() {
+    const container = document.getElementById('aiChatMessages');
 
-    const container =
-        document.getElementById("aiChatMessages");
+    const wrapper = document.createElement('div');
 
-    const wrapper =
-        document.createElement("div");
-
-    wrapper.className = "ai-message ai typing-message";
+    wrapper.className = 'ai-message ai typing-message';
 
     wrapper.innerHTML = `
         <div class="ai-message-content typing-content">
@@ -386,17 +254,10 @@ function addTypingMessage() {
     return wrapper;
 }
 
-
-// ==========================================
 // REMOVE MESSAGE
-// ==========================================
 
 function removeMessage(element) {
-
     if (element && element.parentNode) {
-
         element.parentNode.removeChild(element);
-
     }
-
 }

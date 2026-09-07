@@ -12,7 +12,7 @@ function generatePDF() {
     );
 
     let firstVisible = null;
-    sections.forEach(sec => {
+    sections.forEach((sec) => {
         sec.classList.remove('first-print-section');
         if (!sec.classList.contains('d-none') && !firstVisible) {
             firstVisible = sec;

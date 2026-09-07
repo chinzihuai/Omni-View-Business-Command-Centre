@@ -1,83 +1,102 @@
 let stockChart;
 async function loaddailyGMV() {
     const now = new Date();
-    const { data,error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .from('Live')
         .select('gmv_amount')
-        .eq('session_date',now.toISOString().split('T')[0]);
+        .eq('session_date', now.toISOString().split('T')[0]);
 
     if (error) {
         console.error('Error fetching daily GMV:', error);
         return;
     }
 
-    const totalGMV = data.reduce((sum, record) => sum + Number(record.gmv_amount||0), 0);
+    const totalGMV = data.reduce(
+        (sum, record) => sum + Number(record.gmv_amount || 0),
+        0
+    );
 
-    document.getElementById('daily-gmv').textContent = `RM${totalGMV.toFixed(2)}`;
+    document.getElementById('daily-gmv').textContent =
+        `RM${totalGMV.toFixed(2)}`;
 }
 
 async function loaddailyItemsSold() {
     const now = new Date();
-    const { data,error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .from('Live')
         .select('items_sold')
-        .eq('session_date',now.toISOString().split('T')[0]);
+        .eq('session_date', now.toISOString().split('T')[0]);
 
     if (error) {
         console.error('Error fetching daily items sold:', error);
         return;
     }
 
-    const totalItemsSold = data.reduce((sum, record) => sum + Number(record.items_sold||0), 0);
+    const totalItemsSold = data.reduce(
+        (sum, record) => sum + Number(record.items_sold || 0),
+        0
+    );
 
-    document.getElementById('daily-item-sold').textContent = `${totalItemsSold}`;
+    document.getElementById('daily-item-sold').textContent =
+        `${totalItemsSold}`;
 }
 
 async function loadActiveStaff() {
-    const { data,error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .from('profiles')
         .select('role')
-        .eq('role','employee');
+        .eq('role', 'employee');
 
     if (error) {
         console.error('Error fetching active staff:', error);
         return;
-    }
-    else{
+    } else {
         const activeStaffCount = data.length;
-        document.getElementById('active_staff').textContent = `${activeStaffCount}`;
+        document.getElementById('active_staff').textContent =
+            `${activeStaffCount}`;
     }
 }
 
 async function loadViews() {
     const now = new Date();
-    const { data,error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .from('Live')
         .select('views')
-        .eq('session_date',now.toISOString().split('T')[0]);
+        .eq('session_date', now.toISOString().split('T')[0]);
 
     if (error) {
         console.error('Error fetching views:', error);
         return;
     }
 
-    const totalViews = data.reduce((sum, record) => sum + Number(record.views||0), 0);
+    const totalViews = data.reduce(
+        (sum, record) => sum + Number(record.views || 0),
+        0
+    );
     document.getElementById('views').textContent = `${totalViews}`;
 }
 
-async function loadstock(){
-    const { data,error } = await supabaseClient
+async function loadstock() {
+    const { data, error } = await supabaseClient
         .from('Product')
-        .select('Stock')
+        .select('Stock');
 
     if (error) {
         console.error('Error fetching stock:', error);
         return;
     }
 
-    const totalStock = data.reduce((sum, record) => sum + Number(record.Stock||0), 0);
-    const lowStockCount = data.filter(record => Number(record.Stock||0) < 10 && Number(record.Stock||0) > 0).length;
-    const outOfStockCount = data.filter(record => Number(record.Stock||0) === 0).length;
+    const totalStock = data.reduce(
+        (sum, record) => sum + Number(record.Stock || 0),
+        0
+    );
+    const lowStockCount = data.filter(
+        (record) =>
+            Number(record.Stock || 0) < 10 && Number(record.Stock || 0) > 0
+    ).length;
+    const outOfStockCount = data.filter(
+        (record) => Number(record.Stock || 0) === 0
+    ).length;
 
     document.getElementById('low-stock').textContent = `${lowStockCount}`;
     document.getElementById('out-of-stock').textContent = `${outOfStockCount}`;
@@ -109,7 +128,7 @@ async function loadTopEmployees() {
     }
     const employeeTotals = {};
 
-    data.forEach(record => {
+    data.forEach((record) => {
         const employeeId = record.employee_id;
         const gmv = Number(record.total_gmv) || 0;
 
@@ -121,33 +140,43 @@ async function loadTopEmployees() {
     });
 
     const topEmployeesData = Object.entries(employeeTotals)
-    .map(([employee_id, total_gmv]) => ({
-        employee_id,
-        total_gmv
-    }))
-    .sort((a, b) => b.total_gmv - a.total_gmv)
-    .slice(0, 5);
+        .map(([employee_id, total_gmv]) => ({
+            employee_id,
+            total_gmv,
+        }))
+        .sort((a, b) => b.total_gmv - a.total_gmv)
+        .slice(0, 5);
 
-    const {data:profile,error:profileError}=await supabaseClient
+    const { data: profile, error: profileError } = await supabaseClient
         .from('profiles')
         .select('userid, username')
-        .in('userid', topEmployeesData.map(record => record.employee_id));
-    
+        .in(
+            'userid',
+            topEmployeesData.map((record) => record.employee_id)
+        );
+
     const profileMap = {};
     if (profileError) {
         console.error('Error fetching employee profiles:', profileError);
         return;
     }
-    profile.forEach(record => {
+    profile.forEach((record) => {
         profileMap[record.userid] = record.username;
     });
     // Update the employee names in the UI
-    const topEmployees = topEmployeesData.map(record => profileMap[record.employee_id] || 'N/A');
-    document.getElementById('top-employee').textContent = topEmployees[0]|| 'N/A';
-    document.getElementById('second-employee').textContent = topEmployees[1] || 'N/A';
-    document.getElementById('third-employee').textContent = topEmployees[2] || 'N/A';
-    document.getElementById('fourth-employee').textContent = topEmployees[3] || 'N/A';
-    document.getElementById('fifth-employee').textContent = topEmployees[4] || 'N/A';
+    const topEmployees = topEmployeesData.map(
+        (record) => profileMap[record.employee_id] || 'N/A'
+    );
+    document.getElementById('top-employee').textContent =
+        topEmployees[0] || 'N/A';
+    document.getElementById('second-employee').textContent =
+        topEmployees[1] || 'N/A';
+    document.getElementById('third-employee').textContent =
+        topEmployees[2] || 'N/A';
+    document.getElementById('fourth-employee').textContent =
+        topEmployees[3] || 'N/A';
+    document.getElementById('fifth-employee').textContent =
+        topEmployees[4] || 'N/A';
 }
 
 async function loadRecentPayouts() {
@@ -156,7 +185,7 @@ async function loadRecentPayouts() {
         .select('payout_id, final_payout, payout_date, employee_id')
         .order('payout_date', { ascending: false })
         .limit(5);
-    
+
     if (error) {
         console.error('Error fetching recent payouts:', error);
         return;
@@ -165,22 +194,25 @@ async function loadRecentPayouts() {
     const { data: profileData, error: profileError } = await supabaseClient
         .from('profiles')
         .select('userid, username')
-        .in('userid', data.map(record => record.employee_id));
-    
+        .in(
+            'userid',
+            data.map((record) => record.employee_id)
+        );
+
     if (profileError) {
         console.error('Error fetching employee profiles:', profileError);
         return;
     }
 
     const profileMap = {};
-    profileData.forEach(record => {
+    profileData.forEach((record) => {
         profileMap[record.userid] = record.username;
     });
 
     const recentPayoutsBody = document.getElementById('recent-payouts');
     recentPayoutsBody.innerHTML = '';
 
-    data.forEach(record => {
+    data.forEach((record) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${record.payout_id}</td>
@@ -193,16 +225,15 @@ async function loadRecentPayouts() {
 }
 
 const formatActivityDate = (dateString) => {
-  const date = new Date(dateString);
-  return date.toLocaleDateString(); // Adjust formatting logic as needed
+    const date = new Date(dateString);
+    return date.toLocaleDateString(); // Adjust formatting logic as needed
 };
 
 async function loadRecentActivity() {
-
-    const container = document.getElementById("recent-activity");
+    const container = document.getElementById('recent-activity');
 
     if (!container) {
-        console.error("recent-activity element not found");
+        console.error('recent-activity element not found');
         return;
     }
 
@@ -213,85 +244,63 @@ async function loadRecentActivity() {
     `;
 
     // LOAD RECENT LIVE SESSIONS
-    const { data: liveData, error: liveError } =
-        await supabaseClient
-            .from("Live")
-            .select("session_date, items_sold, gmv_amount")
-            .order("session_date", { ascending: false })
-            .limit(5);
+    const { data: liveData, error: liveError } = await supabaseClient
+        .from('Live')
+        .select('session_date, items_sold, gmv_amount')
+        .order('session_date', { ascending: false })
+        .limit(5);
 
     if (liveError) {
-        console.error("Error loading Live:", liveError);
+        console.error('Error loading Live:', liveError);
     }
 
     // LOAD RECENT PAYOUTS
-    const { data: payoutData, error: payoutError } =
-        await supabaseClient
-            .from("Payout")
-            .select("employee_name, payout_date, final_payout")
-            .order("payout_date", { ascending: false })
-            .limit(5);
+    const { data: payoutData, error: payoutError } = await supabaseClient
+        .from('Payout')
+        .select('employee_name, payout_date, final_payout')
+        .order('payout_date', { ascending: false })
+        .limit(5);
 
     if (payoutError) {
-        console.error("Error loading Payout:", payoutError);
+        console.error('Error loading Payout:', payoutError);
     }
-
 
     // COMBINE ACTIVITIES
     const activities = [];
 
-
     // LIVE ACTIVITIES
     if (liveData) {
-
-        liveData.forEach(record => {
-
+        liveData.forEach((record) => {
             activities.push({
-
-                type: "live",
+                type: 'live',
 
                 date: new Date(record.session_date),
 
-                title: "Live Session",
+                title: 'Live Session',
 
-                description:
-                    `${record.items_sold || 0} items sold • RM${Number(record.gmv_amount || 0).toFixed(2)} GMV`
-
+                description: `${record.items_sold || 0} items sold • RM${Number(record.gmv_amount || 0).toFixed(2)} GMV`,
             });
-
         });
-
     }
 
     // PAYOUT ACTIVITIES
     if (payoutData) {
-
-        payoutData.forEach(record => {
-
+        payoutData.forEach((record) => {
             activities.push({
-
-                type: "payout",
+                type: 'payout',
 
                 date: new Date(record.payout_date),
 
-                title:
-                    `Payout for ${record.employee_name}`,
+                title: `Payout for ${record.employee_name}`,
 
-                description:
-                    `RM${Number(record.final_payout || 0).toFixed(2)}`
-
+                description: `RM${Number(record.final_payout || 0).toFixed(2)}`,
             });
-
         });
-
     }
-
 
     // SORT NEWEST → OLDEST
     activities.sort((a, b) => {
-
         return b.date - a.date;
-
     });
 
     // ONLY SHOW 5
@@ -299,7 +308,6 @@ async function loadRecentActivity() {
 
     // NO DATA
     if (recentActivities.length === 0) {
-
         container.innerHTML = `
             <div class="text-muted text-center py-3">
                 No recent activity
@@ -309,27 +317,21 @@ async function loadRecentActivity() {
         return;
     }
 
-
     // DISPLAY
-    container.innerHTML = recentActivities.map(activity => {
+    container.innerHTML = recentActivities
+        .map((activity) => {
+            let icon;
+            let iconClass;
 
-        let icon;
-        let iconClass;
+            if (activity.type === 'live') {
+                icon = 'bi-broadcast';
+                iconClass = 'text-success';
+            } else {
+                icon = 'bi-cash-stack';
+                iconClass = 'text-primary';
+            }
 
-        if (activity.type === "live") {
-
-            icon = "bi-broadcast";
-            iconClass = "text-success";
-
-        } else {
-
-            icon = "bi-cash-stack";
-            iconClass = "text-primary";
-
-        }
-
-
-        return `
+            return `
             <div class="d-flex align-items-start mb-3">
 
                 <div
@@ -368,12 +370,12 @@ async function loadRecentActivity() {
 
             </div>
         `;
-
-    }).join("");
+        })
+        .join('');
 }
 
 async function loadStockChart() {
-    const { data,error } = await supabaseClient
+    const { data, error } = await supabaseClient
         .from('Product')
         .select('Product_name, Stock')
         .order('Stock', { ascending: true })
@@ -383,71 +385,73 @@ async function loadStockChart() {
         console.error('Error fetching stock data for chart:', error);
         return;
     }
-    const productNames = data.map(record => record.Product_name);
-    const stockValues = data.map(record => Number(record.Stock||0));
+    const productNames = data.map((record) => record.Product_name);
+    const stockValues = data.map((record) => Number(record.Stock || 0));
 
     const canvas = document.getElementById('stockChart');
 
     if (stockChart) {
         stockChart.destroy();
     }
-    
+
     stockChart = new Chart(canvas, {
         type: 'bar',
-        data:{
+        data: {
             labels: productNames,
-            datasets: [{
-                label: 'Stock',
-                data: stockValues,
-                backgroundColor: stockValues.map(stock => {
+            datasets: [
+                {
+                    label: 'Stock',
+                    data: stockValues,
+                    backgroundColor: stockValues.map((stock) => {
                         if (stock <= 10) {
-                            return "#dc3545"; // Red
+                            return '#dc3545'; // Red
                         }
                         if (stock <= 30) {
-                            return "#fd7e14"; // Orange
+                            return '#fd7e14'; // Orange
                         }
                         if (stock <= 50) {
-                            return "#ffc107"; // Yellow
+                            return '#ffc107'; // Yellow
                         }
-                        return "#198754"; // Green
-                })
-            }]
+                        return '#198754'; // Green
+                    }),
+                },
+            ],
         },
         options: {
-            indexAxis: "y",
+            indexAxis: 'y',
             responsive: true,
-            maintainAspectRatio: false,   
+            maintainAspectRatio: false,
             plugins: {
                 legend: {
-                    display: false
-                }
+                    display: false,
+                },
             },
             scales: {
                 x: {
                     beginAtZero: true,
                     title: {
                         display: true,
-                        text: 'Stock'
-                    }
+                        text: 'Stock',
+                    },
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Product Name'
-                        }
-                    }
-                }
-            }
+                        text: 'Product Name',
+                    },
+                },
+            },
+        },
     });
 }
-    document.addEventListener('DOMContentLoaded', () => {
-        loaddailyGMV();
-        loaddailyItemsSold();
-        loadActiveStaff();
-        loadViews();
-        loadstock();
-        loadStockChart();
-        loadTopEmployees();
-        loadRecentPayouts();
-        loadRecentActivity();
+document.addEventListener('DOMContentLoaded', () => {
+    loaddailyGMV();
+    loaddailyItemsSold();
+    loadActiveStaff();
+    loadViews();
+    loadstock();
+    loadStockChart();
+    loadTopEmployees();
+    loadRecentPayouts();
+    loadRecentActivity();
 });

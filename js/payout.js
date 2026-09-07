@@ -1,28 +1,26 @@
 let PayoutTable;
 
 async function loadPayouts() {
-    const { data, error } = await supabaseClient
-        .from('Payout')
-        .select('*');
-    
+    const { data, error } = await supabaseClient.from('Payout').select('*');
+
     if (error) {
         console.error('Error loading payouts:', error);
         return;
     }
 
-    if(!PayoutTable){
+    if (!PayoutTable) {
         PayoutTable = new DataTable('#PayoutTable', {
             pageLength: 10,
-            lengthMenu: [5, 10, 25, 50,100],
+            lengthMenu: [5, 10, 25, 50, 100],
             paging: true,
             ordering: true,
-            info: true
+            info: true,
         });
     }
 
     PayoutTable.clear();
 
-    data.forEach(payout => {
+    data.forEach((payout) => {
         PayoutTable.row.add([
             payout.payout_id,
             payout.employee_id,
@@ -36,31 +34,29 @@ async function loadPayouts() {
             Number(payout.bonus_amount).toFixed(2),
             Number(payout.final_payout).toFixed(2),
             payout.payout_date,
-            
+
             `
                 <button class="btn btn-danger btn-sm"
                     onclick="deletePayout('${payout.payout_id}')">
                     <i class="bi bi-trash"></i> Delete
                 </button>
-            `   
+            `,
         ]);
     });
 
     PayoutTable.draw();
-
 }
 
 async function deletePayout(payoutId) {
-
     if (!confirm('Are you sure you want to delete this payout?')) {
         return;
     }
-        
+
     const { error } = await supabaseClient
         .from('Payout')
         .delete()
         .eq('payout_id', payoutId);
-    
+
     if (error) {
         console.error('Error deleting payout:', error);
         alert('Failed to delete payout. Please try again.');
@@ -76,7 +72,8 @@ async function addPayout() {
     const employeeId = document.getElementById('payoutEmployee').value;
     const periodStart = document.getElementById('periodStart').value;
     const periodEnd = document.getElementById('periodEnd').value;
-    const bonusPerItemValue = Number(document.getElementById('bonusPerItem').value) || 0;
+    const bonusPerItemValue =
+        Number(document.getElementById('bonusPerItem').value) || 0;
 
     if (!payoutId || !employeeId || !periodStart || !periodEnd) {
         alert('Please fill in all required fields.');
@@ -88,12 +85,18 @@ async function addPayout() {
         return;
     }
 
-    if(Number(bonusPerItemValue) < 0){
+    if (Number(bonusPerItemValue) < 0) {
         alert('Bonus amount per item cannot be negative.');
         return;
     }
 
-    const payoutMetrics = await calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusPerItemValue, true);
+    const payoutMetrics = await calculatePayoutMetrics(
+        employeeId,
+        periodStart,
+        periodEnd,
+        bonusPerItemValue,
+        true
+    );
 
     if (!payoutMetrics) {
         resetPreview();
@@ -112,7 +115,7 @@ async function addPayout() {
         .select('username')
         .eq('userid', employeeId)
         .single();
-    
+
     if (employeeError) {
         console.error('Error fetching employee data:', employeeError);
         alert('Failed to fetch employee data. Please try again.');
@@ -121,9 +124,8 @@ async function addPayout() {
 
     const employeeName = employee.username || '';
 
-    const { error } = await supabaseClient
-        .from('Payout')
-        .insert([{ 
+    const { error } = await supabaseClient.from('Payout').insert([
+        {
             payout_id: payoutId,
             employee_id: employeeId,
             employee_name: employeeName,
@@ -135,17 +137,18 @@ async function addPayout() {
             base_payment: basePayment,
             bonus_amount: bonusAmount,
             final_payout: finalPayout,
-            payout_date: new Date().toISOString().split('T')[0]
-        }])
-    
+            payout_date: new Date().toISOString().split('T')[0],
+        },
+    ]);
+
     if (error) {
         console.error('Error adding payout:', error);
 
-        if (error.code === '23505') { // Unique violation error code
+        if (error.code === '23505') {
+            // Unique violation error code
             alert('Payout ID already exists. Please use a different ID.');
-        }
-        else {
-        alert('Failed to add payout. Please try again.');
+        } else {
+            alert('Failed to add payout. Please try again.');
         }
 
         return;
@@ -161,14 +164,22 @@ async function addPayout() {
     loadPayouts();
 }
 
-async function calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusPerItemValue, showNoDataAlert = false) {
+async function calculatePayoutMetrics(
+    employeeId,
+    periodStart,
+    periodEnd,
+    bonusPerItemValue,
+    showNoDataAlert = false
+) {
     if (!employeeId || !periodStart || !periodEnd) {
         return null;
     }
 
     if (new Date(periodStart) > new Date(periodEnd)) {
         if (showNoDataAlert) {
-            alert('End date cannot be earlier than start date. Please select valid dates.');
+            alert(
+                'End date cannot be earlier than start date. Please select valid dates.'
+            );
         }
         return null;
     }
@@ -203,7 +214,9 @@ async function calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusP
 
     if (!liveData || liveData.length === 0) {
         if (showNoDataAlert) {
-            alert('No work hours or item sales data found in Live for the selected date range. Please choose another start and end date.');
+            alert(
+                'No work hours or item sales data found in Live for the selected date range. Please choose another start and end date.'
+            );
         }
         return null;
     }
@@ -212,7 +225,7 @@ async function calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusP
     let totalItems = 0;
     let totalGMV = 0;
 
-    liveData.forEach(live => {
+    liveData.forEach((live) => {
         totalHours += Number(live.duration_hours) || 0;
         totalItems += Number(live.items_sold) || 0;
         totalGMV += Number(live.gmv_amount) || 0;
@@ -229,7 +242,7 @@ async function calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusP
         baseRate,
         basePayment,
         bonusAmount,
-        finalPayout
+        finalPayout,
     };
 }
 
@@ -279,12 +292,15 @@ async function loadEmployees() {
     }
 
     const employees = data
-        .map(profile => ({
+        .map((profile) => ({
             id: profile.userid,
-            name: profile.username || profile.userid
+            name: profile.username || profile.userid,
         }))
-        .filter(item => item.id)
-        .filter((item, index, array) => array.findIndex(x => x.id === item.id) === index);
+        .filter((item) => item.id)
+        .filter(
+            (item, index, array) =>
+                array.findIndex((x) => x.id === item.id) === index
+        );
 
     if (employees.length === 0) {
         select.innerHTML = '<option value="">No employee ID found</option>';
@@ -299,13 +315,13 @@ async function loadEmployees() {
 }
 
 async function previewPayout() {
-    
     const employeeId = document.getElementById('payoutEmployee').value;
     const periodStart = document.getElementById('periodStart').value;
     const periodEnd = document.getElementById('periodEnd').value;
-    const bonusPerItemValue = Number(document.getElementById('bonusPerItem').value) || 0;
+    const bonusPerItemValue =
+        Number(document.getElementById('bonusPerItem').value) || 0;
 
-    if (!employeeId || !periodStart || !periodEnd){
+    if (!employeeId || !periodStart || !periodEnd) {
         resetPreview();
         return;
     }
@@ -315,7 +331,13 @@ async function previewPayout() {
         return;
     }
 
-    const payoutMetrics = await calculatePayoutMetrics(employeeId, periodStart, periodEnd, bonusPerItemValue, true);
+    const payoutMetrics = await calculatePayoutMetrics(
+        employeeId,
+        periodStart,
+        periodEnd,
+        bonusPerItemValue,
+        true
+    );
 
     if (!payoutMetrics) {
         resetPreview();
@@ -323,25 +345,34 @@ async function previewPayout() {
     }
 
     // DISPLAY PREVIEW
-    document.getElementById('previewHours').textContent = payoutMetrics.totalHours;
-    document.getElementById('previewSales').textContent = payoutMetrics.totalItems;
-    document.getElementById('previewGMV').textContent = payoutMetrics.totalGMV.toFixed(2);
-    document.getElementById('previewRate').textContent = payoutMetrics.baseRate.toFixed(2);
-    document.getElementById('previewBase').textContent = payoutMetrics.basePayment.toFixed(2);
-    document.getElementById('previewBonus').textContent = payoutMetrics.bonusAmount.toFixed(2);
-    document.getElementById('previewTotal').textContent = payoutMetrics.finalPayout.toFixed(2);
+    document.getElementById('previewHours').textContent =
+        payoutMetrics.totalHours;
+    document.getElementById('previewSales').textContent =
+        payoutMetrics.totalItems;
+    document.getElementById('previewGMV').textContent =
+        payoutMetrics.totalGMV.toFixed(2);
+    document.getElementById('previewRate').textContent =
+        payoutMetrics.baseRate.toFixed(2);
+    document.getElementById('previewBase').textContent =
+        payoutMetrics.basePayment.toFixed(2);
+    document.getElementById('previewBonus').textContent =
+        payoutMetrics.bonusAmount.toFixed(2);
+    document.getElementById('previewTotal').textContent =
+        payoutMetrics.finalPayout.toFixed(2);
 }
 
 async function validatePayoutForm() {
     const startDate = document.getElementById('periodStart').value;
     const endDate = document.getElementById('periodEnd').value;
-    
-    if(!startDate || !endDate){
+
+    if (!startDate || !endDate) {
         return true;
     }
 
-    if(new Date(endDate) < new Date(startDate)){
-        alert('End date cannot be earlier than start date. Please select valid dates.');
+    if (new Date(endDate) < new Date(startDate)) {
+        alert(
+            'End date cannot be earlier than start date. Please select valid dates.'
+        );
         document.getElementById('periodEnd').value = '';
         resetPreview();
         return false;
@@ -361,20 +392,24 @@ function resetPreview() {
 }
 
 addEventListener('DOMContentLoaded', () => {
-    document.getElementById('add_payout_data').addEventListener('click', async (event) => {
-        const nextID = await getNextPayoutID();
+    document
+        .getElementById('add_payout_data')
+        .addEventListener('click', async (event) => {
+            const nextID = await getNextPayoutID();
 
-        if (nextID === null) {
-            alert('Failed to generate next payout ID. Please try again.');
-            return;
-        }
+            if (nextID === null) {
+                alert('Failed to generate next payout ID. Please try again.');
+                return;
+            }
 
-        document.getElementById('payoutID').value = nextID;
+            document.getElementById('payoutID').value = nextID;
 
-        const payoutmodal = new bootstrap.Modal(document.getElementById('payoutModal'));
+            const payoutmodal = new bootstrap.Modal(
+                document.getElementById('payoutModal')
+            );
 
-        payoutmodal.show();
-    })
+            payoutmodal.show();
+        });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -383,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('periodStart').addEventListener('change', () => {
         if (validatePayoutForm()) {
-        previewPayout();
+            previewPayout();
         }
     });
     document.getElementById('periodEnd').addEventListener('change', () => {
@@ -392,7 +427,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('payoutEmployee').addEventListener('change', previewPayout);
-    document.getElementById('bonusPerItem').addEventListener('input', previewPayout);
-    
+    document
+        .getElementById('payoutEmployee')
+        .addEventListener('change', previewPayout);
+    document
+        .getElementById('bonusPerItem')
+        .addEventListener('input', previewPayout);
 });

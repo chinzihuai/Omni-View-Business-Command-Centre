@@ -4,9 +4,11 @@ function setTableSortLock(locked, tableSelector) {
     const wrapper = document.querySelector(tableSelector);
     if (!wrapper) return;
     const thead = wrapper.querySelector('thead');
-    const paginate = wrapper.closest('.dataTables_wrapper')?.querySelector('.dataTables_paginate');
+    const paginate = wrapper
+        .closest('.dataTables_wrapper')
+        ?.querySelector('.dataTables_paginate');
 
-    [thead, paginate].forEach(el => {
+    [thead, paginate].forEach((el) => {
         if (!el) return;
         el.style.pointerEvents = locked ? 'none' : '';
         el.style.opacity = locked ? '0.6' : '';
@@ -15,15 +17,11 @@ function setTableSortLock(locked, tableSelector) {
 }
 
 async function loadProducts() {
+    const { data, error } = await supabaseClient.from('Product').select('*');
 
-    const{data,error}=await supabaseClient
-        .from('Product')
-        .select('*');
-
-
-    if(error) {
+    if (error) {
         console.error('Error fetching products:', error);
-        alert("Error fetching products. Please check the console for details.");
+        alert('Error fetching products. Please check the console for details.');
         return;
     }
 
@@ -34,7 +32,7 @@ async function loadProducts() {
             lengthMenu: [10, 25, 50, 100],
             paging: true,
             ordering: true,
-            info: true
+            info: true,
         });
     }
 
@@ -42,18 +40,17 @@ async function loadProducts() {
     productTable.clear();
 
     //load new data
-    data.forEach(Product => {
+    data.forEach((Product) => {
+        productTable.row.add([
+            Product.Product_id,
 
-    productTable.row.add([
-        Product.Product_id,
+            Product.Product_name,
 
-        Product.Product_name,
+            Product.category,
 
-        Product.category,
+            Product.Stock,
 
-        Product.Stock,
-
-        `
+            `
         <button class="btn btn-warning btn-sm"
             onclick="editProduct(this, '${Product.Product_id}')">
             <i class="bi bi-pencil"></i> Edit
@@ -63,35 +60,32 @@ async function loadProducts() {
             onclick="deleteProduct('${Product.Product_id}')">
             <i class="bi bi-trash"></i> Delete
         </button>
-        `
-    ]);
+        `,
+        ]);
+    });
 
-});
-
-productTable.draw();
-   
-    
+    productTable.draw();
 }
 
 async function deleteProduct(ProductId) {
-    if (!confirm("Are you sure you want to delete this product?")) {
+    if (!confirm('Are you sure you want to delete this product?')) {
         return;
     }
 
-    console.log("Confirm deletion")
+    console.log('Confirm deletion');
 
-    const{error}=await supabaseClient
+    const { error } = await supabaseClient
         .from('Product')
         .delete()
         .eq('Product_id', ProductId);
 
-    if(error) {
+    if (error) {
         console.error('Error deleting product:', error);
-        alert("Failed to delete product.");
+        alert('Failed to delete product.');
         return;
     }
 
-    alert("Product deleted successfully!");
+    alert('Product deleted successfully!');
 
     loadProducts();
 }
@@ -139,19 +133,19 @@ async function confirmEdit(button, ProductId) {
     const newStock = inputs[2].value.trim();
 
     if (!newProductName || !newCategory || !newStock) {
-        alert("All fields are required!");
+        alert('All fields are required!');
         return;
     }
 
     const stock = Number(newStock);
 
     if (isNaN(stock)) {
-        alert("Stock must be a number.");
+        alert('Stock must be a number.');
         return;
     }
 
     if (stock < 0) {
-        alert("Stock cannot be negative.");
+        alert('Stock cannot be negative.');
         return;
     }
 
@@ -160,68 +154,65 @@ async function confirmEdit(button, ProductId) {
         .update({
             Product_name: newProductName,
             category: newCategory,
-            Stock: stock
+            Stock: stock,
         })
         .eq('Product_id', ProductId);
 
     if (error) {
-        console.error("Update error:", error);
-        alert("Failed to update product.");
+        console.error('Update error:', error);
+        alert('Failed to update product.');
         return;
     }
 
-    alert("Product updated successfully!");
+    alert('Product updated successfully!');
 
     setTableSortLock(false);
     loadProducts();
 }
 
 async function addProduct() {
-
-    const productId =document.getElementById('productId').value.trim();
-    const productName =document.getElementById('productName').value.trim();
-    const category =document.getElementById('productCategory').value.trim();
-    const stockValue =document.getElementById('productStock').value.trim();
+    const productId = document.getElementById('productId').value.trim();
+    const productName = document.getElementById('productName').value.trim();
+    const category = document.getElementById('productCategory').value.trim();
+    const stockValue = document.getElementById('productStock').value.trim();
 
     if (!productId || !productName || !category || !stockValue) {
-        alert("All fields are required!");
+        alert('All fields are required!');
         return;
     }
 
     if (isNaN(stockValue)) {
-        alert("Stock must be a number.");
+        alert('Stock must be a number.');
         return;
     }
 
     const stock = Number(stockValue);
 
     if (stock < 0) {
-        alert("Stock cannot be negative.");
+        alert('Stock cannot be negative.');
         return;
     }
 
-    const { error } = await supabaseClient
-        .from('Product')
-        .insert([{
+    const { error } = await supabaseClient.from('Product').insert([
+        {
             Product_id: productId,
             Product_name: productName,
             category: category,
-            Stock: stock
-        }]);
+            Stock: stock,
+        },
+    ]);
 
     if (error) {
-
-        if (error.code === "23505") {
-        alert("Product ID already exists. Please use a different ID.");
-        } 
-        else {
-        alert("Failed to add product.");
+        if (error.code === '23505') {
+            alert('Product ID already exists. Please use a different ID.');
+        } else {
+            alert('Failed to add product.');
         }
-        console.error("Insert error:", error);
+        console.error('Insert error:', error);
         return;
     }
 
-    alert("Product added successfully!");
+    alert('Product added successfully!');
 
     const modalElement = document.getElementById('addProductModal');
     const modalInstance = bootstrap.Modal.getInstance(modalElement);
@@ -232,7 +223,6 @@ async function addProduct() {
 }
 
 async function getNextProductId() {
-
     const { data, error } = await supabaseClient
         .from('Product')
         .select('Product_id')
@@ -240,47 +230,48 @@ async function getNextProductId() {
         .limit(1);
 
     if (error) {
-        console.error("Error getting last Product ID:", error);
+        console.error('Error getting last Product ID:', error);
         return null;
     }
 
     // No products yet
     if (data.length === 0) {
-        return "Product0001";
+        return 'Product0001';
     }
 
     const lastId = data[0].Product_id;
 
     // Get the number part
-    const number = parseInt(lastId.replace("Product", ""), 10);
+    const number = parseInt(lastId.replace('Product', ''), 10);
 
     // Increase by 1
     const nextNumber = number + 1;
 
     // Keep 4 digits
-    const nextId = String(nextNumber).padStart(4, "0");
+    const nextId = String(nextNumber).padStart(4, '0');
 
     return `Product${nextId}`;
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+    document
+        .getElementById('addproduct')
+        .addEventListener('click', async function () {
+            const nextId = await getNextProductId();
 
-    document.getElementById("addproduct").addEventListener("click", async function() {
-        
-        const nextId = await getNextProductId();
+            if (nextId === null) {
+                alert('Unable to generate Product ID.');
+                return;
+            }
 
-        if (nextId === null) {
-            alert("Unable to generate Product ID.");
-            return;
-        }
+            document.getElementById('productId').value = nextId;
 
-        document.getElementById("productId").value = nextId;
+            const productModal = new bootstrap.Modal(
+                document.getElementById('addProductModal')
+            );
 
-    const productModal = new bootstrap.Modal(document.getElementById('addProductModal'));
-
-    productModal.show();
-});;
+            productModal.show();
+        });
 });
-
 
 document.addEventListener('DOMContentLoaded', loadProducts);

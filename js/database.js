@@ -1,10 +1,7 @@
 const supabaseUrl = 'https://uvmsvoyuzcwncwkghzml.supabase.co';
-const supabaseKey = "sb_publishable_W3YQagWaZn0GLDpj8a8Gvg_WwhXG_Xt";
+const supabaseKey = 'sb_publishable_W3YQagWaZn0GLDpj8a8Gvg_WwhXG_Xt';
 
-const supabaseClient = window.supabase.createClient(
-    supabaseUrl,
-    supabaseKey
-);
+const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseKey);
 
 const STAFF_ROLES = ['employee', 'owner']; // used for live/payout dropdowns — owner logs their own sessions too, not an org headcount category
 
