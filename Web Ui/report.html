@@ -1,629 +1,788 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/database.js"></script>
-    <script src="../js/loaddata.js"></script>
-    <script src="../js/logout.js"></script>
-    <script src="../js/admin_authcheck.js"></script>
-    <script src="../js/report.js"></script>
-    <script src="../js/print_PDF_report.js"></script>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/view-transitions.css">
-    <title>Report Page</title>
-    <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
-</head>
-<body>
-    <div class="d-flex app-shell">
-        <aside class="sidebar offcanvas-md offcanvas-start no-print" id="sidebar" tabindex="-1" aria-label="Main navigation">
-            <div class="sidebar-brand">
-                <img src="../image/captempire_icon.png" alt="Logo" class="sidebar-logo">
-                <span class="brand-text">Capt Empire</span>
-            </div>
-            <nav class="sidebar-nav">
-                <a href="main.html" class="nav-link">
-                    <i class="bi bi-grid-1x2-fill"></i> <span>Dashboard</span>
-                </a>
-                <a href="product.html" class="nav-link">
-                    <i class="bi bi-box-seam-fill"></i> <span>Product</span>
-                </a>
-                <a href="lives.html" class="nav-link">
-                    <i class="bi bi-camera-reels-fill"></i> <span>Lives</span>
-                </a>
-                <a href="payout.html" class="nav-link">
-                    <i class="bi bi-cash-coin"></i> <span>Payout</span>
-                </a>
-                <a href="report.html" class="nav-link active">
-                    <i class="bi bi-bar-chart-fill"></i> <span>Report</span>
-                </a>
-                <a href="user_management.html" class="nav-link">
-                    <i class="bi bi-people-fill"></i> <span>User Management</span>
-                </a>
-            </nav>
-            <div class="sidebar-footer">
-                <a href="#" class="nav-link" onclick="logout(event)">
-                    <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
-                </a>
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <div class="content-topbar no-print">
-                <button class="sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Open navigation">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="topbar-user dropdown">
-                    <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="user-name" id="user_name"></span>
-                        <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        />
+        <script
+            type="module"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            type="module"
+            src="https://cdn.jsdelivr.net/npm/chart.js"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="../js/database.js"></script>
+        <script src="../js/loaddata.js"></script>
+        <script src="../js/logout.js"></script>
+        <script src="../js/admin_authcheck.js"></script>
+        <script src="../js/report.js"></script>
+        <script src="../js/print_PDF_report.js"></script>
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/view-transitions.css" />
+        <title>Report Page</title>
+        <link
+            rel="icon"
+            href="../image/captempire_icon.png"
+            type="image/x-icon"
+        />
+    </head>
+    <body>
+        <div class="d-flex app-shell">
+            <aside
+                class="sidebar offcanvas-md offcanvas-start no-print"
+                id="sidebar"
+                tabindex="-1"
+                aria-label="Main navigation"
+            >
+                <div class="sidebar-brand">
+                    <img
+                        src="../image/captempire_icon.png"
+                        alt="Logo"
+                        class="sidebar-logo"
+                    />
+                    <span class="brand-text">Capt Empire</span>
+                </div>
+                <nav class="sidebar-nav">
+                    <a href="main.html" class="nav-link">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Dashboard</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
-                        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" onclick="logout(event)">
-                            <i class="bi bi-box-arrow-right"></i> Logout
-                        </a></li>
-                    </ul>
+                    <a href="product.html" class="nav-link">
+                        <i class="bi bi-box-seam-fill"></i> <span>Product</span>
+                    </a>
+                    <a href="lives.html" class="nav-link">
+                        <i class="bi bi-camera-reels-fill"></i>
+                        <span>Lives</span>
+                    </a>
+                    <a href="payout.html" class="nav-link">
+                        <i class="bi bi-cash-coin"></i> <span>Payout</span>
+                    </a>
+                    <a href="report.html" class="nav-link active">
+                        <i class="bi bi-bar-chart-fill"></i> <span>Report</span>
+                    </a>
+                    <a href="user_management.html" class="nav-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>User Management</span>
+                    </a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="#" class="nav-link" onclick="logout(event)">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
                 </div>
-            </div>
-            
-            <div class="container-fluid">
-                <div class="product-header">
-                    <h1 class="mt-4">Reports</h1>
-                    <p class="text-muted mb-0">
-                    View and analyze business performance
-                    </p>
-                    <ol class="breadcrumb mb-4 product-breadcrumb">
-                        <li class="breadcrumb-item"><a href="main.html">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Reports</li>
-                    </ol>
-                </div>
-                <div class="d-flex gap-2 mb-3 no-print">
-                    <button class="btn btn-primary" id="generatePdfBtn">
-                        <i class="bi bi-file-earmark-pdf"></i> Generate PDF
+            </aside>
+
+            <main class="main-content">
+                <div class="content-topbar no-print">
+                    <button
+                        class="sidebar-toggle"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#sidebar"
+                        aria-controls="sidebar"
+                        aria-label="Open navigation"
+                    >
+                        <i class="bi bi-list"></i>
                     </button>
+                    <div class="topbar-user dropdown">
+                        <a
+                            href="#"
+                            class="dropdown-toggle"
+                            id="topbarUserMenu"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <span class="user-name" id="user_name"></span>
+                            <img
+                                src="../image/User-avatar.webp"
+                                alt="User avatar"
+                                class="avatar"
+                            />
+                        </a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="topbarUserMenu"
+                        >
+                            <li>
+                                <a class="dropdown-item" href="profile.html"
+                                    ><i class="bi bi-person-circle"></i>
+                                    Profile</a
+                                >
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    onclick="logout(event)"
+                                >
+                                    <i class="bi bi-box-arrow-right"></i> Logout
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Report Filters -->
-                <div class="card shadow-sm mb-4 mt-3 no-print">
-                    <div class="card-body">
-                        <h5 class="fw-bold mb-3">
-                            <i class="bi bi-funnel"></i> Report Filters
-                        </h5>
+                <div class="container-fluid">
+                    <div class="product-header">
+                        <h1 class="mt-4">Reports</h1>
+                        <p class="text-muted mb-0">
+                            View and analyze business performance
+                        </p>
+                        <ol class="breadcrumb mb-4 product-breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="main.html">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">Reports</li>
+                        </ol>
                     </div>
-                    <div class="row g-3 px-3 pb-3">
-                         <!-- Quick Period -->
-                        <div class="col-12 col-md-3">
-                            <label for="periodFilter" class="form-label">
-                                Period
-                            </label>
-                            <select id="periodFilter" class="form-select">
-                                <option value="this_month">This Month</option>
-                                <option value="last_month">Last Month</option>
-                                <option value="this_week">This Week</option>
-                                <option value="this_year">This Year</option>
-                                <option value="custom">Custom Range</option>
-                            </select>
-                        </div>
-                        <!-- Employee -->
-                        <div class="col-12 col-md-3">
-                            <label for="employeeFilter" class="form-label">
-                                Staff
-                            </label>
+                    <div class="d-flex gap-2 mb-3 no-print">
+                        <button class="btn btn-primary" id="generatePdfBtn">
+                            <i class="bi bi-file-earmark-pdf"></i> Generate PDF
+                        </button>
+                    </div>
 
-                            <select id="employeeFilter" class="form-select">
-                                <option value="all">All Staff</option>
-
-                                <!-- Load employees using JS -->
-                            </select>   
+                    <!-- Report Filters -->
+                    <div class="card shadow-sm mb-4 mt-3 no-print">
+                        <div class="card-body">
+                            <h5 class="fw-bold mb-3">
+                                <i class="bi bi-funnel"></i> Report Filters
+                            </h5>
                         </div>
-                        <!-- Report Type -->
-                        <div class="col-12 col-md-3">
-                            <label for="reportTypeFilter" class="form-label">
-                                Report Type
-                            </label>
+                        <div class="row g-3 px-3 pb-3">
+                            <!-- Quick Period -->
+                            <div class="col-12 col-md-3">
+                                <label for="periodFilter" class="form-label">
+                                    Period
+                                </label>
+                                <select id="periodFilter" class="form-select">
+                                    <option value="this_month">
+                                        This Month
+                                    </option>
+                                    <option value="last_month">
+                                        Last Month
+                                    </option>
+                                    <option value="this_week">This Week</option>
+                                    <option value="this_year">This Year</option>
+                                    <option value="custom">Custom Range</option>
+                                </select>
+                            </div>
+                            <!-- Employee -->
+                            <div class="col-12 col-md-3">
+                                <label for="employeeFilter" class="form-label">
+                                    Staff
+                                </label>
 
-                            <select id="reportTypeFilter" class="form-select">
-                                <option value="all">All Reports</option>
-                                <option value="sales">Sales</option>
-                                <option value="employee">Employee Performance</option>
-                                <option value="payout">Payout</option>
-                                <option value="inventory">Inventory</option>
-                                <option value="live">Live</option>
-                            </select>
+                                <select id="employeeFilter" class="form-select">
+                                    <option value="all">All Staff</option>
+
+                                    <!-- Load employees using JS -->
+                                </select>
+                            </div>
+                            <!-- Report Type -->
+                            <div class="col-12 col-md-3">
+                                <label
+                                    for="reportTypeFilter"
+                                    class="form-label"
+                                >
+                                    Report Type
+                                </label>
+
+                                <select
+                                    id="reportTypeFilter"
+                                    class="form-select"
+                                >
+                                    <option value="all">All Reports</option>
+                                    <option value="sales">Sales</option>
+                                    <option value="employee">
+                                        Employee Performance
+                                    </option>
+                                    <option value="payout">Payout</option>
+                                    <option value="inventory">Inventory</option>
+                                    <option value="live">Live</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-3 align-self-end">
+                                <button
+                                    type="button"
+                                    id="applyFilterBtn"
+                                    class="btn btn-primary w-100"
+                                >
+                                    <i class="bi bi-search"></i>
+                                    Apply Filter
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-3 align-self-end">
-                            <button type="button" id="applyFilterBtn" class="btn btn-primary w-100"><i class="bi bi-search"></i>
-                                Apply Filter
-                            </button>
+                        <!-- Custom Date Range -->
+                        <div
+                            id="customDateRange"
+                            class="row g-3 mt-1 px-3 pb-3 d-none"
+                        >
+                            <div class="col-12 col-md-3">
+                                <label for="startDate" class="form-label">
+                                    Start Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="startDate"
+                                    class="form-control"
+                                />
+                            </div>
+                            <div class="col-12 col-md-3">
+                                <label for="endDate" class="form-label">
+                                    End Date
+                                </label>
+
+                                <input
+                                    type="date"
+                                    id="endDate"
+                                    class="form-control"
+                                />
+                            </div>
                         </div>
                     </div>
-                    <!-- Custom Date Range -->
-                    <div id="customDateRange" class="row g-3 mt-1 px-3 pb-3 d-none">
-                        <div class="col-12 col-md-3">
-                            <label for="startDate" class="form-label">
-                                Start Date
-                            </label>
-
-                            <input
-                                type="date"
-                                id="startDate"
-                                class="form-control">
-                        </div>
-                        <div class="col-12 col-md-3">
-                            <label for="endDate" class="form-label">
-                                End Date
-                            </label>
-
-                            <input
-                                type="date"
-                                id="endDate"
-                                class="form-control">   
-                        </div>  
-                    </div>  
-                </div>  
 
                     <!-- REPORT CONTENT -->
                     <div id="reportContent">
-
-                    <!-- SALES REPORT -->
-                    <div id="salesSection" class="d-none">
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h5 class="fw-bold mb-1">
-                                            Sales Report
-                                        </h5>
-                                        <p class="text-muted mb-0">
-                                            Sales performance during the selected period
-                                        </p>
-                                    </div>
-                                    <i class="bi bi-graph-up-arrow fs-3 text-primary"></i>
-                                </div>
-
-                        <!-- Sales Cards -->
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-4">
-                                <div class="card border-0 bg-light">
-                                    <div class="card-body d-flex justify-content-between">
+                        <!-- SALES REPORT -->
+                        <div id="salesSection" class="d-none">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-3"
+                                    >
                                         <div>
-                                            <p class="text-muted mb-1">
-                                                Total GMV
+                                            <h5 class="fw-bold mb-1">
+                                                Sales Report
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                Sales performance during the
+                                                selected period
                                             </p>
-                                            <h3 id="salesTotalGMV" class="mb-0">
-                                                RM 0.00
-                                            </h3>
                                         </div>
-                                        <i class="bi bi-cash-stack fs-2 text-success"></i>
+                                        <i
+                                            class="bi bi-graph-up-arrow fs-3 text-primary"
+                                        ></i>
+                                    </div>
+
+                                    <!-- Sales Cards -->
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-light">
+                                                <div
+                                                    class="card-body d-flex justify-content-between"
+                                                >
+                                                    <div>
+                                                        <p
+                                                            class="text-muted mb-1"
+                                                        >
+                                                            Total GMV
+                                                        </p>
+                                                        <h3
+                                                            id="salesTotalGMV"
+                                                            class="mb-0"
+                                                        >
+                                                            RM 0.00
+                                                        </h3>
+                                                    </div>
+                                                    <i
+                                                        class="bi bi-cash-stack fs-2 text-success"
+                                                    ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-light">
+                                                <div
+                                                    class="card-body d-flex justify-content-between"
+                                                >
+                                                    <div>
+                                                        <p
+                                                            class="text-muted mb-1"
+                                                        >
+                                                            Items Sold
+                                                        </p>
+                                                        <h3
+                                                            id="salesTotalItems"
+                                                            class="mb-0"
+                                                        >
+                                                            0
+                                                        </h3>
+                                                    </div>
+                                                    <i
+                                                        class="bi bi-box-seam fs-2 text-primary"
+                                                    ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-light">
+                                                <div
+                                                    class="card-body d-flex justify-content-between"
+                                                >
+                                                    <div>
+                                                        <p
+                                                            class="text-muted mb-1"
+                                                        >
+                                                            Average GMV
+                                                        </p>
+                                                        <h3
+                                                            id="salesAverageGMV"
+                                                            class="mb-0"
+                                                        >
+                                                            RM 0.00
+                                                        </h3>
+                                                    </div>
+                                                    <i
+                                                        class="bi bi-bar-chart-line fs-2 text-warning"
+                                                    ></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Sales Chart -->
+                                    <div style="height: 350px">
+                                        <canvas id="salesChart"></canvas>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-md-4">
-                                <div class="card border-0 bg-light">
-                                    <div class="card-body d-flex justify-content-between">
+                        <!-- LIVE VIEWS REPORT -->
+                        <div id="liveViewsSection" class="d-none">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-3"
+                                    >
                                         <div>
-                                            <p class="text-muted mb-1">
-                                                Items Sold
+                                            <h5 class="fw-bold mb-1">
+                                                Live Views Report
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                Live session audience
+                                                performance
                                             </p>
-                                            <h3 id="salesTotalItems" class="mb-0">
-                                                0
-                                            </h3>
                                         </div>
-                                        <i class="bi bi-box-seam fs-2 text-primary"></i>
+                                        <i
+                                            class="bi bi-broadcast fs-3 text-danger"
+                                        ></i>
+                                    </div>
+
+                                    <!-- Live View Cards -->
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Views
+                                                    </p>
+                                                    <h3 id="totalViews">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Sessions
+                                                    </p>
+                                                    <h3 id="totalLiveSessions">
+                                                        0
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Average Views
+                                                    </p>
+                                                    <h3 id="averageViews">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Peak Views
+                                                    </p>
+                                                    <h3 id="peakViews">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Views Trend -->
+                                    <div class="mb-4">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mb-3"
+                                        >
+                                            <div>
+                                                <h6 class="fw-bold mb-1">
+                                                    Views Trend
+                                                </h6>
+                                                <small class="text-muted">
+                                                    Views during the selected
+                                                    period
+                                                </small>
+                                            </div>
+                                            <i
+                                                class="bi bi-graph-up fs-4 text-primary"
+                                            ></i>
+                                        </div>
+                                        <div style="height: 350px">
+                                            <canvas
+                                                id="liveViewsTrendChart"
+                                            ></canvas>
+                                        </div>
+                                    </div>
+
+                                    <!-- Day of Week -->
+                                    <div class="mb-4">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mb-3"
+                                        >
+                                            <div>
+                                                <h6 class="fw-bold mb-1">
+                                                    Performance by Day of Week
+                                                </h6>
+                                                <small class="text-muted">
+                                                    Views by day
+                                                </small>
+                                            </div>
+                                            <i
+                                                class="bi bi-calendar-week fs-4 text-success"
+                                            ></i>
+                                        </div>
+                                        <div style="height: 350px">
+                                            <canvas
+                                                id="liveDayOfWeekChart"
+                                            ></canvas>
+                                        </div>
+                                    </div>
+
+                                    <!-- Views by Start Time -->
+                                    <div class="mb-4">
+                                        <div
+                                            class="d-flex justify-content-between align-items-center mb-3"
+                                        >
+                                            <div>
+                                                <h6 class="fw-bold mb-1">
+                                                    Views by Start Time
+                                                </h6>
+                                                <small class="text-muted">
+                                                    Views by start time
+                                                </small>
+                                            </div>
+                                            <i
+                                                class="bi bi-calendar-week fs-4 text-success"
+                                            ></i>
+                                        </div>
+                                        <div style="height: 350px">
+                                            <canvas
+                                                id="liveStartTimeChart"
+                                            ></canvas>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="col-md-4">
-                                <div class="card border-0 bg-light">
-                                    <div class="card-body d-flex justify-content-between">
+                        <!-- EMPLOYEE PERFORMANCE -->
+                        <div id="employeeSection" class="d-none">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-3"
+                                    >
                                         <div>
-                                            <p class="text-muted mb-1">
-                                                Average GMV
+                                            <h5 class="fw-bold mb-1">
+                                                Employee Performance
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                Employee performance during the
+                                                selected period
                                             </p>
-                                            <h3 id="salesAverageGMV" class="mb-0">
-                                                RM 0.00
-                                            </h3>
                                         </div>
-                                        <i class="bi bi-bar-chart-line fs-2 text-warning"></i>
+                                        <i
+                                            class="bi bi-people fs-3 text-primary"
+                                        ></i>
+                                    </div>
+
+                                    <!-- Employee Summary Cards -->
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Employees
+                                                    </p>
+                                                    <h3 id="employeeTotalCount">
+                                                        0
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Hours
+                                                    </p>
+                                                    <h3 id="employeeTotalHours">
+                                                        0
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Items Sold
+                                                    </p>
+                                                    <h3 id="employeeTotalItems">
+                                                        0
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total GMV
+                                                    </p>
+                                                    <h3 id="employeeTotalGMV">
+                                                        RM 0.00
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Employee Performance Table -->
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-hover align-middle"
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee</th>
+                                                    <th>Sessions</th>
+                                                    <th>Hours</th>
+                                                    <th>Views</th>
+                                                    <th>Items Sold</th>
+                                                    <th>GMV</th>
+                                                    <th>GMV / Hour</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                id="employeeReportTable"
+                                            ></tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                            <!-- Sales Chart -->
-                            <div style="height: 350px;">
-                                <canvas id="salesChart"></canvas>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
 
-                    <!-- LIVE VIEWS REPORT -->
-                    <div id="liveViewsSection" class="d-none">
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h5 class="fw-bold mb-1">
-                                            Live Views Report
-                                        </h5>
-                                        <p class="text-muted mb-0">
-                                            Live session audience performance
-                                        </p>
-                                    </div>
-                                    <i class="bi bi-broadcast fs-3 text-danger"></i>
-                                </div>
-
-                                <!-- Live View Cards -->
-                                <div class="row g-3 mb-4">
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Total Views
-                                                </p>
-                                                <h3 id="totalViews">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Total Sessions
-                                                </p>
-                                                <h3 id="totalLiveSessions">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Average Views
-                                                </p>
-                                                <h3 id="averageViews">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Peak Views
-                                                </p>
-                                                <h3 id="peakViews">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> 
-
-                                <!-- Views Trend -->
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- PAYOUT REPORT -->
+                        <div id="payoutSection" class="d-none">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-3"
+                                    >
                                         <div>
-                                            <h6 class="fw-bold mb-1">
-                                                Views Trend
-                                            </h6>
-                                            <small class="text-muted">
-                                                Views during the selected period
-                                            </small>
+                                            <h5 class="fw-bold mb-1">
+                                                Payout Report
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                Employee payout summary
+                                            </p>
                                         </div>
-                                        <i class="bi bi-graph-up fs-4 text-primary"></i>
+                                        <i
+                                            class="bi bi-wallet2 fs-3 text-success"
+                                        ></i>
                                     </div>
-                                    <div style="height: 350px;">
-                                        <canvas id="liveViewsTrendChart"></canvas>
+
+                                    <!-- Payout Summary Cards -->
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Payout
+                                                    </p>
+                                                    <h3 id="totalPayout">
+                                                        RM 0.00
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Base Payment
+                                                    </p>
+                                                    <h3 id="totalBasePayment">
+                                                        RM 0.00
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Bonus
+                                                    </p>
+                                                    <h3 id="totalBonus">
+                                                        RM 0.00
+                                                    </h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Employee</th>
+                                                    <th>Period</th>
+                                                    <th>Base Payment</th>
+                                                    <th>Bonus</th>
+                                                    <th>Final Payout</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                id="payoutReportTable"
+                                            ></tbody>
+                                        </table>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <!-- Day of Week -->
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <!-- INVENTORY REPORT -->
+                        <div id="inventorySection" class="d-none">
+                            <div class="card shadow-sm mb-4">
+                                <div class="card-body">
+                                    <div
+                                        class="d-flex justify-content-between align-items-center mb-3"
+                                    >
                                         <div>
-                                            <h6 class="fw-bold mb-1">
-                                                Performance by Day of Week
-                                            </h6>
-                                            <small class="text-muted">
-                                                Views by day
-                                            </small>
+                                            <h5 class="fw-bold mb-1">
+                                                Inventory Report
+                                            </h5>
+                                            <p class="text-muted mb-0">
+                                                Current inventory status
+                                            </p>
                                         </div>
-                                        <i class="bi bi-calendar-week fs-4 text-success"></i>
+                                        <i
+                                            class="bi bi-boxes fs-3 text-warning"
+                                        ></i>
                                     </div>
-                                    <div style="height: 350px;">
-                                        <canvas id="liveDayOfWeekChart"></canvas>
-                                    </div>
-                                </div>
 
-                                <!-- Views by Start Time -->
-                                <div class="mb-4">
-                                    <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <div>
-                                            <h6 class="fw-bold mb-1">
-                                                Views by Start Time
-                                            </h6>
-                                            <small class="text-muted">
-                                                Views by start time
-                                            </small>
+                                    <!-- Inventory Summary Cards -->
+                                    <div class="row g-3 mb-4">
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Products
+                                                    </p>
+                                                    <h3 id="totalProducts">
+                                                        0
+                                                    </h3>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <i class="bi bi-calendar-week fs-4 text-success"></i>
-                                    </div>
-                                    <div style="height: 350px;">
-                                        <canvas id="liveStartTimeChart"></canvas>
-                                    </div>
-                                </div>
 
-                            </div>
-                        </div>
-                    </div>
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Total Stock
+                                                    </p>
+                                                    <h3 id="totalStock">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Low Stock
+                                                    </p>
+                                                    <h3 id="lowStock">0</h3>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                    <!-- EMPLOYEE PERFORMANCE -->
-                    <div id="employeeSection" class="d-none">
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h5 class="fw-bold mb-1">
-                                            Employee Performance
-                                        </h5>
-                                        <p class="text-muted mb-0">
-                                            Employee performance during the selected period
-                                        </p>
-                                    </div>
-                                    <i class="bi bi-people fs-3 text-primary"></i>
-                                </div>
-
-                                <!-- Employee Summary Cards -->
-                                <div class="row g-3 mb-4">
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">Total Employees</p>
-                                                <h3 id="employeeTotalCount">0</h3>
+                                        <div class="col-md-3">
+                                            <div class="card border-0 bg-light">
+                                                <div class="card-body">
+                                                    <p class="text-muted mb-1">
+                                                        Out of Stock
+                                                    </p>
+                                                    <h3 id="outOfStock">0</h3>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">Total Hours</p>
-                                                <h3 id="employeeTotalHours">0</h3>
-                                            </div>
-                                        </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Stock</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody
+                                                id="inventoryReportTable"
+                                            ></tbody>
+                                        </table>
                                     </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">Total Items Sold</p>
-                                                <h3 id="employeeTotalItems">0</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">Total GMV</p>
-                                                <h3 id="employeeTotalGMV">RM 0.00</h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Employee Performance Table -->
-                                <div class="table-responsive">
-                                    <table class="table table-hover align-middle">
-                                        <thead>
-                                            <tr>
-                                                <th>Employee</th>
-                                                <th>Sessions</th>
-                                                <th>Hours</th>
-                                                <th>Views</th>
-                                                <th>Items Sold</th>
-                                                <th>GMV</th>
-                                                <th>GMV / Hour</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="employeeReportTable">
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PAYOUT REPORT -->
-                    <div id="payoutSection" class="d-none">
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h5 class="fw-bold mb-1">
-                                            Payout Report
-                                        </h5>
-                                        <p class="text-muted mb-0">
-                                            Employee payout summary
-                                        </p>
-                                    </div>
-                                    <i class="bi bi-wallet2 fs-3 text-success"></i>
-                                </div>
-                                
-                                <!-- Payout Summary Cards -->
-                                <div class="row g-3 mb-4">
-
-                                    <div class="col-md-4">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Total Payout
-                                                </p>
-                                                <h3 id="totalPayout">
-                                                    RM 0.00
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Base Payment
-                                                </p>
-                                                <h3 id="totalBasePayment">
-                                                    RM 0.00
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-4">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Total Bonus
-                                                </p>
-                                                <h3 id="totalBonus">
-                                                    RM 0.00
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Employee</th>
-                                                <th>Period</th>
-                                                <th>Base Payment</th>
-                                                <th>Bonus</th>
-                                                <th>Final Payout</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="payoutReportTable">
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- INVENTORY REPORT -->
-                    <div id="inventorySection" class="d-none">
-                        <div class="card shadow-sm mb-4">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-3">
-                                    <div>
-                                        <h5 class="fw-bold mb-1">
-                                            Inventory Report
-                                        </h5>
-                                        <p class="text-muted mb-0">
-                                            Current inventory status
-                                        </p>
-                                    </div>
-                                    <i class="bi bi-boxes fs-3 text-warning"></i>
-                                </div>
-
-                                <!-- Inventory Summary Cards -->
-                                <div class="row g-3 mb-4">
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Total Products
-                                                </p>
-                                                <h3 id="totalProducts">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Total Stock
-                                                </p>
-                                                <h3 id="totalStock">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Low Stock
-                                                </p>
-                                                <h3 id="lowStock">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-3">
-                                        <div class="card border-0 bg-light">
-                                            <div class="card-body">
-                                                <p class="text-muted mb-1">
-                                                    Out of Stock
-                                                </p>
-                                                <h3 id="outOfStock">
-                                                    0
-                                                </h3>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Product</th>
-                                                <th>Stock</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="inventoryReportTable">
-                                        </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </main>
-    </div>
-</body>
+            </main>
+        </div>
+    </body>
 </html>

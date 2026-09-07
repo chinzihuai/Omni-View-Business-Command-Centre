@@ -1,267 +1,426 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-    <script type="module" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-    <link href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css" rel="stylesheet">
-    <script type="module" src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="../js/database.js"></script>
-    <script src="../js/loaddata.js"></script>
-    <script src="../js/logout.js"></script>
-    <script src="../js/admin_authcheck.js"></script>
-    <script src="../js/payout.js"></script>
-    <link rel="stylesheet" href="../css/main.css">
-    <link rel="stylesheet" href="../css/view-transitions.css">
-    <title>Payout Page</title>
-    <link rel="icon" href="../image/captempire_icon.png" type="image/x-icon">
-</head>
-<body>
-    <div class="d-flex app-shell">
-        <!-- Sidebar -->
-        <aside class="sidebar offcanvas-md offcanvas-start" id="sidebar" tabindex="-1" aria-label="Main navigation">
-            <div class="sidebar-brand">
-                <img src="../image/captempire_icon.png" alt="Logo" class="sidebar-logo">
-                <span class="brand-text">Capt Empire</span>
-            </div>
- 
-            <nav class="sidebar-nav">
-                <a href="main.html" class="nav-link">
-                    <i class="bi bi-grid-1x2-fill"></i> <span>Dashboard</span>
-                </a>
-                <a href="product.html" class="nav-link">
-                    <i class="bi bi-box-seam-fill"></i> <span>Product</span>
-                </a>
-                <a href="lives.html" class="nav-link">
-                    <i class="bi bi-camera-reels-fill"></i> <span>Lives</span>
-                </a>
-                <a href="payout.html" class="nav-link active">
-                    <i class="bi bi-cash-coin"></i> <span>Payout</span>
-                </a>
-                <a href="report.html" class="nav-link">
-                    <i class="bi bi-file-earmark-bar-graph-fill"></i> <span>Report</span>
-                </a>
-                <a href="user_management.html" class="nav-link">
-                    <i class="bi bi-people-fill"></i> <span>User Management</span>
-                </a>
-            </nav>
- 
-            <div class="sidebar-footer">
-                <a href="#" class="nav-link" onclick="logout(event)">
-                    <i class="bi bi-box-arrow-right"></i> <span>Logout</span>
-                </a>
-            </div>
-        </aside>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            crossorigin="anonymous"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+        />
+        <script
+            type="module"
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"
+        ></script>
+        <link
+            href="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.css"
+            rel="stylesheet"
+        />
+        <script
+            type="module"
+            src="https://cdn.datatables.net/v/dt/dt-3.0.1/datatables.min.js"
+        ></script>
+        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+        <script src="../js/database.js"></script>
+        <script src="../js/loaddata.js"></script>
+        <script src="../js/logout.js"></script>
+        <script src="../js/admin_authcheck.js"></script>
+        <script src="../js/payout.js"></script>
+        <link rel="stylesheet" href="../css/main.css" />
+        <link rel="stylesheet" href="../css/view-transitions.css" />
+        <title>Payout Page</title>
+        <link
+            rel="icon"
+            href="../image/captempire_icon.png"
+            type="image/x-icon"
+        />
+    </head>
+    <body>
+        <div class="d-flex app-shell">
+            <!-- Sidebar -->
+            <aside
+                class="sidebar offcanvas-md offcanvas-start"
+                id="sidebar"
+                tabindex="-1"
+                aria-label="Main navigation"
+            >
+                <div class="sidebar-brand">
+                    <img
+                        src="../image/captempire_icon.png"
+                        alt="Logo"
+                        class="sidebar-logo"
+                    />
+                    <span class="brand-text">Capt Empire</span>
+                </div>
 
-        <main class="main-content">
-            <div class="content-topbar">
-                <button class="sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Open navigation">
-                    <i class="bi bi-list"></i>
-                </button>
-                <div class="topbar-user dropdown">
-                    <a href="#" class="dropdown-toggle" id="topbarUserMenu" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="user-name" id="user_name"></span>
-                        <img src="../image/User-avatar.webp" alt="User avatar" class="avatar">
+                <nav class="sidebar-nav">
+                    <a href="main.html" class="nav-link">
+                        <i class="bi bi-grid-1x2-fill"></i>
+                        <span>Dashboard</span>
                     </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="topbarUserMenu">
-                        <li><a class="dropdown-item" href="profile.html"><i class="bi bi-person-circle"></i> Profile</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" onclick="logout(event)"><i class="bi bi-box-arrow-right"></i> Logout</a></li>
-                    </ul>
+                    <a href="product.html" class="nav-link">
+                        <i class="bi bi-box-seam-fill"></i> <span>Product</span>
+                    </a>
+                    <a href="lives.html" class="nav-link">
+                        <i class="bi bi-camera-reels-fill"></i>
+                        <span>Lives</span>
+                    </a>
+                    <a href="payout.html" class="nav-link active">
+                        <i class="bi bi-cash-coin"></i> <span>Payout</span>
+                    </a>
+                    <a href="report.html" class="nav-link">
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
+                        <span>Report</span>
+                    </a>
+                    <a href="user_management.html" class="nav-link">
+                        <i class="bi bi-people-fill"></i>
+                        <span>User Management</span>
+                    </a>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="nav-link" onclick="logout(event)">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Logout</span>
+                    </a>
                 </div>
-            </div>
-        
-        <div class="container-fluid">
-            <div class="product-header">
-                <h1 class="mt-4">Payout</h1>
-                <ol class="breadcrumb mb-4 product-breadcrumb">
-                    <li class="breadcrumb-item"><a href="main.html">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Payout</li>
-                </ol>
-            </div>
+            </aside>
 
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card product-card mb-4">
-                        <div class="card-header">
-                            <h1 class="card-title"><i class="bi bi-cash-coin"></i> Employee Payout Table</h1>
-                        </div>
-                        <div class="card-body"> 
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="PayoutTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>Payout ID</th>
-                                            <th>Employee ID</th>
-                                            <th>Employee Name</th>
-                                            <th style="min-width: 130px;">Period Start</th>
-                                            <th style="min-width: 130px;">Period End</th>
-                                            <th>Work Hours</th>
-                                            <th>Total Items Sold</th>
-                                            <th>Total GMV</th>
-                                            <th>Base Salary</th>
-                                            <th>Bonus</th>
-                                            <th>Final Payout (RM)</th>
-                                            <th style="min-width: 130px;">Payout Date</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+            <main class="main-content">
+                <div class="content-topbar">
+                    <button
+                        class="sidebar-toggle"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#sidebar"
+                        aria-controls="sidebar"
+                        aria-label="Open navigation"
+                    >
+                        <i class="bi bi-list"></i>
+                    </button>
+                    <div class="topbar-user dropdown">
+                        <a
+                            href="#"
+                            class="dropdown-toggle"
+                            id="topbarUserMenu"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >
+                            <span class="user-name" id="user_name"></span>
+                            <img
+                                src="../image/User-avatar.webp"
+                                alt="User avatar"
+                                class="avatar"
+                            />
+                        </a>
+                        <ul
+                            class="dropdown-menu dropdown-menu-end"
+                            aria-labelledby="topbarUserMenu"
+                        >
+                            <li>
+                                <a class="dropdown-item" href="profile.html"
+                                    ><i class="bi bi-person-circle"></i>
+                                    Profile</a
+                                >
+                            </li>
+                            <li><hr class="dropdown-divider" /></li>
+                            <li>
+                                <a
+                                    class="dropdown-item"
+                                    href="#"
+                                    onclick="logout(event)"
+                                    ><i class="bi bi-box-arrow-right"></i>
+                                    Logout</a
+                                >
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        </div>
 
-    <div class="modal fade" id="payoutModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Add New Payout</h5>
-                <button type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal">
-                </button>
-            </div>
-
-            <div class="modal-body">
-
-                <form id="payoutForm">
-
-                    <!-- Product -->
-                    <div class="mb-3">
-                        <label for="payoutID" class="form-label">
-                            Payout Id
-                        </label>
-                        <input type="text"class="form-control" id="payoutID">
+                <div class="container-fluid">
+                    <div class="product-header">
+                        <h1 class="mt-4">Payout</h1>
+                        <ol class="breadcrumb mb-4 product-breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="main.html">Dashboard</a>
+                            </li>
+                            <li class="breadcrumb-item active">Payout</li>
+                        </ol>
                     </div>
 
-
-                    <!-- Employee -->
-                    <div class="mb-3">
-                        <label for="payoutEmployee" class="form-label">
-                            EmployeeID
-                        </label>
-                        <select id="payoutEmployee" class="form-select" required>
-                            <option value="">Loading employees...</option>
-                        </select>
-                    </div>
-
-
-                    <!-- Period -->
                     <div class="row">
-
-                        <div class="col-md-6 mb-3">
-                            <label for="periodStart" class="form-label">
-                                Period Start
-                            </label>
-                            <input type="date" id="periodStart" class="form-control" required>
-
+                        <div class="col-md-12">
+                            <div class="card product-card mb-4">
+                                <div class="card-header">
+                                    <h1 class="card-title">
+                                        <i class="bi bi-cash-coin"></i> Employee
+                                        Payout Table
+                                    </h1>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table
+                                            class="table table-bordered"
+                                            id="PayoutTable"
+                                            width="100%"
+                                            cellspacing="0"
+                                        >
+                                            <thead>
+                                                <tr>
+                                                    <th>Payout ID</th>
+                                                    <th>Employee ID</th>
+                                                    <th>Employee Name</th>
+                                                    <th
+                                                        style="min-width: 130px"
+                                                    >
+                                                        Period Start
+                                                    </th>
+                                                    <th
+                                                        style="min-width: 130px"
+                                                    >
+                                                        Period End
+                                                    </th>
+                                                    <th>Work Hours</th>
+                                                    <th>Total Items Sold</th>
+                                                    <th>Total GMV</th>
+                                                    <th>Base Salary</th>
+                                                    <th>Bonus</th>
+                                                    <th>Final Payout (RM)</th>
+                                                    <th
+                                                        style="min-width: 130px"
+                                                    >
+                                                        Payout Date
+                                                    </th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col-md-6 mb-3">
-                            <label for="periodEnd" class="form-label">
-                                Period End
-                            </label>
-                            <input type="date" id="periodEnd" class="form-control" required>
-                        </div>
-
                     </div>
+                </div>
 
-
-                    <!-- Bonus per item -->
-                    <div class="mb-3">
-                        <label for="bonusPerItem" class="form-label">
-                            Bonus Per Item (RM)
-                        </label>
-                        <input type="number" id="bonusPerItem" class="form-control" min="0" step="0.01" placeholder="Example: 2.00" required>
-                    </div>
-
-
-                    <!-- Calculation Preview -->
-                    <div class="card bg-light mb-3">
-                        <div class="card-body">
-
-                            <h6 class="mb-3">
-                                Payout Calculation
-                            </h6>
-
-                            <div class="row">
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>Total Hours:</strong>
-                                    <span id="previewHours">0</span>
-                                </div>
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>Item Sold:</strong>
-                                    <span id="previewSales">0</span>
-                                </div>
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>GMV Amount:</strong>
-                                    RM <span id="previewGMV">0.00</span>
-                                </div>
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>Base Rate:</strong>
-                                    RM <span id="previewRate">0.00</span>
-                                </div>
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>Base Payment:</strong>
-                                    RM <span id="previewBase">0.00</span>
-                                </div>
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>Bonus:</strong>
-                                    RM <span id="previewBonus">0.00</span>
-                                </div>
-
-                                <div class="col-md-6 mb-2">
-                                    <strong>Total Payment:</strong>
-                                    RM <span id="previewTotal">0.00</span>
-                                </div>
-
+                <div
+                    class="modal fade"
+                    id="payoutModal"
+                    tabindex="-1"
+                    aria-hidden="true"
+                >
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Add New Payout</h5>
+                                <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                ></button>
                             </div>
 
+                            <div class="modal-body">
+                                <form id="payoutForm">
+                                    <!-- Product -->
+                                    <div class="mb-3">
+                                        <label
+                                            for="payoutID"
+                                            class="form-label"
+                                        >
+                                            Payout Id
+                                        </label>
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="payoutID"
+                                        />
+                                    </div>
+
+                                    <!-- Employee -->
+                                    <div class="mb-3">
+                                        <label
+                                            for="payoutEmployee"
+                                            class="form-label"
+                                        >
+                                            EmployeeID
+                                        </label>
+                                        <select
+                                            id="payoutEmployee"
+                                            class="form-select"
+                                            required
+                                        >
+                                            <option value="">
+                                                Loading employees...
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Period -->
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label
+                                                for="periodStart"
+                                                class="form-label"
+                                            >
+                                                Period Start
+                                            </label>
+                                            <input
+                                                type="date"
+                                                id="periodStart"
+                                                class="form-control"
+                                                required
+                                            />
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label
+                                                for="periodEnd"
+                                                class="form-label"
+                                            >
+                                                Period End
+                                            </label>
+                                            <input
+                                                type="date"
+                                                id="periodEnd"
+                                                class="form-control"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+
+                                    <!-- Bonus per item -->
+                                    <div class="mb-3">
+                                        <label
+                                            for="bonusPerItem"
+                                            class="form-label"
+                                        >
+                                            Bonus Per Item (RM)
+                                        </label>
+                                        <input
+                                            type="number"
+                                            id="bonusPerItem"
+                                            class="form-control"
+                                            min="0"
+                                            step="0.01"
+                                            placeholder="Example: 2.00"
+                                            required
+                                        />
+                                    </div>
+
+                                    <!-- Calculation Preview -->
+                                    <div class="card bg-light mb-3">
+                                        <div class="card-body">
+                                            <h6 class="mb-3">
+                                                Payout Calculation
+                                            </h6>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-2">
+                                                    <strong
+                                                        >Total Hours:</strong
+                                                    >
+                                                    <span id="previewHours"
+                                                        >0</span
+                                                    >
+                                                </div>
+
+                                                <div class="col-md-6 mb-2">
+                                                    <strong>Item Sold:</strong>
+                                                    <span id="previewSales"
+                                                        >0</span
+                                                    >
+                                                </div>
+
+                                                <div class="col-md-6 mb-2">
+                                                    <strong>GMV Amount:</strong>
+                                                    RM
+                                                    <span id="previewGMV"
+                                                        >0.00</span
+                                                    >
+                                                </div>
+
+                                                <div class="col-md-6 mb-2">
+                                                    <strong>Base Rate:</strong>
+                                                    RM
+                                                    <span id="previewRate"
+                                                        >0.00</span
+                                                    >
+                                                </div>
+
+                                                <div class="col-md-6 mb-2">
+                                                    <strong
+                                                        >Base Payment:</strong
+                                                    >
+                                                    RM
+                                                    <span id="previewBase"
+                                                        >0.00</span
+                                                    >
+                                                </div>
+
+                                                <div class="col-md-6 mb-2">
+                                                    <strong>Bonus:</strong>
+                                                    RM
+                                                    <span id="previewBonus"
+                                                        >0.00</span
+                                                    >
+                                                </div>
+
+                                                <div class="col-md-6 mb-2">
+                                                    <strong
+                                                        >Total Payment:</strong
+                                                    >
+                                                    RM
+                                                    <span id="previewTotal"
+                                                        >0.00</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                >
+                                    Cancel
+                                </button>
+
+                                <button
+                                    type="button"
+                                    form="payoutForm"
+                                    class="btn btn-primary"
+                                    onclick="addPayout()"
+                                >
+                                    Add Payout
+                                </button>
+                            </div>
                         </div>
                     </div>
-
-                </form>
-
-            </div>
-
-
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Cancel
-                </button>
-
-                <button type="button" form="payoutForm" class="btn btn-primary" onclick="addPayout()">
-                    Add Payout
-                </button>
-            </div>
-
-        </div>
-    </div>
-</div>
-
-        <div class="row justify-content-center mt-5">
-                <div class="col-lg-3 col-md-6 text-center">
-                    <button class="btn btn-primary w-100" id="add_payout_data"><i class="bi bi-plus-circle"></i> Add Payout</button>
                 </div>
+
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-3 col-md-6 text-center">
+                        <button
+                            class="btn btn-primary w-100"
+                            id="add_payout_data"
+                        >
+                            <i class="bi bi-plus-circle"></i> Add Payout
+                        </button>
+                    </div>
+                </div>
+            </main>
         </div>
-    </main>
-</div>
-</body>
+    </body>
 </html>
