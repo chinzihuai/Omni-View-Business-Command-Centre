@@ -1,5 +1,5 @@
 .env
 node_modules/
-test-chat.html
+test-chat.js
 .prettierrc
 .prettierignore
