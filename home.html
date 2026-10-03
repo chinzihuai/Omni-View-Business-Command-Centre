@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ef">
+  <title></title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #242522;
+      --muted: #74766f;
+      --accent: #c69b52;
+      --surface: #fffefa;
+      --line: #ece9e1;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 12% 8%, rgba(198, 155, 82, .12), transparent 32rem),
+        #f5f3ef;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .page-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.25rem;
+    }
+
+    .page-heading {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .eyebrow {
+      margin-bottom: .65rem;
+      color: #9b783e;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+
+    .page-heading h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 650;
+      letter-spacing: -.045em;
+    }
+
+    .page-heading p {
+      margin: .75rem 0 0;
+      color: var(--muted);
+    }
+
+    .link-card {
+      width: min(100%, 42rem);
+      padding: clamp(1.5rem, 5vw, 2.75rem);
+      border: 1px solid rgba(36, 37, 34, .14);
+      border-radius: 1.7rem;
+      background: var(--surface);
+      box-shadow: 0 24px 70px rgba(48, 43, 34, .09);
+    }
+
+    .category + .category {
+      margin-top: 2rem;
+      padding-top: 1.75rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .category h2 {
+      margin: 0 0 1rem;
+      font-size: .8rem;
+      font-weight: 750;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .link-list {
+      display: grid;
+      gap: .75rem;
+    }
+
+    .category-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      min-height: 3.5rem;
+      padding: .85rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 0.5rem;
+      color: var(--ink);
+      background: #fff;
+      font-weight: 550;
+      text-decoration: none;
+      transition: border-color .18s ease, background-color .18s ease, transform .18s ease;
+    }
+    
+    .category-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(198, 155, 82, .65);
+      background: #fffdf8;
+    }
+
+    .category-link:focus-visible {
+      outline: 3px solid rgba(198, 155, 82, .45);
+      outline-offset: 3px;
+    }
+
+    .page-footer {
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: .85rem;
+      text-align: center;
+    }
+
+    @media (max-width: 575.98px) {
+      .page-shell {
+        justify-content: flex-start;
+        padding-top: 4rem;
+      }
+
+      .page-heading {
+        margin-bottom: 1.5rem;
+      }
+
+      .link-card {
+        border-radius: 1.5rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page-shell container">
+    <header class="page-heading">
+      <div class="eyebrow">Omni-View Business Command Center</div>
+    </header>
+
+    <nav class="link-card" aria-label="Page categories">
+      <section class="category" aria-labelledby="category-one-title">
+        <h2 id="category-one-title">Quick Links</h2>
+        <div class="link-list">
+          <a class="category-link" href="./Web%20Ui/login.html">Login</a>
+          <a class="category-link" href="https://github.com/chinzihuai/Omni-View-Business-Command-Centre">GitHub Repository</a>
+        </div>
+      </section>
+
+      <section class="category" aria-labelledby="category-two-title">
+        <h2 id="category-two-title">Documentation</h2>
+        <div class="link-list">
+          <a class="category-link" href="https://drive.google.com/file/d/17C2PtrudbEZ_JJXvclEy2vGTxm0V7UiJ/view?usp=sharing">User Manual</a>
+        </div>
+      </section>
+    </nav>
+  </main>
+</body>
+</html>
