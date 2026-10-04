@@ -3,17 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f3ef">
   <title></title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     :root {
       color-scheme: light;
-      --ink: #242522;
-      --muted: #74766f;
+      --ink: #1f221d;
+      --muted: #5c625c;
       --accent: #c69b52;
-      --surface: #fffefa;
-      --line: #ece9e1;
+      --surface: #fffdf9;
+      --line: #e8e1d7;
+      --soft-panel: #f4efe9;
+      --soft-button: #ffffff;
     }
 
     body {
@@ -21,64 +27,75 @@
       margin: 0;
       color: var(--ink);
       background:
-        radial-gradient(ellipse at 12% 8%, rgba(198, 155, 82, .12), transparent 32rem),
+        radial-gradient(ellipse at 12% 8%, rgba(198, 155, 82, 0.12), transparent 32rem),
         #f5f3ef;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     .page-shell {
+      width: 100%;
+      max-width: none;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 2rem;
       padding: 4rem 1.25rem;
+      color: var(--ink);
+      background:#f7f3ee;
     }
 
     .page-heading {
-      margin-bottom: 2rem;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.25rem;
+      text-align: left;
     }
 
-    .eyebrow {
-      margin-bottom: .65rem;
-      color: #9b783e;
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: .2em;
-      text-transform: uppercase;
+    .brand-logo {
+      width: 5rem;
+      height: 5rem;
+      border: 1px solid var(--line);
+      border-radius: .5rem;
+      object-fit: cover;
     }
 
-    .page-heading h1 {
+    .brand-copy h1,
+    .brand-copy h2 {
       margin: 0;
-      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-size: 2rem;
       font-weight: 650;
       letter-spacing: -.045em;
     }
 
-    .page-heading p {
-      margin: .75rem 0 0;
-      color: var(--muted);
+    .brand-copy p {
+      margin: .25rem 0 0;
+      color: #303234;
+    }
+
+    .link-columns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+      width: min(100%, 58rem);
     }
 
     .link-card {
-      width: min(100%, 42rem);
-      padding: clamp(1.5rem, 5vw, 2.75rem);
-      border: 1px solid rgba(36, 37, 34, .14);
-      border-radius: 1.7rem;
-      background: var(--surface);
-      box-shadow: 0 24px 70px rgba(48, 43, 34, .09);
-    }
-
-    .category + .category {
-      margin-top: 2rem;
-      padding-top: 1.75rem;
-      border-top: 1px solid var(--line);
+      width: 100%;
+      padding: clamp(1.25rem, 4vw, 2rem);
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 18px 40px rgba(60, 54, 40, 0.08);
     }
 
     .category h2 {
-      margin: 0 0 1rem;
-      font-size: .8rem;
+      margin: 0 0 1.25rem;
+      color: #1b1d1a;
+      text-align: center;
+      font-size: .9rem;
       font-weight: 750;
       letter-spacing: .14em;
       text-transform: uppercase;
@@ -92,49 +109,53 @@
     .category-link {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-start;
       gap: 1rem;
       min-height: 3.5rem;
       padding: .85rem 1rem;
       border: 1px solid var(--line);
       border-radius: 0.5rem;
-      color: var(--ink);
-      background: #fff;
+      color: #1d1d1b;
+      background: var(--soft-button);
       font-weight: 550;
       text-decoration: none;
       transition: border-color .18s ease, background-color .18s ease, transform .18s ease;
     }
+
+    .category-link i {
+      flex: 0 0 1.5rem;
+      color: #c69b52;
+      font-size: 1.25rem;
+      text-align: center;
+    }
     
     .category-link:hover {
       transform: translateY(-2px);
-      border-color: rgba(198, 155, 82, .65);
-      background: #fffdf8;
+      border-color: rgba(198, 155, 82, .8);
+      background: #f3ead8;
+      color: #171815;
     }
 
     .category-link:focus-visible {
-      outline: 3px solid rgba(198, 155, 82, .45);
+      outline: 3px solid rgba(198, 155, 82, .75);
       outline-offset: 3px;
     }
 
-    .page-footer {
-      margin-top: 1.5rem;
-      color: var(--muted);
-      font-size: .85rem;
-      text-align: center;
-    }
-
-    @media (max-width: 575.98px) {
-      .page-shell {
-        justify-content: flex-start;
-        padding-top: 4rem;
+    @media (max-width: 767.98px) {
+      .link-columns {
+        grid-template-columns: 1fr;
       }
 
       .page-heading {
-        margin-bottom: 1.5rem;
+        flex-direction: column;
+        gap: .75rem;
+        text-align: center;
+        font-size: 1rem;
       }
 
-      .link-card {
-        border-radius: 1.5rem;
+      .brand-logo {
+        width: 5.5rem;
+        height: 5.5rem;
       }
     }
 
@@ -151,22 +172,35 @@
 <body>
   <main class="page-shell container">
     <header class="page-heading">
-      <div class="eyebrow">Omni-View Business Command Center</div>
+      <img class="brand-logo" src="image/captempire_icon.png" alt="Logo">
+      <div class="brand-copy">
+        <h2>Omni-View</h2>
+        <p>Business Command Centre</p>
+      </div>
     </header>
 
-    <nav class="link-card" aria-label="Page categories">
-      <section class="category" aria-labelledby="category-one-title">
+    <nav class="link-columns" aria-label="Page categories">
+      <section class="link-card category" aria-labelledby="category-one-title">
         <h2 id="category-one-title">Quick Links</h2>
         <div class="link-list">
-          <a class="category-link" href="./Web%20Ui/login.html">Login</a>
-          <a class="category-link" href="https://github.com/chinzihuai/Omni-View-Business-Command-Centre">GitHub Repository</a>
+          <a class="category-link" href="./Web%20Ui/login.html">
+            <i class="bi bi-box-arrow-in-right" aria-hidden="true"></i>
+            <span>Dashboard Login </span>
+          </a>
+          <a class="category-link" href="https://github.com/chinzihuai/Omni-View-Business-Command-Centre">
+            <i class="bi bi-github" aria-hidden="true"></i>
+            <span>GitHub Repository</span>
+          </a>
         </div>
       </section>
 
-      <section class="category" aria-labelledby="category-two-title">
+      <section class="link-card category" aria-labelledby="category-two-title">
         <h2 id="category-two-title">Documentation</h2>
         <div class="link-list">
-          <a class="category-link" href="https://drive.google.com/file/d/17C2PtrudbEZ_JJXvclEy2vGTxm0V7UiJ/view?usp=sharing">User Manual</a>
+          <a class="category-link" href="https://drive.google.com/file/d/17C2PtrudbEZ_JJXvclEy2vGTxm0V7UiJ/view?usp=sharing">
+            <i class="bi bi-journal-text" aria-hidden="true"></i>
+            <span>User Manual</span>
+          </a>
         </div>
       </section>
     </nav>
