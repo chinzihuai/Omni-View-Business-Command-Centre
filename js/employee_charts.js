@@ -2,6 +2,10 @@ let salesChart = null;
 let workingHours = null;
 let liveViewsTrend = null;
 
+function getTodayDateUTC8() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }));
+}
+
 async function loadcharts() {
     const { data: sessionData, error: sessionError } =
         await supabaseClient.auth.getSession();
@@ -44,7 +48,7 @@ async function loadcharts() {
 
     const employeeId = profile.userid;
 
-    const now = new Date();
+    const now = getTodayDateUTC8();
 
     const startDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
 

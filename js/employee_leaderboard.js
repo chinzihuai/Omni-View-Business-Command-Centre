@@ -1,5 +1,9 @@
 let leaderboardData = [];
 
+function getTodayDateUTC8() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }));
+}
+
 async function loadLeaderboard() {
     console.log('=== LEADERBOARD START ===');
 
@@ -143,7 +147,7 @@ async function loadLeaderboard() {
 }
 
 function getDateRange(period) {
-    const now = new Date();
+    const now = getTodayDateUTC8();
 
     let start;
     let end;

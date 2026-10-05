@@ -1,3 +1,7 @@
+function getTodayDateUTC8() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }));
+}
+
 async function loaddaily() {
     const { data: sessionData, error: sessionError } =
         await supabaseClient.auth.getSession();
@@ -38,7 +42,7 @@ async function loaddaily() {
         return;
     }
 
-    const today_date = new Date();
+    const today_date = getTodayDateUTC8();
     const userid = profile.userid;
 
     const { data: today, error: todayError } = await supabaseClient

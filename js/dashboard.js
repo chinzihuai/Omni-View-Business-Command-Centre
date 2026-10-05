@@ -1,6 +1,10 @@
 let stockChart;
+function getTodayDateUTC8() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }));
+}
+
 async function loaddailyGMV() {
-    const now = new Date();
+    const now = getTodayDateUTC8();
     const { data, error } = await supabaseClient
         .from('Live')
         .select('gmv_amount')
@@ -21,7 +25,7 @@ async function loaddailyGMV() {
 }
 
 async function loaddailyItemsSold() {
-    const now = new Date();
+    const now = getTodayDateUTC8();
     const { data, error } = await supabaseClient
         .from('Live')
         .select('items_sold')
@@ -58,7 +62,7 @@ async function loadActiveStaff() {
 }
 
 async function loadViews() {
-    const now = new Date();
+    const now = getTodayDateUTC8();
     const { data, error } = await supabaseClient
         .from('Live')
         .select('views')

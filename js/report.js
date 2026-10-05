@@ -1,3 +1,7 @@
+function getTodayDateUTC8() {
+    return new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Kuala_Lumpur' }));
+}
+
 //sales report
 async function loadSalesReport(filter) {
     console.log('Loading Sales Report with filter:', filter);
@@ -904,7 +908,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         //this month
         else if (period === 'this_month') {
-            const now = new Date();
+            const now = getTodayDateUTC8();
 
             start = formatDate(new Date(now.getFullYear(), now.getMonth(), 1));
             end = formatDate(
@@ -914,7 +918,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         //last month
         else if (period === 'last_month') {
-            const now = new Date();
+            const now = getTodayDateUTC8();
 
             start = formatDate(
                 new Date(now.getFullYear(), now.getMonth() - 1, 1)
@@ -924,7 +928,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         //this week
         else if (period === 'this_week') {
-            const now = new Date();
+            const now = getTodayDateUTC8();
 
             const day = now.getDay(); // 0 (Sun) to 6 (Sat)
             const diffToMonday = day === 0 ? -6 : day - 1; // If Sunday, go back 6 days, else go back to Monday
@@ -938,7 +942,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         //this year
         else if (period === 'this_year') {
-            const now = new Date();
+            const now = getTodayDateUTC8();
 
             start = formatDate(new Date(now.getFullYear(), 0, 1));
             end = formatDate(new Date(now.getFullYear(), 11, 31));
